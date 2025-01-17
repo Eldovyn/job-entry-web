@@ -17,10 +17,10 @@ const RegisterPage = () => {
                         <div className="flex flex-col mb-3">
                             <Input type="password" placeholder="password" />
                         </div>
-                        <Button className="bg-[#4b5fe2] hover:bg-[#4558cf] w-full">Register</Button>
+                        <Button className="bg-[#4b5fe2] hover:bg-[#4558cf] w-full">register</Button>
                         <div className="flex flex-row mt-3 text-sm">
                             <p className="text-[#b5b7da]">have an account?</p>
-                            <p className="ms-1 text-blue-600">Login</p>
+                            <p className="ms-1 text-blue-600">login</p>
                         </div>
                     </form>
                 </h1>
