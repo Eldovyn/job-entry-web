@@ -9,18 +9,18 @@ const LoginPage = () => {
                     <p className="text-2xl font-bold">Login To Your Account</p>
                     <form action="">
                         <div className="flex flex-col mb-3 mt-3">
-                            <Input type="email" placeholder="example@gmail.com" />
+                            <Input type="email" placeholder="email" />
                         </div>
                         <div className="flex flex-col mb-2">
-                            <Input type="password" placeholder="your password" />
+                            <Input type="password" placeholder="password" />
                         </div>
                         <div className="flex flex-col mb-3">
-                            <p className="flex justify-end text-[#b5b7da] text-sm">Don't have an account?</p>
+                            <p className="flex justify-end text-[#b5b7da] text-sm">forgot password</p>
                         </div>
-                        <Button className="bg-[#4b5fe2] hover:bg-[#4558cf] w-full">Login</Button>
+                        <Button className="bg-[#4b5fe2] hover:bg-[#4558cf] w-full">login</Button>
                         <div className="flex flex-row mt-3 text-sm">
-                            <p className="text-[#b5b7da]">Dont have an account?</p>
-                            <p className="ms-1 text-blue-600">Register</p>
+                            <p className="text-[#b5b7da]">dont have an account?</p>
+                            <p className="ms-1 text-blue-600">register</p>
                         </div>
                     </form>
                 </h1>
