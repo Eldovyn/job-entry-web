@@ -1,19 +1,19 @@
 import AuthForm from "../../../layout/AuthForm"
 
-const RegisterPage = () => {
+const ResetPasswordPage = () => {
     return (
         <>
             <div className="bg-[#0b0d14] h-screen flex items-center justify-center w-full text-white">
                 <AuthForm
-                    title="Create Your Account"
-                    buttonText="register"
+                    title="Forgot Password"
+                    buttonText="reset password"
                     switchText="have an account?"
-                    switchLink="register"
-                    Category={'register'}
+                    switchLink="reset password"
+                    Category={'reset-password'}
                 />
             </div>
         </>
     )
 }
 
-export default RegisterPage
+export default ResetPasswordPage

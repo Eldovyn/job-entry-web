@@ -8,8 +8,8 @@ const LoginPage = () => {
                     title="Login To Your Account"
                     buttonText="login"
                     switchText="dont have an account?"
-                    switchLink="register"
-                    Category={'register'}
+                    switchLink="login"
+                    Category={'login'}
                 />
             </div>
         </>
