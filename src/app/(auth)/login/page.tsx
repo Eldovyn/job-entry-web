@@ -9,10 +9,10 @@ const LoginPage = () => {
                     <p className="text-2xl font-bold">Login To Your Account</p>
                     <form action="">
                         <div className="flex flex-col mb-3 mt-3">
-                            <Input type="email" placeholder="email" />
+                            <Input type="email" placeholder="email" className="border-[#1b1d2e] border-2" />
                         </div>
                         <div className="flex flex-col mb-2">
-                            <Input type="password" placeholder="password" />
+                            <Input type="password" placeholder="password" className="border-[#1f2236] border-2" />
                         </div>
                         <div className="flex flex-col mb-3">
                             <p className="flex justify-end text-[#b5b7da] text-sm">forgot password</p>

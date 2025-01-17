@@ -9,13 +9,13 @@ const RegisterPage = () => {
                     <p className="text-2xl font-bold">Create Your Account</p>
                     <form action="">
                         <div className="flex flex-col mb-3 mt-3">
-                            <Input type="text" placeholder="username" />
+                            <Input type="text" placeholder="username" className="border-[#1b1d2e] border-2" />
                         </div>
                         <div className="flex flex-col mb-3">
-                            <Input type="text" placeholder="email" />
+                            <Input type="text" placeholder="email" className="border-[#1b1d2e] border-2" />
                         </div>
                         <div className="flex flex-col mb-3">
-                            <Input type="password" placeholder="password" />
+                            <Input type="password" placeholder="password" className="border-[#1b1d2e] border-2" />
                         </div>
                         <Button className="bg-[#4b5fe2] hover:bg-[#4558cf] w-full">register</Button>
                         <div className="flex flex-row mt-3 text-sm">
