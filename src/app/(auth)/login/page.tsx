@@ -9,7 +9,7 @@ const LoginPage = () => {
                     buttonText="login"
                     switchText="dont have an account?"
                     switchLink="register"
-                    isRegister={false}
+                    Category={'register'}
                 />
             </div>
         </>

@@ -6,26 +6,28 @@ interface AuthFormProps {
     buttonText: string
     switchText: string
     switchLink: string
-    isRegister: boolean
+    Category: string
 }
 
-const AuthForm: React.FC<AuthFormProps> = ({ title, buttonText, switchText, switchLink, isRegister }) => {
+const AuthForm: React.FC<AuthFormProps> = ({ title, buttonText, switchText, switchLink, Category }) => {
     return (
         <div className="bg-[#12141e] w-[50%] p-8 rounded-md mt-9 border-[#1f2236] border-2">
             <p className="text-2xl font-bold mb-3">{title}</p>
             <form action="">
-                {isRegister && (
+                {Category === "login" && (
                     <div className="flex flex-col mb-3 mt-3">
                         <Input type="text" placeholder="username" className="border-[#1b1d2e] border-2" />
                     </div>
                 )}
                 <div className="flex flex-col mb-3">
-                    <Input type={isRegister ? "text" : "email"} placeholder={isRegister ? "email" : "email"} className="border-[#1b1d2e] border-2" />
+                    <Input type={Category ? "text" : "email"} placeholder={Category ? "email" : "email"} className="border-[#1b1d2e] border-2" />
                 </div>
-                <div className="flex flex-col mb-3">
-                    <Input type="password" placeholder="password" className="border-[#1b1d2e] border-2" />
-                </div>
-                {!isRegister && (
+                {Category === 'register' || Category === 'login' && (
+                    <div className="flex flex-col mb-3">
+                        <Input type="password" placeholder="password" className="border-[#1b1d2e] border-2" />
+                    </div>
+                )}
+                {Category === 'register' && (
                     <div className="flex flex-col mb-3">
                         <p className="flex justify-end text-[#b5b7da] text-sm">forgot password</p>
                     </div>
