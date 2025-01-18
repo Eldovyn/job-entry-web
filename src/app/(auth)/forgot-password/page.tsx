@@ -8,7 +8,7 @@ const ResetPasswordPage = () => {
                     title="Forgot Password"
                     buttonText="reset password"
                     switchText="have an account?"
-                    switchLink="reset password"
+                    switchLink="login"
                     Category={'reset-password'}
                 />
             </div>

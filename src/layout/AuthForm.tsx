@@ -11,22 +11,22 @@ interface AuthFormProps {
 
 const AuthForm: React.FC<AuthFormProps> = ({ title, buttonText, switchText, switchLink, Category }) => {
     return (
-        <div className="bg-[#12141e] w-[50%] p-8 rounded-md mt-9 border-[#1f2236] border-2">
+        <div className="bg-[#12141e] w-[25%] p-8 rounded-md mt-9 border-[#1f2236] border-2">
             <p className="text-2xl font-bold mb-3 text-white">{title}</p>
             <form action="">
                 {Category === 'register' || Category === 'login' ? (
                     <div className="flex flex-col mb-3 mt-3">
-                        <Input type="text" placeholder="username" className="border-[#1b1d2e] border-2 focus:border-[#4b5fe2]" />
+                        <Input type="text" placeholder="username" className="caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2]" />
                     </div>
                 ) : ''}
                 {Category === 'register' || Category === 'reset-password' ? (
                     <div className="flex flex-col mb-3">
-                        <Input type={Category ? "text" : "email"} placeholder={Category ? "email" : "email"} className="border-[#1b1d2e] border-2 focus:border-[#4b5fe2]" />
+                        <Input type={Category ? "text" : "email"} placeholder={Category ? "email" : "email"} className="caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2]" />
                     </div>
                 ) : ''}
                 {Category === 'register' || Category === 'login' ? (
                     <div className="flex flex-col mb-3">
-                        <Input type="password" placeholder="password" className="border-[#1b1d2e] border-2 focus:border-[#4b5fe2]" />
+                        <Input type="password" placeholder="password" className="caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2]" />
                     </div>
                 ) : ''}
                 {Category === 'login' ? (
@@ -43,6 +43,18 @@ const AuthForm: React.FC<AuthFormProps> = ({ title, buttonText, switchText, swit
                         <a href={switchLink} className="ms-1 text-sm">
                             <p className="text-blue-600">
                                 {Category === 'register' ? 'login' : 'register'}
+                            </p>
+                        </a>
+                    </div>
+                ) : ''}
+                {Category === 'reset-password' ? (
+                    <div className="flex flex-row mt-3">
+                        <p className="text-[#b5b7da] text-sm">
+                            {switchText}
+                        </p>
+                        <a href={switchLink} className="ms-1 text-sm">
+                            <p className="text-blue-600">
+                                login
                             </p>
                         </a>
                     </div>

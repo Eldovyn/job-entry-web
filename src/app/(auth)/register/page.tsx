@@ -8,7 +8,7 @@ const RegisterPage = () => {
                     title="Create Your Account"
                     buttonText="register"
                     switchText="have an account?"
-                    switchLink="register"
+                    switchLink="login"
                     Category={'register'}
                 />
             </div>
