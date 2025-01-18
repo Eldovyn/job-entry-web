@@ -16,22 +16,22 @@ const AuthForm: React.FC<AuthFormProps> = ({ title, buttonText, switchText, swit
             <form action="">
                 {Category === 'register' || Category === 'login' ? (
                     <div className="flex flex-col mb-3 mt-3">
-                        <Input type="text" placeholder="username" className="border-[#1b1d2e] border-2" />
+                        <Input type="text" placeholder="username" className="border-[#1b1d2e] border-2 focus:border-[#4b5fe2]" />
                     </div>
                 ) : ''}
                 {Category === 'register' || Category === 'reset-password' ? (
                     <div className="flex flex-col mb-3">
-                        <Input type={Category ? "text" : "email"} placeholder={Category ? "email" : "email"} className="border-[#1b1d2e] border-2" />
+                        <Input type={Category ? "text" : "email"} placeholder={Category ? "email" : "email"} className="border-[#1b1d2e] border-2 focus:border-[#4b5fe2]" />
                     </div>
                 ) : ''}
                 {Category === 'register' || Category === 'login' ? (
                     <div className="flex flex-col mb-3">
-                        <Input type="password" placeholder="password" className="border-[#1b1d2e] border-2" />
+                        <Input type="password" placeholder="password" className="border-[#1b1d2e] border-2 focus:border-[#4b5fe2]" />
                     </div>
                 ) : ''}
                 {Category === 'login' ? (
                     <div className="flex flex-col mb-3">
-                        <a href="/forgot-password" className="flex justify-end text-[#b5b7da] text-sm">forgot password</a>
+                        <a href="/forgot-password" className="flex justify-end text-[#b5b7da] text-sm focus:text-[#4b5fe2]">forgot password</a>
                     </div>
                 ) : ''}
                 <Button className="bg-[#4b5fe2] hover:bg-[#4558cf] w-full">{buttonText}</Button>
