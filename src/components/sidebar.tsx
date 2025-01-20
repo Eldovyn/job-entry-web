@@ -16,9 +16,8 @@ const SideBar: React.FC = () => {
 
     return (
         <div
-            className={`fixed top-0 left-0 h-screen bg-[#0b0d14] text-white border-r-2 border-[#1f2236] transition-all duration-300 ${
-                isCollapsed ? 'w-20' : 'w-20 sm:w-40 lg:w-72'
-            }`}
+            className={`fixed top-0 left-0 h-screen bg-[#0b0d14] text-white border-r-2 border-[#1f2236] transition-all duration-300 ${isCollapsed ? 'w-20' : 'w-20 sm:w-40 lg:w-72'
+                }`}
         >
             <div className="flex items-center justify-center mt-5 sm:hidden mr-1">
                 <Image src={IconProject} alt="Logo" className="w-[45px]" />
@@ -42,18 +41,16 @@ const SideBar: React.FC = () => {
                 </div>
             </div>
 
-            <ul className="text-white mt-3 ms-1 overflow-hidden">
+            <ul className="text-white mt-3 overflow-hidden">
                 <li>
                     <Link
                         href="/"
                         className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm ${isActive('/')
-                            ? 'border border-primary bg-[#4b5fe2]'
-                            : 'hover:bg-[#1f2236]'
+                            ? 'bg-[#4b5fe2] w-full'
+                            : ''
                             }`}
                     >
-                        <div className="flex items-center justify-center w-6">
-                            <IoHomeOutline size={22} />
-                        </div>
+                        <VscAccount size={22} className="ms-3" />
                         <p className="text-sm hidden sm:block lg:block">Home</p>
                     </Link>
                 </li>
@@ -61,13 +58,11 @@ const SideBar: React.FC = () => {
                     <Link
                         href="/profile"
                         className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm ${isActive('/profile')
-                            ? 'border border-primary bg-[#4b5fe2]'
-                            : 'hover:bg-[#1f2236]'
+                            ? 'bg-[#4b5fe2]'
+                            : ''
                             }`}
                     >
-                        <div className="flex items-center justify-center w-6">
-                            <VscAccount size={22} />
-                        </div>
+                        <IoHomeOutline size={22} className="ms-3" />
                         <p className="text-sm hidden sm:block lg:block">Profile</p>
                     </Link>
                 </li>

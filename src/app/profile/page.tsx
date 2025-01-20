@@ -92,10 +92,10 @@ const Profile = () => {
                                             />
                                         </div>
                                         <div className="flex flex-row justify-center mt-3">
-                                            <div className="border-t-2 rounded-s-sm w-[18rem] border-s-2 border-b-2 border-e-2 border-[#1f2236] px-3 py-1 overflow-hidden whitespace-nowrap text-ellipsis">
+                                            <div className={`border-t-2 rounded-s-sm w-[18rem] border-s-2 border-b-2 border-e-2 ${isDragging ? 'border-[#4b5fe2]' : 'border-[#1f2236]'} px-3 py-1 overflow-hidden whitespace-nowrap text-ellipsis`}>
                                                 <p className="text-white text-md text-center">{fileName}</p>
                                             </div>
-                                            <div className="border-t-2 border-b-2 border-e-2 rounded-e-sm border-[#1f2236] px-3 py-1 flex items-center">
+                                            <div className={`border-t-2 border-b-2 border-e-2 rounded-e-sm ${isDragging ? 'border-[#4b5fe2]' : 'border-[#1f2236]'} px-3 py-1 flex items-center`}>
                                                 <label
                                                     htmlFor="file-upload"
                                                     className="cursor-pointer flex items-center"
