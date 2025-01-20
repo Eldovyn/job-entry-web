@@ -47,7 +47,7 @@ const SideBar: React.FC = () => {
                     <Link
                         href="/"
                         className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm ${isActive('/')
-                            ? 'border border-primary bg-red-700'
+                            ? 'border border-primary bg-[#4b5fe2]'
                             : ''
                             }`}
                     >
