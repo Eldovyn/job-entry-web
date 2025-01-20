@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useState } from "react";
 import SideBar from "@/components/sidebar";
 import Avatar from "../../../public/avatar.jpg";
@@ -7,12 +7,15 @@ import { ImCross } from "react-icons/im";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MdOutlineFileUpload } from "react-icons/md";
+import { Toaster } from "@/components/ui/toaster"
+import { useToast } from "@/hooks/use-toast"
 
 const Profile = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [fileName, setFileName] = useState("File Name");
     const [preview, setPreview] = useState<string | null>(Avatar.src);
     const [isDragging, setIsDragging] = useState(false);
+    const { toast } = useToast()
 
     const openModal = () => setIsOpen(true);
     const closeModal = () => {
@@ -22,7 +25,7 @@ const Profile = () => {
     };
 
     const handleFileChange = (file: File | null) => {
-        if (file) {
+        if (file && file.type.startsWith('image/')) {
             setFileName(file.name);
 
             const reader = new FileReader();
@@ -31,6 +34,13 @@ const Profile = () => {
             };
             reader.readAsDataURL(file);
         } else {
+            if (file) {
+            toast({
+                title: "Failed to upload",
+                description: "Only image files are allowed",
+                variant: "destructive"
+            })
+            }
             setFileName("File Name");
             setPreview(Avatar.src);
         }
@@ -50,7 +60,15 @@ const Profile = () => {
         setIsDragging(false);
 
         const file = event.dataTransfer.files[0];
-        handleFileChange(file);
+        if (file && file.type.startsWith('image/')) {
+            handleFileChange(file);
+        } else {
+            toast({
+                title: "Failed to upload",
+                description: "Only image files are allowed",
+                variant: "destructive"
+            })
+        }
     };
 
     return (
@@ -73,11 +91,7 @@ const Profile = () => {
                                     </div>
 
                                     <div
-                                        className={`p-4 border-2 rounded-sm transition-colors ${
-                                            isDragging
-                                                ? "border-[#4b5fe2] bg-[#1f2236]"
-                                                : "border-[#1f2236]"
-                                        }`}
+                                        className={`p-4 border-2 rounded-sm transition-colors ${isDragging ? "border-[#4b5fe2] bg-[#1f2236]" : "border-[#1f2236]"}`}
                                         onDragOver={handleDragOver}
                                         onDragLeave={handleDragLeave}
                                         onDrop={handleDrop}
@@ -106,9 +120,7 @@ const Profile = () => {
                                                     id="file-upload"
                                                     type="file"
                                                     className="hidden"
-                                                    onChange={(e) =>
-                                                        handleFileChange(e.target.files?.[0] || null)
-                                                    }
+                                                    onChange={(e) => handleFileChange(e.target.files?.[0] || null)}
                                                     accept="image/*"
                                                 />
                                             </div>
@@ -173,6 +185,7 @@ const Profile = () => {
                             </div>
                         </form>
                     </div>
+                    <Toaster />
                 </main>
             </div>
         </>
