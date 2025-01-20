@@ -45,8 +45,8 @@ const SideBar: React.FC = () => {
             <ul className="text-white mt-3 ms-1 overflow-hidden">
                 <li>
                     <Link
-                        href="#"
-                        className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm ${isActive('/dasbor-admin')
+                        href="/"
+                        className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm ${isActive('/')
                             ? 'border border-primary bg-red-700'
                             : ''
                             }`}
@@ -57,7 +57,7 @@ const SideBar: React.FC = () => {
                 </li>
                 <li>
                     <Link
-                        href="#"
+                        href="/profile"
                         className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm ${isActive('/profile')
                             ? 'border border-primary bg-[#4b5fe2]'
                             : ''
