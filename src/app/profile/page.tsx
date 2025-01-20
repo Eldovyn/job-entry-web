@@ -21,7 +21,7 @@ const Profile = () => {
                 <main className="flex-1 ml-20 sm:ml-40 lg:ml-72 p-8 h-screen bg-[#0b0d14] flex items-center justify-center">
                     <div className="bg-[#12141e] md:w-[75%] lg:w-[60%] mx-auto p-5 rounded-md border-[#1f2236] border-2 flex flex-col">
                         {isOpen && (
-                            <div className="fixed inset-0 bg-black backdrop-blur-md bg-opacity-50 flex items-center justify-center z-50">
+                            <div className="fixed inset-0 bg-black backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
                                 <div className="bg-[#12141e] w-full max-w-md rounded-lg shadow-lg relative">
                                     <div className="p-4 border-b-2 border-[#1f2236] relative">
                                         <h2 className="text-xl font-semibold text-white">Upload Avatar</h2>
