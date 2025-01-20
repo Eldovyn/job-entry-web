@@ -11,7 +11,7 @@ const Profile = () => {
             <div className="flex">
                 <SideBar />
                 <main className="flex-1 ml-20 sm:ml-40 lg:ml-72 p-8 h-screen bg-[#0b0d14] flex items-center justify-center">
-                    <div className="bg-[#12141e] w-[50%] mx-auto p-5 rounded-md border-[#1f2236] border-2 flex flex-col">
+                    <div className="bg-[#12141e] md:w-[80%] w-[90%] lg:w-[60%] mx-auto p-5 rounded-md border-[#1f2236] border-2 flex flex-col">
                         <p className="text-lg mb-3 text-white">Profile Picture</p>
                         <Image src={Avatar} alt="User Icon" width={100} height={100} className="rounded-full" />
                         <Button className="bg-[#4b5fe2] hover:bg-[#4558cf] w-[9rem] mt-5 text-sm">Upload Avatar</Button>
