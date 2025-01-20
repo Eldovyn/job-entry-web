@@ -47,7 +47,7 @@ const SideBar: React.FC = () => {
                         href="/"
                         className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm ${isActive('/')
                             ? 'bg-[#4b5fe2] w-full'
-                            : ''
+                            : 'hover:bg-[#1f2236]'
                             }`}
                     >
                         <VscAccount size={22} className="ms-4" />
@@ -59,7 +59,7 @@ const SideBar: React.FC = () => {
                         href="/profile"
                         className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm ${isActive('/profile')
                             ? 'bg-[#4b5fe2]'
-                            : ''
+                            : 'hover:bg-[#1f2236]'
                             }`}
                     >
                         <IoHomeOutline size={22} className="ms-4" />
