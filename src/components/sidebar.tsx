@@ -16,11 +16,11 @@ const SideBar: React.FC = () => {
 
     return (
         <div
-            className={`fixed top-0 left-0 h-screen bg-[#0b0d14] text-white border-r-2 border-[#1f2236] transition-all duration-300 ${isCollapsed ? 'w-20' : 'w-20 sm:w-40 lg:w-72'
+            className={`fixed top-0 left-0 h-screen bg-[#0b0d14] text-white border-r-2 border-[#1f2236] transition-all duration-300 ${isCollapsed ? 'w-13' : 'w-13 sm:w-40 lg:w-72'
                 }`}
         >
             <div className="flex items-center justify-center mt-5 sm:hidden">
-                <Image src={IconProject} alt="Logo" className="w-[45px]" />
+                <Image src={IconProject} alt="Logo" width={35} />
             </div>
 
             <div className="sm:hidden mt-4 border-b-2 border-[#1f2236]" />
@@ -50,7 +50,7 @@ const SideBar: React.FC = () => {
                             : 'hover:bg-[#1f2236]'
                             }`}
                     >
-                        <VscAccount size={22} className="ms-4" />
+                        <VscAccount size={22} className="me-1" />
                         <p className="text-sm hidden sm:block lg:block">Home</p>
                     </Link>
                 </li>
@@ -62,7 +62,7 @@ const SideBar: React.FC = () => {
                             : 'hover:bg-[#1f2236]'
                             }`}
                     >
-                        <IoHomeOutline size={22} className="ms-4" />
+                        <IoHomeOutline size={22} className="me-1" />
                         <p className="text-sm hidden sm:block lg:block">Profile</p>
                     </Link>
                 </li>
