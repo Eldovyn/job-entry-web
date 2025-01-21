@@ -20,15 +20,15 @@ const SideBar: React.FC = () => {
                 }`}
         >
             <div className="flex items-center justify-center mt-5 sm:hidden">
-                <Image src={IconProject} alt="Logo" width={35} />
+                <Image src={IconProject} alt="Logo" width={40} className='me-1' />
             </div>
 
             <div className="sm:hidden mt-4 border-b-2 border-[#1f2236]" />
 
             <div className="hidden sm:block">
                 <div className="flex flex-row mt-3 p-5 justify-center border-b-2 border-[#1f2236]">
-                    <Image src={IconProject} alt="Logo" width={50} />
-                    <p className="ml-1 font-semibold">Eldovyn</p>
+                    <Image src={IconProject} alt="Logo" className='w-[45px] lg:w-[50px]' />
+                    <p className="ml-2 font-semibold md:text-lg lg:text-2xl">Eldovyn</p>
                 </div>
             </div>
 
