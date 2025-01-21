@@ -50,7 +50,7 @@ const SideBar: React.FC = () => {
                             : 'hover:bg-[#1f2236]'
                             }`}
                     >
-                        <VscAccount size={22} className="me-1" />
+                        <IoHomeOutline size={22} className="me-1" />
                         <p className="text-sm hidden sm:block lg:block">Home</p>
                     </Link>
                 </li>
@@ -62,7 +62,7 @@ const SideBar: React.FC = () => {
                             : 'hover:bg-[#1f2236]'
                             }`}
                     >
-                        <IoHomeOutline size={22} className="me-1" />
+                        <VscAccount size={22} className="me-1" />
                         <p className="text-sm hidden sm:block lg:block">Profile</p>
                     </Link>
                 </li>
