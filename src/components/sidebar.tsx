@@ -35,7 +35,7 @@ const SideBar: React.FC = () => {
             <div className="hidden sm:block mt-5">
                 <div className="flex flex-col justify-center border-b-2 border-[#1f2236] pb-5">
                     <div className="flex flex-col mb-3 ms-1 items-center justify-center">
-                        <Image src={Avatar} alt="User Icon" width={50} height={50} className="rounded-full" />
+                        <Image src={Avatar} alt="User Icon" width={65} height={65} className="rounded-full" />
                     </div>
                     <p className="ml-1 text-sm text-center">Andana Farras Pramudita</p>
                 </div>
