@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import SideBar from "@/components/sidebar";
@@ -26,189 +26,58 @@ const Home = () => {
   useEffect(() => {
     if (isNaN(page) || page < 0) {
       router.push("?page=0");
-      return;
     }
   }, [page]);
 
+  const formFields = [
+    [
+      { id: "name", label: "Name", placeholder: "Enter your name" },
+      { id: "noHp", label: "No HP", placeholder: "Enter your no hp" },
+      { id: "tempatLahir", label: "Tempat Lahir", placeholder: "Enter your tempat lahir" },
+      { id: "tanggalLahir", label: "Tanggal Lahir", component: <DatePickerDemo /> },
+      {
+        id: "jenisKelamin",
+        label: "Jenis Kelamin",
+        component: (
+          <Select>
+            <SelectTrigger className="w-full text-white caret-white border-[#1b1d2e] border-2 active:border-[#4b5fe2]">
+              <SelectValue placeholder="jenis kelamin" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="male">Laki Laki</SelectItem>
+              <SelectItem value="female">Perempuan</SelectItem>
+            </SelectContent>
+          </Select>
+        ),
+      },
+    ],
+    [
+      { id: "npm", label: "NPM", placeholder: "Enter your npm" },
+      { id: "kelas", label: "Kelas", placeholder: "Enter your kelas" },
+      { id: "lokasiKampus", label: "Lokasi Kampus", placeholder: "Enter your lokasi kampus" },
+    ],
+    [
+      { id: "tempatLahir", label: "Tempat Lahir", placeholder: "Enter your tempat lahir" },
+      { id: "tanggalLahir", label: "Tanggal Lahir", component: <DatePickerDemo /> },
+    ],
+  ];
+
   const renderFormPage = () => {
-    switch (page) {
-      case 0:
-        return (
-          <>
-            <div className="flex flex-col">
-              <label htmlFor="name" className="text-sm font-semibold text-white mb-2">
-                Name
-              </label>
-              <Input
-                type="text"
-                id="name"
-                placeholder="Enter your name"
-                className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2]"
-              />
-            </div>
-            <div className="flex flex-col">
-              <label htmlFor="noHp" className="text-sm font-semibold text-white mb-2">
-                No HP
-              </label>
-              <Input
-                type="text"
-                id="noHp"
-                placeholder="Enter your no hp"
-                className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2]"
-              />
-            </div>
-            <div className="flex flex-col mt-2">
-              <label htmlFor="tempatLahir" className="text-sm font-semibold text-white mb-2">
-                Tempat Lahir
-              </label>
-              <Input
-                type="text"
-                id="tempatLahir"
-                placeholder="Enter your tempat lahir"
-                className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2]"
-              />
-            </div>
-            <div className="flex flex-col mt-2">
-              <label htmlFor="tanggalLahir" className="text-sm font-semibold text-white mb-2">
-                Tanggal Lahir
-              </label>
-              <DatePickerDemo />
-            </div>
-            <div className="flex flex-col mt-2">
-              <label htmlFor="tanggalLahir" className="text-sm font-semibold text-white mb-2">
-                Jenis Kelamin
-              </label>
-              <Select>
-                <SelectTrigger className="w-full text-white caret-white border-[#1b1d2e] border-2 active:border-[#4b5fe2]">
-                  <SelectValue placeholder="jenis kelamin" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="light">Laki Laki</SelectItem>
-                  <SelectItem value="dark">Perempuan</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </>
-        );
-      case 1:
-        return (
-          <>
-            <div className="flex flex-col mt-2">
-              <label htmlFor="npm" className="text-sm font-semibold text-white mb-2">
-                NPM
-              </label>
-              <Input
-                type="text"
-                id="npm"
-                placeholder="Enter your npm"
-                className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2]"
-              />
-            </div>
-            <div className="flex flex-col mt-2">
-              <label htmlFor="kelas" className="text-sm font-semibold text-white mb-2">
-                Kelas
-              </label>
-              <Input
-                type="text"
-                id="kelas"
-                placeholder="Enter your kelas"
-                className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2]"
-              />
-            </div>
-            <div className="flex flex-col mt-2">
-              <label htmlFor="lokasiKampus" className="text-sm font-semibold text-white mb-2">
-                Lokasi Kampus
-              </label>
-              <Input
-                type="text"
-                id="lokasiKampus"
-                placeholder="Enter your lokasi kampus"
-                className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2]"
-              />
-            </div>
-          </>
-        );
-      case 2:
-        return (
-          <>
-            <div className="flex flex-col mt-2">
-              <label htmlFor="tempatLahir" className="text-sm font-semibold text-white mb-2">
-                Tempat Lahir
-              </label>
-              <Input
-                type="text"
-                id="tempatLahir"
-                placeholder="Enter your tempat lahir"
-                className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2]"
-              />
-            </div>
-            <div className="flex flex-col mt-2">
-              <label htmlFor="tanggalLahir" className="text-sm font-semibold text-white mb-2">
-                Tanggal Lahir
-              </label>
-              <DatePickerDemo />
-            </div>
-          </>
-        );
-      default:
-        return (
-          <>
-            <div className="flex flex-col">
-              <label htmlFor="name" className="text-sm font-semibold text-white mb-2">
-                Name
-              </label>
-              <Input
-                type="text"
-                id="name"
-                placeholder="Enter your name"
-                className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2]"
-              />
-            </div>
-            <div className="flex flex-col">
-              <label htmlFor="noHp" className="text-sm font-semibold text-white mb-2">
-                No HP
-              </label>
-              <Input
-                type="text"
-                id="noHp"
-                placeholder="Enter your no hp"
-                className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2]"
-              />
-            </div>
-            <div className="flex flex-col mt-2">
-              <label htmlFor="tempatLahir" className="text-sm font-semibold text-white mb-2">
-                Tempat Lahir
-              </label>
-              <Input
-                type="text"
-                id="tempatLahir"
-                placeholder="Enter your tempat lahir"
-                className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2]"
-              />
-            </div>
-            <div className="flex flex-col mt-2">
-              <label htmlFor="tanggalLahir" className="text-sm font-semibold text-white mb-2">
-                Tanggal Lahir
-              </label>
-              <DatePickerDemo />
-            </div>
-            <div className="flex flex-col mt-2">
-              <label htmlFor="tanggalLahir" className="text-sm font-semibold text-white mb-2">
-                Jenis Kelamin
-              </label>
-              <Select>
-                <SelectTrigger className="w-full text-white caret-white border-[#1b1d2e] border-2 active:border-[#4b5fe2]">
-                  <SelectValue placeholder="jenis kelamin" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="light">Laki Laki</SelectItem>
-                  <SelectItem value="dark">Perempuan</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </>
-        );
-    }
+    return formFields[page]?.map((field) => (
+      <div className="flex flex-col mt-2" key={field.id}>
+        <label htmlFor={field.id} className="text-sm font-semibold text-white mb-2">
+          {field.label}
+        </label>
+        {field.component || (
+          <Input
+            type="text"
+            id={field.id}
+            placeholder={field.placeholder}
+            className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2]"
+          />
+        )}
+      </div>
+    ));
   };
 
   return (
@@ -231,8 +100,7 @@ const Home = () => {
                 <PaginationItem key={pg}>
                   <PaginationLink
                     href={`?page=${pg}`}
-                    className={`${pg === page ? "bg-gray-600 hover:bg-gray-700" : "bg-[#4b5fe2] hover:bg-[#4b5fe2]"
-                      } text-white hover:text-white bg-[#4b5fe2] hover:bg-[#4b5fe2]`}
+                    className={`${pg === page ? "bg-gray-600 hover:bg-gray-700" : "bg-[#4b5fe2] hover:bg-[#4b5fe2]"} text-white hover:text-white`}
                   >
                     {pg + 1}
                   </PaginationLink>
