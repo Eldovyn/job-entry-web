@@ -1,9 +1,10 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import SideBar from "@/components/sidebar";
 import { Input } from "@/components/ui/input";
 import { DatePickerDemo } from "@/components/ui/datePicker";
+import { MdOutlineFileUpload } from "react-icons/md";
 import {
   Select,
   SelectContent,
@@ -18,6 +19,10 @@ import {
   PaginationLink,
 } from "@/components/ui/pagination";
 
+interface InputFileProps {
+  placholder: string
+}
+
 const Home = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -29,36 +34,112 @@ const Home = () => {
     }
   }, [page]);
 
+  const InputFile: React.FC<InputFileProps> = ({ placholder }) => {
+    const [fileName, setFileName] = useState(placholder)
+
+    const [isDragging, setIsDragging] = useState(false);
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        setFileName(file.name);
+        console.log("Selected file:", file.name);
+      }
+    };
+
+    const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
+      e.preventDefault();
+      setIsDragging(false);
+
+      const file = e.dataTransfer.files?.[0];
+      if (file) {
+        setFileName(file.name);
+        console.log("Dropped file:", file.name);
+      }
+    };
+
+    const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
+      e.preventDefault();
+      setIsDragging(true);
+    };
+
+    const handleDragLeave = () => {
+      setIsDragging(false);
+    };
+
+    return (
+      <div className="flex flex-row">
+        <div className="border-[#1b1d2e] border-t-2 border-s-2 w-[9rem] rounded-s-md border-b-2 focus:border-[#4b5fe2] h-9 text-[#71717a] flex items-center overflow-hidden whitespace-nowrap">
+          <p className="ms-3 text-ellipsis overflow-hidden">{fileName}</p>
+        </div>
+
+        <label
+          className={`border-[#1b1d2e] border-s-2 border-e-2 border-t-2 border-b-2 rounded-e-md w-[3rem] focus:border-[#4b5fe2] flex items-center justify-center cursor-pointer ${isDragging ? "bg-[#4b5fe2]" : ""
+            }`}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+          onDragLeave={handleDragLeave}
+        >
+          <MdOutlineFileUpload className="text-white" size={25} />
+          <input
+            type="file"
+            className="hidden"
+            accept="application/pdf"
+            onChange={handleFileChange}
+          />
+        </label>
+      </div>
+    );
+  };
+
   const formFields = [
     [
-      { id: "name", label: "Name", placeholder: "Enter your name" },
-      { id: "noHp", label: "No HP", placeholder: "Enter your no hp" },
-      { id: "tempatLahir", label: "Tempat Lahir", placeholder: "Enter your tempat lahir" },
+      { id: "name", label: "Name", placeholder: "name" },
+      { id: "noHp", label: "No HP", placeholder: "no hp" },
+      { id: "tempatLahir", label: "Tempat Lahir", placeholder: "tempat lahir" },
       { id: "tanggalLahir", label: "Tanggal Lahir", component: <DatePickerDemo /> },
       {
         id: "jenisKelamin",
         label: "Jenis Kelamin",
         component: (
           <Select>
-            <SelectTrigger className="w-full text-white caret-white border-[#1b1d2e] border-2 active:border-[#4b5fe2]">
+            <SelectTrigger className="w-full text-[#71717a] caret-white border-[#1b1d2e] border-2 active:border-[#4b5fe2]">
               <SelectValue placeholder="jenis kelamin" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="male">Laki Laki</SelectItem>
-              <SelectItem value="female">Perempuan</SelectItem>
+              <SelectItem value="male" key="male">Laki Laki</SelectItem>
+              <SelectItem value="female" key="female">Perempuan</SelectItem>
             </SelectContent>
           </Select>
         ),
       },
     ],
     [
-      { id: "npm", label: "NPM", placeholder: "Enter your npm" },
-      { id: "kelas", label: "Kelas", placeholder: "Enter your kelas" },
-      { id: "lokasiKampus", label: "Lokasi Kampus", placeholder: "Enter your lokasi kampus" },
+      { id: "npm", label: "NPM", placeholder: "npm" },
+      { id: "kelas", label: "Kelas", placeholder: "kelas" },
+      {
+        id: "lokasiKampus", label: "Lokasi Kampus", component: (
+          <Select>
+            <SelectTrigger className="w-full text-[#71717a] caret-white border-[#1b1d2e] border-2 active:border-[#4b5fe2]">
+              <SelectValue placeholder="lokasi kampus" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="depok">Depok</SelectItem>
+              <SelectItem value="karawaci">Karawaci</SelectItem>
+              <SelectItem value="bekasi">Bekasi</SelectItem>
+            </SelectContent>
+          </Select>
+        ),
+      },
     ],
     [
-      { id: "tempatLahir", label: "Tempat Lahir", placeholder: "Enter your tempat lahir" },
-      { id: "tanggalLahir", label: "Tanggal Lahir", component: <DatePickerDemo /> },
+      { id: "CV", label: "CV", component: <InputFile placholder="cv" /> },
+      { id: "KRS", label: "KRS", component: <InputFile placholder="krs" /> },
+      { id: "pasFoto", label: "Pas Foto", component: <InputFile placholder="pas foto" /> },
+      { id: "KTM", label: "KTM", component: <InputFile placholder="KTM" /> },
+      { id: "KTP", label: "KTP", component: <InputFile placholder="KTP" /> },
+      { id: "rangkumanNilai", label: "Rangkuman Nilai", component: <InputFile placholder="rangkuman nilai" /> },
+      { id: "certificate", label: "Certificate", component: <InputFile placholder="certificate" /> },
     ],
   ];
 
@@ -72,7 +153,7 @@ const Home = () => {
           <Input
             type="text"
             id={field.id}
-            placeholder={field.placeholder}
+            placeholder={field?.placeholder}
             className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2]"
           />
         )}
