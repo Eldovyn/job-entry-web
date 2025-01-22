@@ -18,6 +18,7 @@ import {
   PaginationItem,
   PaginationLink,
 } from "@/components/ui/pagination";
+import { Button } from "@/components/ui/button";
 
 interface InputFileProps {
   placholder: string
@@ -144,8 +145,8 @@ const Home = () => {
   ];
 
   const renderFormPage = () => {
-    return formFields[page]?.map((field) => (
-      <div className="flex flex-col mt-2" key={field.id}>
+    return formFields[page]?.map((field, index) => (
+      <div className="flex flex-col" key={index}>
         <label htmlFor={field.id} className="text-sm font-semibold text-white mb-2">
           {field.label}
         </label>
@@ -166,7 +167,17 @@ const Home = () => {
       <SideBar />
       <main className="flex-1 ml-20 sm:ml-40 lg:ml-72 p-8 h-screen bg-[#0b0d14] flex items-center justify-center">
         <div className="bg-[#12141e] md:w-[75%] lg:w-[60%] w-[85%] mx-auto p-5 rounded-md border-[#1f2236] border-2 flex flex-col">
-          <form>{renderFormPage()}</form>
+          <form>
+            {renderFormPage()}
+            <div className="flex justify-end border-b-2 border-[#1f2236] pb-3">
+              <Button
+                type="submit"
+                className="mt-3 bg-[#4b5fe2] text-white hover:bg-[#4b5fe2] hover:text-white w-[7rem]"
+              >
+                Submit
+              </Button>
+            </div>
+          </form>
           <Pagination className="mt-3">
             <PaginationContent>
               <PaginationItem>
