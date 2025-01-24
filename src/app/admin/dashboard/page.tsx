@@ -11,6 +11,10 @@ const Dashboard = () => {
         query: '(max-width: 640px)'
     })
 
+    const isUltraMobile = useMediaQuery({
+        query: '(max-width: 320px)'
+    })
+
     return (
         <>
             <div className="h-screen bg-[#0b0d14] flex items-center justify-center">
@@ -39,9 +43,9 @@ const Dashboard = () => {
                                 </Button>
                             </>) : ''}
                     </div>
-                    {isMobile ? (
+                    {isMobile || isUltraMobile ? (
                         <>
-                            <Button className="bg-[#4b5fe2] hover:bg-[#4558cf] mt-3 lg:w-[10%] md:w-[20%] w-[30%] h-[2.05rem]">
+                            <Button className={`bg-[#4b5fe2] hover:bg-[#4558cf] mt-3 lg:w-[10%] md:w-[20%] ${isMobile ? 'w-[30%]' : ''} ${isUltraMobile ? 'w-[70%]' : ''} h-[2.05rem]`}>
                                 <div className="flex flex-row">
                                     <IoExitOutline className="text-white pt-1 pe-1" />
                                     <p className="text-white">Logout</p>
