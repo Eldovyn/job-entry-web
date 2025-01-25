@@ -29,19 +29,19 @@ const Dashboard = () => {
 
     const isMobile = useMediaQuery({
         query: '(max-width: 640px) and (min-width: 320px)'
-    })
+    });
 
     const isUltraMobile = useMediaQuery({
         query: '(max-width: 320px)'
-    })
+    });
 
     const isTablet = useMediaQuery({
         query: '(min-width: 640px) and (max-width: 1024px)'
-    })
+    });
 
     const isDesktop = useMediaQuery({
         query: '(min-width: 1024px)'
-    })
+    });
 
     if (!isClient) {
         return null;
@@ -64,8 +64,8 @@ const Dashboard = () => {
             tempatLahir: "Bandung",
             tanggalLahir: "01-01-2000",
             jenisKelamin: "Laki-laki",
-            npm: "20201001",
-            kelas: "TI-2A",
+            npm: "20201002",
+            kelas: "TI-2B",
             lokasiKampus: "Bandung",
         },
         {
@@ -74,11 +74,11 @@ const Dashboard = () => {
             tempatLahir: "Bandung",
             tanggalLahir: "01-01-2000",
             jenisKelamin: "Laki-laki",
-            npm: "20201001",
-            kelas: "TI-2A",
+            npm: "20201003",
+            kelas: "TI-2C",
             lokasiKampus: "Bandung",
         }
-    ]
+    ];
 
     return (
         <>
@@ -130,8 +130,8 @@ const Dashboard = () => {
                                     </tr>
                                 </thead>
                                 <tbody className="text-center">
-                                    {dataMahasiswa.map((mahasiswa, index) => (
-                                        <tr key={index}>
+                                    {dataMahasiswa.map((mahasiswa) => (
+                                        <tr key={mahasiswa.npm}>
                                             <td className="border-2 border-[#1f2236] px-4 py-2">
                                                 <div className="flex flex-row justify-center">
                                                     <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] me-1">
@@ -154,29 +154,27 @@ const Dashboard = () => {
                             </table>
                         </>) : ''}
                     {isTablet && !isDesktop ? (
-                        dataMahasiswa.map((mahasiswa, index) => (
-                            <>
-                                <div className="border rounded-md border-[#1f2236] mt-2 p-3 flex justify-between items-center text-white">
-                                    <div className="flex flex-row justify-center" key={index}>
-                                        <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] me-1">
-                                            <MdDelete className="cursor-pointer text-red-500" size={20} />
-                                        </div>
-                                        <Link href={`/admin/dashboard/${mahasiswa.npm}`}>
-                                            <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] ms-1">
-                                                <FaExternalLinkAlt className="cursor-pointer text-white" size={20} />
-                                            </div>
-                                        </Link>
+                        dataMahasiswa.map((mahasiswa) => (
+                            <div className="border rounded-md border-[#1f2236] mt-2 p-3 flex justify-between items-center text-white" key={mahasiswa.npm}>
+                                <div className="flex flex-row justify-center">
+                                    <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] me-1">
+                                        <MdDelete className="cursor-pointer text-red-500" size={20} />
                                     </div>
-                                    <p className="text-center">{mahasiswa.name}</p>
-                                    <p className="text-center">{mahasiswa.npm}</p>
+                                    <Link href={`/admin/dashboard/${mahasiswa.npm}`}>
+                                        <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] ms-1">
+                                            <FaExternalLinkAlt className="cursor-pointer text-white" size={20} />
+                                        </div>
+                                    </Link>
                                 </div>
-                            </>
+                                <p className="text-center">{mahasiswa.name}</p>
+                                <p className="text-center">{mahasiswa.npm}</p>
+                            </div>
                         ))
                     ) : ''}
                 </div>
             </div>
         </>
-    )
+    );
 };
 
 export default Dashboard;
