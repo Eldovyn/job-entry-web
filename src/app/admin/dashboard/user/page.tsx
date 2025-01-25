@@ -33,31 +33,31 @@ const DashboardUser = () => {
                             <label htmlFor='noHp' className="text-sm font-semibold text-white mb-2">
                                 Name
                             </label>
-                            <p className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2] h-9 w-[35%] flex items-center px-3 py-1 rounded-md">{dataMahasiswa.name}</p>
+                            <p className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2] h-9 md:w-[50%] lg:w-[35%] sm:w-[70%] flex items-center px-3 py-1 rounded-md">{dataMahasiswa.name}</p>
                         </div>
                         <div className="flex flex-col">
                             <label htmlFor='noHp' className="text-sm font-semibold text-white mb-2">
                                 No HP
                             </label>
-                            <p className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2] h-9 w-[35%] flex items-center px-3 py-1 rounded-md">{dataMahasiswa.noHp}</p>
+                            <p className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2] h-9 md:w-[50%] lg:w-[35%] sm:w-[70%] flex items-center px-3 py-1 rounded-md">{dataMahasiswa.noHp}</p>
                         </div>
                         <div className="flex flex-col">
                             <label htmlFor='noHp' className="text-sm font-semibold text-white mb-2">
                                 Tempat Lahir
                             </label>
-                            <p className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2] h-9 w-[35%] flex items-center px-3 py-1 rounded-md">{dataMahasiswa.tempatLahir}</p>
+                            <p className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2] h-9 md:w-[50%] lg:w-[35%] sm:w-[70%] flex items-center px-3 py-1 rounded-md">{dataMahasiswa.tempatLahir}</p>
                         </div>
                         <div className="flex flex-col">
                             <label htmlFor='noHp' className="text-sm font-semibold text-white mb-2">
                                 Tanggal Lahir
                             </label>
-                            <p className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2] h-9 w-[35%] flex items-center px-3 py-1 rounded-md">{dataMahasiswa.tanggalLahir}</p>
+                            <p className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2] h-9 md:w-[50%] lg:w-[35%] sm:w-[70%] flex items-center px-3 py-1 rounded-md">{dataMahasiswa.tanggalLahir}</p>
                         </div>
                         <div className="flex flex-col">
                             <label htmlFor='noHp' className="text-sm font-semibold text-white mb-2">
                                 Jenis Kelamin
                             </label>
-                            <p className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2] h-9 w-[35%] flex items-center px-3 py-1 rounded-md">{dataMahasiswa.jenisKelamin}</p>
+                            <p className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2] h-9 md:w-[50%] lg:w-[35%] sm:w-[70%] flex items-center px-3 py-1 rounded-md">{dataMahasiswa.jenisKelamin}</p>
                         </div>
                     </div>
                 </div>
