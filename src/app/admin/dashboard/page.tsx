@@ -153,10 +153,10 @@ const Dashboard = () => {
                                 </tbody>
                             </table>
                         </>) : ''}
-                    {isTablet ? (
+                    {isTablet && !isDesktop ? (
                         dataMahasiswa.map((mahasiswa, index) => (
                             <>
-                                <div className="border rounded-md border-[#1f2236] mt-2 p-3 flex justify-between items-center text-white">
+                                <div className="border rounded-md border-[#1f2236] mt-2 p-3 flex justify-between items-center text-white" key={index}>
                                     <div className="flex flex-row justify-center">
                                         <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] me-1">
                                             <MdDelete className="cursor-pointer text-red-500" size={20} />
