@@ -100,7 +100,7 @@ const Dashboard = () => {
                         </div>
                         {!isMobile && !isUltraMobile ? (
                             <>
-                                <Button className="bg-[#4b5fe2] hover:bg-[#4558cf] ms-3 lg:w-[10%] md:w-[20%] w-[30%] h-[2.2rem]">
+                                <Button className="bg-[#4b5fe2] hover:bg-[#4558cf] ms-3 h-[2.2rem]">
                                     <div className="flex flex-row">
                                         <IoExitOutline className="text-white pt-1 pe-1" />
                                         <p className="text-white">Logout</p>
