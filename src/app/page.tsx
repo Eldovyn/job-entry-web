@@ -5,6 +5,7 @@ import { MdOutlineFileUpload } from "react-icons/md";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import TabletDesktop from "@/layout/home/tabletDesktop";
+import MobileHome from "@/layout/home/mobile";
 
 interface UseFileUploadReturn {
   fileName: string;
@@ -135,6 +136,12 @@ const Home = () => {
   if (!isMobile && !isUltraMobile) {
     return (
       <TabletDesktop page={page} />
+    );
+  }
+
+  if (isMobile || isUltraMobile) {
+    return (
+      <MobileHome />
     );
   }
 };
