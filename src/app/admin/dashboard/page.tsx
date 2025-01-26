@@ -171,6 +171,30 @@ const Dashboard = () => {
                             </div>
                         ))
                     ) : ''}
+                    {isMobile && (
+                        dataMahasiswa.map((mahasiswa) => (
+                            <div className="border rounded-md border-[#1f2236] mt-2 p-3 flex justify-between items-center text-white" key={mahasiswa.npm}>
+                                <div className="flex flex-row justify-center">
+                                    <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] me-1">
+                                        <MdDelete className="cursor-pointer text-red-500" size={20} />
+                                    </div>
+                                    <Link href={`/admin/dashboard/${mahasiswa.npm}`}>
+                                        <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] ms-1">
+                                            <FaExternalLinkAlt className="cursor-pointer text-white" size={20} />
+                                        </div>
+                                    </Link>
+                                </div>
+                                <p className="text-center">{mahasiswa.name}</p>
+                            </div>
+                        ))
+                    )}
+                    {!isMobile && !isTablet && !isDesktop && (dataMahasiswa.map((mahasiswa) => (
+                        <div className="border rounded-md border-[#1f2236] mt-2 p-3 flex justify-between items-center text-white" key={mahasiswa.npm}>
+                            <Link href={`/admin/dashboard/${mahasiswa.npm}`}>
+                                <p className="text-center">{mahasiswa.name}</p>
+                            </Link>
+                        </div>
+                    )))}
                 </div>
             </div>
         </>
