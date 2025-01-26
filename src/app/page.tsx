@@ -176,7 +176,7 @@ const Home = () => {
 
   const renderFormPage = () => {
     return formFields[page]?.map((field, index) => (
-      <div className="flex flex-col gap-3 mt-3 mb-3" key={index}>
+      <div className="flex flex-col gap-2 pb-1" key={index}>
         <label htmlFor={field.id} className="text-sm font-semibold text-white">
           {field.label}
         </label>
