@@ -176,8 +176,8 @@ const Home = () => {
 
   const renderFormPage = () => {
     return formFields[page]?.map((field, index) => (
-      <div className="flex flex-col" key={index}>
-        <label htmlFor={field.id} className="text-sm font-semibold text-white mb-2">
+      <div className="flex flex-col gap-3 mt-3 mb-3" key={index}>
+        <label htmlFor={field.id} className="text-sm font-semibold text-white">
           {field.label}
         </label>
         {field.component || (
@@ -195,7 +195,7 @@ const Home = () => {
   return (
     <div className="flex bg-[#0b0d14]">
       <SideBar />
-      <main className="flex-1 ml-20 sm:ml-40 lg:ml-72 p-8 h-screen bg-[#0b0d14] flex items-center justify-center">
+      <main className="flex-1 ml-20 sm:ml-40 lg:ml-72 p-8 min-h-screen bg-[#0b0d14] flex items-center justify-center">
         <div className="bg-[#12141e] md:w-[75%] lg:w-[60%] w-[85%] mx-auto p-5 rounded-md border-[#1f2236] border-2 flex flex-col">
           <form>
             {renderFormPage()}
