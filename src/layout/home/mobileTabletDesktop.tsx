@@ -18,11 +18,12 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import { InputFile } from "@/app/page";
 
-interface TabletDesktopProps {
+interface MobileTabletDesktopHomeProps {
     page: number;
+    isMobile: boolean;
 }
 
-const TabletDesktop: React.FC<TabletDesktopProps> = ({ page }) => {
+const MobileTabletDesktopHome: React.FC<MobileTabletDesktopHomeProps> = ({ page, isMobile }) => {
     const formFields = [
         [
             { id: "name", label: "Name", placeholder: "name" },
@@ -121,16 +122,25 @@ const TabletDesktop: React.FC<TabletDesktopProps> = ({ page }) => {
                                         Previous
                                     </PaginationLink>
                                 </PaginationItem>
-                                {[0, 1, 2].map((pg) => (
-                                    <PaginationItem key={pg}>
+                                {!isMobile ? (
+                                    [0, 1, 2].map((pg) => (
+                                        <PaginationItem key={pg}>
+                                            <PaginationLink
+                                                href={`?page=${pg}`}
+                                                className={`${pg === page ? "bg-gray-600 hover:bg-gray-700" : "bg-[#4b5fe2] hover:bg-[#4b5fe2]"} text-white hover:text-white`}
+                                            >
+                                                {pg + 1}
+                                            </PaginationLink>
+                                        </PaginationItem>
+                                    ))) : (
+                                    <PaginationItem>
                                         <PaginationLink
-                                            href={`?page=${pg}`}
-                                            className={`${pg === page ? "bg-gray-600 hover:bg-gray-700" : "bg-[#4b5fe2] hover:bg-[#4b5fe2]"} text-white hover:text-white`}
+                                            href={`?page=${page}`}
+                                            className={`${page === page ? "bg-gray-600 hover:bg-gray-700" : "bg-[#4b5fe2] hover:bg-[#4b5fe2]"} text-white hover:text-white`}
                                         >
-                                            {pg + 1}
+                                            {page + 1}
                                         </PaginationLink>
-                                    </PaginationItem>
-                                ))}
+                                    </PaginationItem>)}
                                 <PaginationItem>
                                     <PaginationLink
                                         href={`?page=${Math.min(2, page + 1)}`}
@@ -148,4 +158,4 @@ const TabletDesktop: React.FC<TabletDesktopProps> = ({ page }) => {
     )
 }
 
-export default TabletDesktop
+export default MobileTabletDesktopHome

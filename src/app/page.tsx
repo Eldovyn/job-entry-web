@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import TabletDesktop from "@/layout/home/tabletDesktop";
+import MobileTabletDesktopHome from "@/layout/home/mobileTabletDesktop";
 import MobileHome from "@/layout/home/mobile";
 
 interface UseFileUploadReturn {
@@ -108,11 +108,11 @@ const Home = () => {
   }, []);
 
   const isMobile = useMediaQuery({
-    query: '(max-width: 640px) and (min-width: 320px)'
+    query: '(max-width: 640px) and (min-width: 440px)'
   });
 
   const isUltraMobile = useMediaQuery({
-    query: '(max-width: 320px)'
+    query: '(max-width: 440px)'
   });
 
   const isTablet = useMediaQuery({
@@ -133,13 +133,13 @@ const Home = () => {
     return null;
   }
 
-  if (!isMobile && !isUltraMobile) {
+  if (isDesktop || isTablet || isMobile) {
     return (
-      <TabletDesktop page={page} />
+      <MobileTabletDesktopHome page={page} isMobile={isMobile} />
     );
   }
 
-  if (isMobile || isUltraMobile) {
+  if (isUltraMobile) {
     return (
       <MobileHome />
     );
