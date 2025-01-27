@@ -1,4 +1,4 @@
-import SideBar from "@/components/sidebar";
+import NavBar from "@/components/navbar";
 import { Input } from "@/components/ui/input";
 import { DatePickerDemo } from "@/components/ui/datePicker";
 import {
@@ -86,6 +86,7 @@ const MobileHome: React.FC = () => {
 
     return (
         <>
+            <NavBar />
             <main className="min-h-screen bg-[#0b0d14] flex items-center justify-center p-5">
                     <div className="bg-[#12141e] md:w-[75%] lg:w-[60%] w-[85%] mx-auto p-5 rounded-md border-[#1f2236] border-2 flex flex-col">
                         <form>
