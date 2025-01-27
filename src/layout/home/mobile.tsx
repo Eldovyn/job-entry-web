@@ -86,9 +86,7 @@ const MobileHome: React.FC = () => {
 
     return (
         <>
-            <div className="flex bg-[#0b0d14]">
-                <SideBar category="user"/>
-                <main className="flex-1 ml-20 sm:ml-40 lg:ml-72 p-8 min-h-screen bg-[#0b0d14] flex items-center justify-center">
+            <main className="min-h-screen bg-[#0b0d14] flex items-center justify-center p-5">
                     <div className="bg-[#12141e] md:w-[75%] lg:w-[60%] w-[85%] mx-auto p-5 rounded-md border-[#1f2236] border-2 flex flex-col">
                         <form>
                             {renderFormFields()}
@@ -102,8 +100,7 @@ const MobileHome: React.FC = () => {
                             </div>
                         </form>
                     </div>
-                </main>
-            </div>
+            </main>
         </>
     );
 };
