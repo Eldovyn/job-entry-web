@@ -8,7 +8,11 @@ import { VscAccount } from "react-icons/vsc";
 import IconProject from '../../public/IconRemoverBg.png';
 import Avatar from '../../public/avatar.jpg';
 
-const SideBar: React.FC = () => {
+interface SideBarProps {
+    category: string;
+}
+
+const SideBar: React.FC<SideBarProps> = ({ category }) => {
     const pathname = usePathname();
     const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -42,30 +46,34 @@ const SideBar: React.FC = () => {
             </div>
 
             <ul className="text-white mt-3 overflow-hidden">
-                <li>
-                    <Link
-                        href="/"
-                        className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm ${isActive('/')
-                            ? 'bg-[#4b5fe2] w-full'
-                            : 'hover:bg-[#1f2236]'
-                            }`}
-                    >
-                        <IoHomeOutline size={22} className="me-1" />
-                        <p className="text-sm hidden sm:block lg:block">Home</p>
-                    </Link>
-                </li>
-                <li>
-                    <Link
-                        href="/profile"
-                        className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm ${isActive('/profile')
-                            ? 'bg-[#4b5fe2]'
-                            : 'hover:bg-[#1f2236]'
-                            }`}
-                    >
-                        <VscAccount size={22} className="me-1" />
-                        <p className="text-sm hidden sm:block lg:block">Profile</p>
-                    </Link>
-                </li>
+                {category === 'user' && (
+                    <>
+                        <li>
+                            <Link
+                                href="/"
+                                className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm ${isActive('/')
+                                    ? 'bg-[#4b5fe2] w-full'
+                                    : 'hover:bg-[#1f2236]'
+                                    }`}
+                            >
+                                <IoHomeOutline size={22} className="me-1" />
+                                <p className="text-sm hidden sm:block lg:block">Home</p>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href="/profile"
+                                className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm ${isActive('/profile')
+                                    ? 'bg-[#4b5fe2]'
+                                    : 'hover:bg-[#1f2236]'
+                                    }`}
+                            >
+                                <VscAccount size={22} className="me-1" />
+                                <p className="text-sm hidden sm:block lg:block">Profile</p>
+                            </Link>
+                        </li>
+                    </>
+                )}
             </ul>
         </div>
     );

@@ -98,7 +98,7 @@ const MobileTabletDesktopHome: React.FC<MobileTabletDesktopHomeProps> = ({ page,
     return (
         <>
             <div className="flex bg-[#0b0d14]">
-                <SideBar />
+                <SideBar category="user"/>
                 <main className="flex-1 ml-20 sm:ml-40 lg:ml-72 p-8 min-h-screen bg-[#0b0d14] flex items-center justify-center">
                     <div className="bg-[#12141e] md:w-[75%] lg:w-[60%] w-[85%] mx-auto p-5 rounded-md border-[#1f2236] border-2 flex flex-col">
                         <p className="text-white text-2xl font-semibold text-center border-b-2 border-[#1f2236] mb-3 pb-3">Batch 1</p>
