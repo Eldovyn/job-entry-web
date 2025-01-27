@@ -23,8 +23,8 @@ const Dashboard = () => {
     const [isClient, setIsClient] = useState(false);
 
     const isDesktop = useMediaQuery({ minWidth: 1025 });
-    const isTablet = useMediaQuery({ minWidth: 641, maxWidth: 1024 });
-    const isMobile = useMediaQuery({ minWidth: 321, maxWidth: 640 });
+    const isTablet = useMediaQuery({ minWidth: 807, maxWidth: 1024 });
+    const isMobile = useMediaQuery({ minWidth: 321, maxWidth: 806 });
     const isUltraMobile = useMediaQuery({ maxWidth: 320 });
 
     useEffect(() => {
@@ -72,8 +72,8 @@ const Dashboard = () => {
         <div className="flex bg-[#0b0d14]">
             <SideBar category="admin" />
             <main className="flex-1 ml-20 sm:ml-40 lg:ml-72 p-8 min-h-screen bg-[#0b0d14] flex items-center justify-center">
-                <div className="h-screen bg-[#0b0d14] flex items-center justify-center">
-                    <div className="bg-[#12141e] w-[95%] border-2 p-8 rounded-md border-[#1f2236]">
+                <div className="h-screen bg-[#0b0d14] flex items-center justify-center w-full">
+                    <div className="bg-[#12141e] w-full border-2 p-8 rounded-md border-[#1f2236]">
                         <p className="text-white text-2xl font-semibold text-center border-b-2 border-[#1f2236] pb-3">
                             Data Mahasiswa
                         </p>
