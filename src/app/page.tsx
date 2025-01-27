@@ -108,11 +108,11 @@ const Home = () => {
   }, []);
 
   const isMobile = useMediaQuery({
-    query: '(max-width: 640px) and (min-width: 440px)'
+    query: '(max-width: 640px) and (min-width: 438px)'
   });
 
   const isUltraMobile = useMediaQuery({
-    query: '(max-width: 440px)'
+    query: '(max-width: 437px)'
   });
 
   const isTablet = useMediaQuery({
