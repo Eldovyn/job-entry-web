@@ -92,7 +92,7 @@ const Dashboard = () => {
                                 Data Mahasiswa
                             </p>
                             <div className="mt-3 flex justify-end flex-row">
-                                <div className="relative lg:w-[30%] w-full flex">
+                                <div className="relative lg:w-[40%] md:w-[60%] w-full flex">
                                     <Input
                                         className="caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2] pr-10 h-[2.2rem]"
                                         placeholder="cari sesuai nama/npm"
@@ -102,25 +102,7 @@ const Dashboard = () => {
                                         <FaSearch />
                                     </span>
                                 </div>
-                                {!isMobile && !isUltraMobile ? (
-                                    <>
-                                        <Button className="bg-[#4b5fe2] hover:bg-[#4558cf] ms-3 h-[2.2rem]">
-                                            <div className="flex flex-row">
-                                                <IoExitOutline className="text-white pt-1 pe-1" />
-                                                <p className="text-white">Logout</p>
-                                            </div>
-                                        </Button>
-                                    </>) : ''}
                             </div>
-                            {isMobile || isUltraMobile ? (
-                                <>
-                                    <Button className={`bg-[#4b5fe2] hover:bg-[#4558cf] mt-3 lg:w-[10%] md:w-[20%] ${isMobile ? 'w-[40%]' : ''} ${isUltraMobile ? 'w-[70%]' : ''} h-[2.05rem]`}>
-                                        <div className="flex flex-row">
-                                            <IoExitOutline className="text-white pt-1 pe-1" />
-                                            <p className="text-white">Logout</p>
-                                        </div>
-                                    </Button>
-                                </>) : ''}
                             {isDesktop ? (
                                 <>
                                     <table className="table-auto w-full border-2 mt-2 text-white text-center">

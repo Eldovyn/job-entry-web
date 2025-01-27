@@ -7,6 +7,7 @@ import { IoHomeOutline } from "react-icons/io5";
 import { VscAccount } from "react-icons/vsc";
 import IconProject from '../../public/IconRemoverBg.png';
 import Avatar from '../../public/avatar.jpg';
+import { IoMdExit } from "react-icons/io";
 
 interface SideBarProps {
     category: string;
@@ -74,6 +75,15 @@ const SideBar: React.FC<SideBarProps> = ({ category }) => {
                         </li>
                     </>
                 )}
+                <li>
+                    <button
+                        onClick={() => console.log('Logout clicked')} 
+                        className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm hover:bg-[#1f2236] w-full`}
+                    >
+                        <IoMdExit size={22} className="me-1" />
+                        <p className="text-sm hidden sm:block lg:block">Logout</p>
+                    </button>
+                </li>
             </ul>
         </div>
     );
