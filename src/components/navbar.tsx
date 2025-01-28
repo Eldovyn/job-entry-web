@@ -14,7 +14,7 @@ const NavBar = () => {
     }, []);
 
     const isTablet = useMediaQuery({ minWidth: 426, maxWidth: 768 });
-    const isMobile = useMediaQuery({ maxWidth: 320, minWidth: 425 });
+    const isMobile = useMediaQuery({ maxWidth: 425, minWidth: 320 });
     const isUltraMobile = useMediaQuery({ maxWidth: 319 });
 
     if (!isClient) {
@@ -26,18 +26,14 @@ const NavBar = () => {
             <Navbar fluid className="bg-[#12141e]">
                 <Navbar.Brand href="https://flowbite-react.com">
                     <Image src={Icon} className="mr-3 h-[25px] w-[40px]" alt="Flowbite React Logo" />
-                    {!isMobile && !isUltraMobile ? (
-                        <span className="self-center whitespace-nowrap text-xl font-semibold text-white">Eldovyn</span>
-                    ) : ''}
+                    <span className={`self-center whitespace-nowrap text-xl font-semibold text-white ${isUltraMobile ? 'hidden' : ''}`}>Eldovyn</span>
                 </Navbar.Brand>
                 <div className="flex md:order-2">
                     <Dropdown
                         arrowIcon={false}
                         inline
                         label={
-                            !isMobile && !isUltraMobile ? (
-                                <Avatar alt="User settings" img={ProfileAvatar.src} rounded className={isTablet ? 'me-1' : ''} />
-                            ) : ''
+                            <Avatar alt="User settings" img={ProfileAvatar.src} rounded className={`${isMobile ? 'me-2' : ''} ${isUltraMobile ? 'hidden' : ''}`} />
                         }
                     >
                         <Dropdown.Header>
