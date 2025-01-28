@@ -13,6 +13,7 @@ interface DataMahasiswa {
     npm: string;
     kelas: string;
     lokasiKampus: string;
+    batch: string;
 }
 
 const Dashboard = () => {
@@ -40,6 +41,7 @@ const Dashboard = () => {
             npm: "20201001",
             kelas: "TI-2A",
             lokasiKampus: "Bandung",
+            batch: "2022",
         },
         {
             name: "Andana Farras Pramudita",
@@ -50,6 +52,7 @@ const Dashboard = () => {
             npm: "20201002",
             kelas: "TI-2B",
             lokasiKampus: "Bandung",
+            batch: "2023",
         },
         {
             name: "Andana Farras Pramudita",
@@ -60,6 +63,7 @@ const Dashboard = () => {
             npm: "20201003",
             kelas: "TI-2C",
             lokasiKampus: "Bandung",
+            batch: "2024",
         }
     ];
 

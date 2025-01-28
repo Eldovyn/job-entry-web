@@ -12,6 +12,7 @@ interface DataMahasiswa {
     npm: string;
     kelas: string;
     lokasiKampus: string;
+    batch: string;
 }
 
 interface Props {

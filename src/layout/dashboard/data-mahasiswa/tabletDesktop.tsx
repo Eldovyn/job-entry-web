@@ -6,6 +6,12 @@ import { MdDelete } from "react-icons/md";
 import SideBar from "@/components/sidebar";
 import { useMediaQuery } from "react-responsive";
 import React, { useEffect, useState } from "react";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 interface DataMahasiswa {
     name: string;
@@ -16,6 +22,7 @@ interface DataMahasiswa {
     npm: string;
     kelas: string;
     lokasiKampus: string;
+    batch: string;
 }
 
 interface Props {
@@ -86,7 +93,16 @@ const TabletDesktopDashboard: React.FC<Props> = ({ dataMahasiswa, isDesktop }) =
                                                         </Link>
                                                     </div>
                                                 </td>
-                                                <td className="border-2 border-[#1f2236] px-4 py-2">{mahasiswa.name}</td>
+                                                <td className="border-2 border-[#1f2236] px-4 py-2">
+                                                    <TooltipProvider>
+                                                        <Tooltip>
+                                                            <TooltipTrigger>{mahasiswa.name}</TooltipTrigger>
+                                                            <TooltipContent>
+                                                                <p>{mahasiswa.batch}</p>
+                                                            </TooltipContent>
+                                                        </Tooltip>
+                                                    </TooltipProvider>
+                                                </td>
                                                 <td className="border-2 border-[#1f2236] px-4 py-2">{mahasiswa.npm}</td>
                                                 <td className="border-2 border-[#1f2236] px-4 py-2">{mahasiswa.kelas}</td>
                                                 <td className="border-2 border-[#1f2236] px-4 py-2">{mahasiswa.lokasiKampus}</td>
