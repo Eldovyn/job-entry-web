@@ -9,6 +9,7 @@ import IconProject from '../../public/IconRemoverBg.png';
 import Avatar from '../../public/avatar.jpg';
 import { IoMdExit } from "react-icons/io";
 import { GoDatabase } from "react-icons/go";
+import { CiBoxList } from "react-icons/ci";
 
 interface SideBarProps {
     category: string;
@@ -80,7 +81,19 @@ const SideBar: React.FC<SideBarProps> = ({ category }) => {
                     <>
                         <li>
                             <Link
-                                href="/admin/dashboard"
+                                href="/admin/dashboard/batch"
+                                className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm ${isActive('/admin/dashboard/batch')
+                                    ? 'bg-[#4b5fe2] w-full'
+                                    : 'hover:bg-[#1f2236]'
+                                    }`}
+                            >
+                                <CiBoxList size={22} className="me-1" />
+                                <p className="text-sm hidden sm:block lg:block">Batch</p>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href="/admin/dashboard/data-mahasiswa"
                                 className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm ${isActive('/admin/dashboard/data-mahasiswa')
                                     ? 'bg-[#4b5fe2] w-full'
                                     : 'hover:bg-[#1f2236]'
@@ -94,7 +107,7 @@ const SideBar: React.FC<SideBarProps> = ({ category }) => {
                 )}
                 <li>
                     <button
-                        onClick={() => console.log('Logout clicked')} 
+                        onClick={() => console.log('Logout clicked')}
                         className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm hover:bg-[#1f2236] w-full`}
                     >
                         <IoMdExit size={22} className="me-1" />
