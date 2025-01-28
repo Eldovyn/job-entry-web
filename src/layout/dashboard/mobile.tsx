@@ -21,7 +21,7 @@ interface Props {
 const MobileDashboard: React.FC<Props> = ({ dataMahasiswa }) => {
     return (
         <>
-            <NavBar />
+            <NavBar category="admin"/>
             <div className="bg-[#0b0d14] min-h-screen flex items-center justify-center w-full pb-[3rem]">
                 <div className="border-[#1f2236] bg-[#12141e] w-[90%] border-2 p-8 rounded-md">
                     <p className="text-white text-2xl font-semibold text-center border-b-2 border-[#1f2236] pb-3">

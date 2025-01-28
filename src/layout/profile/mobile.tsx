@@ -26,7 +26,7 @@ interface Props {
 const MobileProfile: React.FC<Props> = ({ isMobile, isSmallMobile, isOpen, fileName, preview, isDragging, openModal, closeModal, handleDragOver, handleDragLeave, handleDrop, handleFileChange }) => {
     return (
         <>
-            <NavBar />
+            <NavBar category="user" />
             <main className="p-8 h-screen bg-[#0b0d14] flex items-center justify-center">
                 <div className="bg-[#12141e] md:w-[75%] lg:w-[60%] w-[85%] mx-auto p-5 rounded-md border-[#1f2236] border-2 flex flex-col">
                     {isOpen && (

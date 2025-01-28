@@ -3,13 +3,18 @@ import Icon from '@/../public/IconRemoverBg.png';
 import Image from "next/image";
 import { Navbar } from "flowbite-react";
 import { useMediaQuery } from "react-responsive";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname } from 'next/navigation';
 import { VscAccount } from 'react-icons/vsc';
 import { IoHomeOutline } from 'react-icons/io5';
 import { IoMdExit } from 'react-icons/io';
+import { GoDatabase } from "react-icons/go";
 
-const NavBar = () => {
+interface Props {
+    category: string;
+}
+
+const NavBar: React.FC<Props> = ({ category }) => {
     const pathname = usePathname();
     const [isClient, setIsClient] = useState(false);
     const isActive = (path: string) => pathname === path;
@@ -35,20 +40,34 @@ const NavBar = () => {
                 </Navbar.Brand>
                 <Navbar.Toggle className='bg-transparent hover:bg-transparent focus:ring-transparent' />
                 <Navbar.Collapse>
-                    <Navbar.Link href="/" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white ${isActive('/')
-                        ? 'bg-[#4b5fe2]'
-                        : 'hover:bg-[#1f2236]'
-                        }`}>
-                        <IoHomeOutline size={22} />
-                        <p className="text-sm">Home</p>
-                    </Navbar.Link>
-                    <Navbar.Link href="/profile" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white ${isActive('/profile')
-                        ? 'bg-[#4b5fe2]'
-                        : 'hover:bg-[#1f2236]'
-                        }`}>
-                        <VscAccount size={22} />
-                        <p className="text-sm">Profile</p>
-                    </Navbar.Link>
+                    {category === 'user' && (
+                        <><Navbar.Link href="/" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white ${isActive('/')
+                            ? 'bg-[#4b5fe2]'
+                            : 'hover:bg-[#1f2236]'
+                            }`}>
+                            <IoHomeOutline size={22} />
+                            <p className="text-sm">Home</p>
+                        </Navbar.Link>
+                            <Navbar.Link href="/profile" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white ${isActive('/profile')
+                                ? 'bg-[#4b5fe2]'
+                                : 'hover:bg-[#1f2236]'
+                                }`}>
+                                <VscAccount size={22} />
+                                <p className="text-sm">Profile</p>
+                            </Navbar.Link>
+                        </>
+                    )}
+                    {category === 'admin' && (
+                        <>
+                            <Navbar.Link href="/admin/dashboard" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white ${isActive('/')
+                                ? 'bg-[#4b5fe2]'
+                                : 'hover:bg-[#1f2236]'
+                                }`}>
+                                <GoDatabase size={22} />
+                                <p className="text-sm">Data Mahasiswa</p>
+                            </Navbar.Link>
+                        </>
+                    )}
                     <Navbar.Link href="/profile" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white hover:bg-[#1f2236]`}>
                         <IoMdExit size={22} />
                         <p className="text-sm">Logout</p>
