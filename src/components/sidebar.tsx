@@ -8,6 +8,7 @@ import { VscAccount } from "react-icons/vsc";
 import IconProject from '../../public/IconRemoverBg.png';
 import Avatar from '../../public/avatar.jpg';
 import { IoMdExit } from "react-icons/io";
+import { GoDatabase } from "react-icons/go";
 
 interface SideBarProps {
     category: string;
@@ -71,6 +72,22 @@ const SideBar: React.FC<SideBarProps> = ({ category }) => {
                             >
                                 <VscAccount size={22} className="me-1" />
                                 <p className="text-sm hidden sm:block lg:block">Profile</p>
+                            </Link>
+                        </li>
+                    </>
+                )}
+                {category === 'admin' && (
+                    <>
+                        <li>
+                            <Link
+                                href="/admin/dashboard"
+                                className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm ${isActive('/')
+                                    ? 'bg-[#4b5fe2] w-full'
+                                    : 'hover:bg-[#1f2236]'
+                                    }`}
+                            >
+                                <GoDatabase size={22} className="me-1" />
+                                <p className="text-sm hidden sm:block lg:block">Data User</p>
                             </Link>
                         </li>
                     </>
