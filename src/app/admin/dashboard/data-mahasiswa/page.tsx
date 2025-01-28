@@ -1,8 +1,8 @@
 'use client';
 import React, { useState, useEffect } from "react";
 import { useMediaQuery } from 'react-responsive';
-import TabletDesktopDashboard from "@/layout/dashboard/tabletDesktop";
-import MobileDashboard from "@/layout/dashboard/mobile";
+import TabletDesktopDashboard from "@/layout/dashboard/data-mahasiswa/tabletDesktop";
+import MobileDashboard from "@/layout/dashboard/data-mahasiswa/mobile";
 
 interface DataMahasiswa {
     name: string;
