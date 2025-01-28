@@ -10,6 +10,7 @@ import Avatar from '../../public/avatar.jpg';
 import { IoMdExit } from "react-icons/io";
 import { GoDatabase } from "react-icons/go";
 import { CiBoxList } from "react-icons/ci";
+import { LuLockOpen } from "react-icons/lu";
 
 interface SideBarProps {
     category: string;
@@ -79,6 +80,18 @@ const SideBar: React.FC<SideBarProps> = ({ category }) => {
                 )}
                 {category === 'admin' && (
                     <>
+                        <li>
+                            <Link
+                                href="/admin/dashboard/add-batch"
+                                className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm ${isActive('/admin/dashboard/add-batch')
+                                    ? 'bg-[#4b5fe2] w-full'
+                                    : 'hover:bg-[#1f2236]'
+                                    }`}
+                            >
+                                <LuLockOpen size={22} className="me-1" />
+                                <p className="text-sm hidden sm:block lg:block">Open</p>
+                            </Link>
+                        </li>
                         <li>
                             <Link
                                 href="/admin/dashboard/batch"
