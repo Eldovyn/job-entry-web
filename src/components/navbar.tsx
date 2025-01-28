@@ -61,14 +61,14 @@ const NavBar: React.FC<Props> = ({ category }) => {
                     )}
                     {category === 'admin' && (
                         <>
-                            <Navbar.Link href="/admin/dashboard/batch" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white ${isActive('/')
+                            <Navbar.Link href="/admin/dashboard/batch" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white ${isActive('/admin/dashboard/batch')
                                 ? 'bg-[#4b5fe2]'
                                 : 'hover:bg-[#1f2236]'
                                 }`}>
                                 <CiBoxList size={22} />
                                 <p className="text-sm">Batch</p>
                             </Navbar.Link>
-                            <Navbar.Link href="/admin/dashboard/data-mahasiswa" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white ${isActive('/')
+                            <Navbar.Link href="/admin/dashboard/data-mahasiswa" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white ${isActive('/admin/dashboard/data-mahasiswa')
                                 ? 'bg-[#4b5fe2]'
                                 : 'hover:bg-[#1f2236]'
                                 }`}>
