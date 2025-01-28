@@ -85,7 +85,7 @@ const BatchPage = () => {
                                                     </Link>
                                                 </div>
                                             </td>
-                                            <td className="border-2 border-[#1f2236] px-4 py-2">
+                                            <td className="border-2 border-[#1f2236] px-4 py-2 w-[10%]">
                                                 <Switch className="data-[state=checked]:bg-red-500 data-[state=unchecked]:bg-gray-300"/>
                                             </td>
                                             <td className="border-2 border-[#1f2236] px-4 py-2">
