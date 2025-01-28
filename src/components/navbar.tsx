@@ -1,10 +1,9 @@
 'use client';
 import Icon from '@/../public/IconRemoverBg.png';
 import Image from "next/image";
-import { Avatar, Dropdown, Navbar } from "flowbite-react";
+import { Navbar } from "flowbite-react";
 import { useMediaQuery } from "react-responsive";
 import { useEffect, useState } from "react";
-import ProfileAvatar from '@/../public/avatar.jpg';
 import { usePathname } from 'next/navigation';
 import { VscAccount } from 'react-icons/vsc';
 import { IoHomeOutline } from 'react-icons/io5';
