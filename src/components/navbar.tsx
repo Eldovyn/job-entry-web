@@ -5,9 +5,15 @@ import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import { useMediaQuery } from "react-responsive";
 import { useEffect, useState } from "react";
 import ProfileAvatar from '@/../public/avatar.jpg';
+import { usePathname } from 'next/navigation';
+import { VscAccount } from 'react-icons/vsc';
+import { IoHomeOutline } from 'react-icons/io5';
+import { IoMdExit } from 'react-icons/io';
 
 const NavBar = () => {
+    const pathname = usePathname();
     const [isClient, setIsClient] = useState(false);
+    const isActive = (path: string) => pathname === path;
 
     useEffect(() => {
         setIsClient(true);
@@ -23,39 +29,31 @@ const NavBar = () => {
 
     return (
         <>
-            <Navbar fluid className="bg-[#12141e]">
+            <Navbar fluid className="bg-[#12141e] sticky top-0 z-50">
                 <Navbar.Brand href="https://flowbite-react.com">
                     <Image src={Icon} className="mr-3 h-[25px] w-[40px]" alt="Flowbite React Logo" />
                     <span className={`self-center whitespace-nowrap text-xl font-semibold text-white ${isUltraMobile ? 'hidden' : ''}`}>Eldovyn</span>
                 </Navbar.Brand>
-                <div className="flex md:order-2">
-                    <Dropdown
-                        arrowIcon={false}
-                        inline
-                        label={
-                            <Avatar alt="User settings" img={ProfileAvatar.src} rounded className={`${isMobile ? 'me-2' : ''} ${isUltraMobile ? 'hidden' : ''}`} />
-                        }
-                    >
-                        <Dropdown.Header>
-                            <span className="block text-sm">Bonnie Green</span>
-                            <span className="block truncate text-sm font-medium">name@flowbite.com</span>
-                        </Dropdown.Header>
-                        <Dropdown.Item>Dashboard</Dropdown.Item>
-                        <Dropdown.Item>Settings</Dropdown.Item>
-                        <Dropdown.Item>Earnings</Dropdown.Item>
-                        <Dropdown.Divider />
-                        <Dropdown.Item>Sign out</Dropdown.Item>
-                    </Dropdown>
-                    <Navbar.Toggle />
-                </div>
+                <Navbar.Toggle className='bg-transparent hover:bg-transparent focus:ring-transparent' />
                 <Navbar.Collapse>
-                    <Navbar.Link href="#" active>
-                        Home
+                    <Navbar.Link href="/" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white ${isActive('/')
+                        ? 'bg-[#4b5fe2]'
+                        : 'hover:bg-[#1f2236]'
+                        }`}>
+                        <IoHomeOutline size={22} />
+                        <p className="text-sm">Home</p>
                     </Navbar.Link>
-                    <Navbar.Link href="#">About</Navbar.Link>
-                    <Navbar.Link href="#">Services</Navbar.Link>
-                    <Navbar.Link href="#">Pricing</Navbar.Link>
-                    <Navbar.Link href="#">Contact</Navbar.Link>
+                    <Navbar.Link href="/profile" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white ${isActive('/profile')
+                        ? 'bg-[#4b5fe2]'
+                        : 'hover:bg-[#1f2236]'
+                        }`}>
+                        <VscAccount size={22} />
+                        <p className="text-sm">Profile</p>
+                    </Navbar.Link>
+                    <Navbar.Link href="/profile" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white hover:bg-[#1f2236]`}>
+                        <IoMdExit size={22} />
+                        <p className="text-sm">Logout</p>
+                    </Navbar.Link>
                 </Navbar.Collapse>
             </Navbar>
         </>
