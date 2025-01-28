@@ -15,7 +15,7 @@ const DashboardUser = () => {
         query: '(max-width: 640px) and (min-width: 440px)'
     });
 
-    const isUltraMobile = useMediaQuery({
+    const isSmallMobile = useMediaQuery({
         query: '(max-width: 440px)'
     });
 
@@ -37,7 +37,7 @@ const DashboardUser = () => {
         );
     }
 
-    if (isUltraMobile) {
+    if (isSmallMobile) {
         return <MobileDashboardUser />
     }
 };

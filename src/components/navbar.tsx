@@ -20,7 +20,7 @@ const NavBar = () => {
 
     const isTablet = useMediaQuery({ minWidth: 426, maxWidth: 768 });
     const isMobile = useMediaQuery({ maxWidth: 425, minWidth: 320 });
-    const isUltraMobile = useMediaQuery({ maxWidth: 319 });
+    const isSmallMobile = useMediaQuery({ maxWidth: 319 });
 
     if (!isClient) {
         return null;
@@ -31,7 +31,7 @@ const NavBar = () => {
             <Navbar fluid className="bg-[#12141e] sticky top-0 z-50">
                 <Navbar.Brand href="https://flowbite-react.com">
                     <Image src={Icon} className="mr-3 h-[25px] w-[40px]" alt="Flowbite React Logo" />
-                    <span className={`self-center whitespace-nowrap text-xl font-semibold text-white ${isUltraMobile ? 'hidden' : ''}`}>Eldovyn</span>
+                    <span className={`self-center whitespace-nowrap text-xl font-semibold text-white ${isSmallMobile ? 'hidden' : ''}`}>Eldovyn</span>
                 </Navbar.Brand>
                 <Navbar.Toggle className='bg-transparent hover:bg-transparent focus:ring-transparent' />
                 <Navbar.Collapse>

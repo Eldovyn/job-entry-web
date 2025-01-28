@@ -20,10 +20,10 @@ interface Props {
     handleDrop: (event: React.DragEvent<HTMLDivElement>) => void;
     handleFileChange: (file: File | null) => void;
     isMobile: boolean
-    isUltraMobile: boolean
+    isSmallMobile: boolean
 }
 
-const MobileProfile: React.FC<Props> = ({ isMobile, isUltraMobile, isOpen, fileName, preview, isDragging, openModal, closeModal, handleDragOver, handleDragLeave, handleDrop, handleFileChange }) => {
+const MobileProfile: React.FC<Props> = ({ isMobile, isSmallMobile, isOpen, fileName, preview, isDragging, openModal, closeModal, handleDragOver, handleDragLeave, handleDrop, handleFileChange }) => {
     return (
         <>
             <NavBar />
@@ -103,12 +103,12 @@ const MobileProfile: React.FC<Props> = ({ isMobile, isUltraMobile, isOpen, fileN
                                 width={100}
                                 height={100}
                             />
-                            <Button className={`bg-[#4b5fe2] hover:bg-[#4558cf] mt-5 ${isUltraMobile ? 'w-full' : 'w-1/2'} text-[11px]`} onClick={openModal}>
+                            <Button className={`bg-[#4b5fe2] hover:bg-[#4558cf] mt-5 ${isSmallMobile ? 'w-full' : 'w-1/2'} text-[11px]`} onClick={openModal}>
                                 Upload Avatar
                             </Button>
                         </>
                     )}
-                    {isUltraMobile && (
+                    {isSmallMobile && (
                         <>
                             <div className="flex flex-col">
                                 <p className="text-lg mb-3 text-white text-center">Profile Picture</p>
@@ -119,7 +119,7 @@ const MobileProfile: React.FC<Props> = ({ isMobile, isUltraMobile, isOpen, fileN
                                     width={100}
                                     height={100}
                                 />
-                                <Button className={`bg-[#4b5fe2] hover:bg-[#4558cf] mt-5 ${isUltraMobile ? 'w-full' : 'w-1/2'} text-[13px]`} onClick={openModal}>
+                                <Button className={`bg-[#4b5fe2] hover:bg-[#4558cf] mt-5 ${isSmallMobile ? 'w-full' : 'w-1/2'} text-[13px]`} onClick={openModal}>
                                     Upload Avatar
                                 </Button>
                             </div>
@@ -154,7 +154,7 @@ const MobileProfile: React.FC<Props> = ({ isMobile, isUltraMobile, isOpen, fileN
                             />
                         </div>
                         <div className="flex justify-end">
-                            <Button className={`bg-[#4b5fe2] hover:bg-[#4558cf] ${isUltraMobile ? 'w-full' : 'w-1/2'} text-[11px]`}>Save Changes</Button>
+                            <Button className={`bg-[#4b5fe2] hover:bg-[#4558cf] ${isSmallMobile ? 'w-full' : 'w-1/2'} text-[11px]`}>Save Changes</Button>
                         </div>
                     </form>
                 </div>

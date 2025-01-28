@@ -21,7 +21,7 @@ const Profile = () => {
     const isDesktop = useMediaQuery({ minWidth: 769 });
     const isTablet = useMediaQuery({ minWidth: 426, maxWidth: 769 });
     const isMobile = useMediaQuery({ maxWidth: 426, minWidth: 320 });
-    const isUltraMobile = useMediaQuery({ maxWidth: 320 });
+    const isSmallMobile = useMediaQuery({ maxWidth: 320 });
 
     const openModal = () => setIsOpen(true);
     const closeModal = () => {
@@ -85,8 +85,8 @@ const Profile = () => {
         return <TabletDesktopProfile isTablet={isTablet} isOpen={isOpen} preview={preview} isDragging={isDragging} openModal={openModal} handleFileChange={handleFileChange} closeModal={closeModal} handleDragOver={handleDragOver} handleDrop={handleDrop} handleDragLeave={handleDragLeave} fileName={fileName} />
     }
 
-    if (isMobile || isUltraMobile) {
-        return <MobileProfile isMobile={isMobile} isUltraMobile={isUltraMobile} isOpen={isOpen} preview={preview} isDragging={isDragging} openModal={openModal} handleFileChange={handleFileChange} closeModal={closeModal} handleDragOver={handleDragOver} handleDrop={handleDrop} handleDragLeave={handleDragLeave} fileName={fileName} />
+    if (isMobile || isSmallMobile) {
+        return <MobileProfile isMobile={isMobile} isSmallMobile={isSmallMobile} isOpen={isOpen} preview={preview} isDragging={isDragging} openModal={openModal} handleFileChange={handleFileChange} closeModal={closeModal} handleDragOver={handleDragOver} handleDrop={handleDrop} handleDragLeave={handleDragLeave} fileName={fileName} />
     }
 };
 

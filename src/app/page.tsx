@@ -111,7 +111,7 @@ const Home = () => {
     query: '(max-width: 640px) and (min-width: 438px)'
   });
 
-  const isUltraMobile = useMediaQuery({
+  const isSmallMobile = useMediaQuery({
     query: '(max-width: 438px)'
   });
 
@@ -139,7 +139,7 @@ const Home = () => {
     );
   }
 
-  if (isUltraMobile) {
+  if (isSmallMobile) {
     return (
       <MobileHome />
     );
