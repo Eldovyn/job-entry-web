@@ -81,13 +81,13 @@ const SideBar: React.FC<SideBarProps> = ({ category }) => {
                         <li>
                             <Link
                                 href="/admin/dashboard"
-                                className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm ${isActive('/')
+                                className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm ${isActive('/admin/dashboard/data-mahasiswa')
                                     ? 'bg-[#4b5fe2] w-full'
                                     : 'hover:bg-[#1f2236]'
                                     }`}
                             >
                                 <GoDatabase size={22} className="me-1" />
-                                <p className="text-sm hidden sm:block lg:block">Data User</p>
+                                <p className="text-sm hidden sm:block lg:block">Data Mahasiswa</p>
                             </Link>
                         </li>
                     </>
