@@ -9,6 +9,7 @@ import { VscAccount } from 'react-icons/vsc';
 import { IoHomeOutline } from 'react-icons/io5';
 import { IoMdExit } from 'react-icons/io';
 import { GoDatabase } from "react-icons/go";
+import { CiBoxList } from "react-icons/ci";
 
 interface Props {
     category: string;
@@ -41,13 +42,14 @@ const NavBar: React.FC<Props> = ({ category }) => {
                 <Navbar.Toggle className='bg-transparent hover:bg-transparent focus:ring-transparent' />
                 <Navbar.Collapse>
                     {category === 'user' && (
-                        <><Navbar.Link href="/" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white ${isActive('/')
-                            ? 'bg-[#4b5fe2]'
-                            : 'hover:bg-[#1f2236]'
-                            }`}>
-                            <IoHomeOutline size={22} />
-                            <p className="text-sm">Home</p>
-                        </Navbar.Link>
+                        <>
+                            <Navbar.Link href="/" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white ${isActive('/')
+                                ? 'bg-[#4b5fe2]'
+                                : 'hover:bg-[#1f2236]'
+                                }`}>
+                                <IoHomeOutline size={22} />
+                                <p className="text-sm">Home</p>
+                            </Navbar.Link>
                             <Navbar.Link href="/profile" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white ${isActive('/profile')
                                 ? 'bg-[#4b5fe2]'
                                 : 'hover:bg-[#1f2236]'
@@ -59,7 +61,14 @@ const NavBar: React.FC<Props> = ({ category }) => {
                     )}
                     {category === 'admin' && (
                         <>
-                            <Navbar.Link href="/admin/dashboard" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white ${isActive('/')
+                            <Navbar.Link href="/admin/dashboard/batch" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white ${isActive('/')
+                                ? 'bg-[#4b5fe2]'
+                                : 'hover:bg-[#1f2236]'
+                                }`}>
+                                <CiBoxList size={22} />
+                                <p className="text-sm">Batch</p>
+                            </Navbar.Link>
+                            <Navbar.Link href="/admin/dashboard/data-mahasiswa" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white ${isActive('/')
                                 ? 'bg-[#4b5fe2]'
                                 : 'hover:bg-[#1f2236]'
                                 }`}>
