@@ -1,5 +1,5 @@
 'use client'
-import { AuthForm } from "@/responsive/AuthForm"
+import { AuthForm } from "@/layout/AuthForm"
 
 const RegisterPage = () => {
     return (
