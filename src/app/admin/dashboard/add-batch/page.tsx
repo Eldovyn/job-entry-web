@@ -1,8 +1,8 @@
 'use client'
 import { useMediaQuery } from "react-responsive"
 import React, { useState, useEffect } from "react";
-import TabletDesktopAddBatch from "@/layout/dashboard/add-batch/tabletDesktop";
-import MobileAddBatch from "@/layout/dashboard/add-batch/mobile";
+import TabletDesktopAddBatch from "@/responsive/dashboard/add-batch/tabletDesktop";
+import MobileAddBatch from "@/responsive/dashboard/add-batch/mobile";
 
 const AddBatch = () => {
     const [isClient, setIsClient] = useState(false);

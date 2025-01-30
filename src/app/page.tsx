@@ -4,8 +4,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import MobileTabletDesktopHome from "@/layout/home/mobileTabletDesktop";
-import MobileHome from "@/layout/home/mobile";
+import MobileTabletDesktopHome from "@/responsive/home/mobileTabletDesktop";
+import MobileHome from "@/responsive/home/mobile";
 
 interface UseFileUploadReturn {
   fileName: string;

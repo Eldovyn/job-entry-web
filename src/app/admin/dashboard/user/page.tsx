@@ -1,8 +1,8 @@
 'use client';
 import { useMediaQuery } from "react-responsive";
 import React, { useEffect, useState } from "react";
-import MobileTabletDesktopDashboardUser from "@/layout/dashboard/user/mobileTabletDesktop";
-import MobileDashboardUser from "@/layout/dashboard/user/mobile";
+import MobileTabletDesktopDashboardUser from "@/responsive/dashboard/user/mobileTabletDesktop";
+import MobileDashboardUser from "@/responsive/dashboard/user/mobile";
 
 const DashboardUser = () => {
     const [isClient, setIsClient] = useState(false);

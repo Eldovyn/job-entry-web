@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from "react";
-import TabletDesktopProfile from "@/layout/profile/tabletDesktop";
-import MobileProfile from "@/layout/profile/mobile";
+import TabletDesktopProfile from "@/responsive/profile/tabletDesktop";
+import MobileProfile from "@/responsive/profile/mobile";
 import Avatar from "../../../public/avatar.jpg";
 import { useToast } from "@/hooks/use-toast"
 import { useMediaQuery } from 'react-responsive';

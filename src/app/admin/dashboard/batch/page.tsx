@@ -1,8 +1,8 @@
 'use client';
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import MobileBatch from "@/layout/dashboard/batch/mobile";
-import TabletDesktopBatch from "@/layout/dashboard/batch/tabletDesktop";
+import MobileBatch from "@/responsive/dashboard/batch/mobile";
+import TabletDesktopBatch from "@/responsive/dashboard/batch/tabletDesktop";
 
 
 interface DataBatch {
