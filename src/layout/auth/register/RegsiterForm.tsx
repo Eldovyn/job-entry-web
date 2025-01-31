@@ -33,8 +33,6 @@ const RegisterForm: React.FC = () => {
     const { push } = useRouter();
     const { toast } = useToast()
 
-    console.log(toast);
-
     const [formErrors, setFormErrors] = useState<FormErrors>({
         username: [],
         email: [],
