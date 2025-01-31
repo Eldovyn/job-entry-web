@@ -8,6 +8,7 @@ export default {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/layout/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/responsive/**/*.{js,ts,jsx,tsx,mdx}",
 	flowbite.content(),
   ],
   theme: {
