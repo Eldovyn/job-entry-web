@@ -6,7 +6,6 @@ import { axiosInstance } from "@/lib/axios";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
 
 interface ErrorResponse {
     message: string;
@@ -18,7 +17,6 @@ interface ErrorResponse {
 const VerifyEmail = () => {
     const { push } = useRouter();
     const searchParams = useSearchParams();
-    const [loadingReSendVerification, setLoadingReSendVerification] = useState(false);
 
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['my-polling'],
@@ -37,23 +35,6 @@ const VerifyEmail = () => {
         refetchOnWindowFocus: false,
         retry: false,
     });
-
-    const updateResponse = async () => {
-        setLoadingReSendVerification(true);
-        try {
-            const response = await axiosInstance.patch(`/job-entry/re-send/account-active`, { email: data?.data?.data?.email }, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            const resp = response.data
-            push(`${process.env.NEXT_PUBLIC_BASE_URL}/verify-email?token=${resp.data.token}`);
-        } catch (error) {
-            push(`${process.env.NEXT_PUBLIC_BASE_URL}/register`)
-        } finally {
-            setLoadingReSendVerification(false);
-        }
-    };
 
     const err = error as AxiosError<ErrorResponse>;
 
@@ -74,7 +55,7 @@ const VerifyEmail = () => {
                 </div>
                 <div className="flex md:flex-row lg:flex-row sm:flex-col flex-col text-sm">
                     <p className="text-white">Link expired?</p>
-                    <p className="text-blue-600 md:ms-1 lg:ms-1 cursor-pointer" onClick={loadingReSendVerification ? () => {} : updateResponse}>Resend verification email.</p>
+                    <p className="text-blue-600 md:ms-1 lg:ms-1 cursor-pointer">Resend verification email.</p>
                 </div>
             </div>
         </div>

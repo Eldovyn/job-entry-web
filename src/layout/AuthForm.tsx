@@ -1,6 +1,7 @@
 import React from 'react'
 import { Input } from "@/components/ui/input";
 import RegisterForm from './auth/register/RegsiterForm';
+import LoginForm from './auth/login/LoginForm';
 
 interface AuthFormProps {
     catgory: string;
@@ -9,6 +10,9 @@ interface AuthFormProps {
 export const AuthForm: React.FC<AuthFormProps> = ({ catgory }) => {
     if (catgory === "register") {
         return <RegisterForm />;
+    }
+    if (catgory === "login") {
+        return <LoginForm />
     }
 };
 
