@@ -67,7 +67,7 @@ const RegisterForm: React.FC = () => {
             toast({
                 description: "success register",
             })
-            setTimeout(() => push(`${process.env.NEXT_PUBLIC_BASE_URL}/verify-email?token=${dataApi.verification.token}`), 5000);
+            setTimeout(() => push(`/verify-email?token=${dataApi.verification.token}`), 5000);
             const fields = ['username', 'email', 'password'];
             fields.forEach(field => formik.setFieldValue(field, ''));
             handleValidation({

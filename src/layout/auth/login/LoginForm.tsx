@@ -67,7 +67,7 @@ const LoginForm = () => {
                 toast({
                     description: "user is inactive",
                 })
-                setTimeout(() => push(`${process.env.NEXT_PUBLIC_BASE_URL}/verify-email?token=${data?.verification?.token}`), 5000);
+                setTimeout(() => push(`/verify-email?token=${data?.verification?.token}`), 5000);
             }
             const fields = ['email', 'password'];
             fields.forEach(field => formik.setFieldValue(field, ''));
@@ -81,7 +81,7 @@ const LoginForm = () => {
             toast({
                 description: "success login",
             })
-            setTimeout(() => push(`${process.env.NEXT_PUBLIC_BASE_URL}/`), 5000);
+            setTimeout(() => push(`/`), 5000);
         },
     })
 
