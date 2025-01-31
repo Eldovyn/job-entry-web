@@ -8,6 +8,7 @@ import { AxiosError } from "axios";
 import { useFormik } from 'formik';
 import LoadingSpinnerComponent from 'react-spinners-components';
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 interface FormData {
     username: string;
@@ -30,6 +31,9 @@ interface ErrorResponse {
 
 const RegisterForm: React.FC = () => {
     const { push } = useRouter();
+    const { toast } = useToast()
+
+    console.log(toast);
 
     const [formErrors, setFormErrors] = useState<FormErrors>({
         username: [],
@@ -61,6 +65,11 @@ const RegisterForm: React.FC = () => {
             }
         },
         onSuccess: async (data) => {
+            const dataApi = data.data
+            toast({
+                description: "success register",
+            })
+            setTimeout(() => push(`${process.env.NEXT_PUBLIC_BASE_URL}/verify-email?token=${dataApi.verification.token}`), 5000);
             const fields = ['username', 'email', 'password'];
             fields.forEach(field => formik.setFieldValue(field, ''));
             handleValidation({
@@ -85,7 +94,6 @@ const RegisterForm: React.FC = () => {
                     email,
                     password
                 })
-                console.log('Form submitted:', values);
             } catch (error) {
                 console.error('Terjadi kesalahan:', error);
             } finally {
