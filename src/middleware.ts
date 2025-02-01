@@ -5,6 +5,20 @@ import { axiosInstance } from './lib/axios';
 export async function middleware(request: NextRequest) {
     const { pathname, searchParams } = request.nextUrl;
 
+    if (pathname === '/login' || pathname === '/register') {
+        const accessToken = request.cookies.get('accessToken');
+        if (accessToken) {
+            return NextResponse.redirect(new URL('/', request.url));
+        }
+    }
+
+    if (pathname === '/' || pathname == '/profile') {
+        const accessToken = request.cookies.get('accessToken');
+        if (!accessToken) {
+            return NextResponse.redirect(new URL('/login', request.url));
+        }
+    }
+
     if (pathname === '/account-active/sent') {
         const token = searchParams.get('token');
         if (token) {
