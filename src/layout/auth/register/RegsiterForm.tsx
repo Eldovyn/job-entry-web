@@ -103,7 +103,7 @@ const RegisterForm: React.FC = () => {
     return (
         <div className="bg-[#12141e] w-[45%] p-8 rounded-md mt-9 border-[#1f2236] border-2">
             <p className="text-2xl font-bold mb-3 text-white text-center">Register</p>
-            <form action="" onSubmit={formik.handleSubmit}>
+            <form action="" onSubmit={formik.isSubmitting ? () => {} : formik.handleSubmit}>
                 <div className="flex flex-col mb-3">
                     <Input
                         type='text'
