@@ -29,7 +29,7 @@ interface ErrorResponse {
     data?: {
         [field: string]: string[];
     };
-    verification?: {
+    account_active?: {
         [field: string]: string[];
     };
 }
@@ -72,7 +72,7 @@ const LoginForm = () => {
                 toast({
                     description: "user is inactive",
                 })
-                setTimeout(() => push(`/verify-email?token=${data?.verification?.token}`), 5000);
+                setTimeout(() => push(`/account-active/sent?token=${data?.account_active?.token}`), 5000);
             }
             toast({
                 description: err?.response?.data?.message,

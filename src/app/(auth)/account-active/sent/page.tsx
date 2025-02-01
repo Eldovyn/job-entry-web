@@ -49,7 +49,7 @@ const VerifyEmail = () => {
             const response = await axiosInstance.patch('/job-entry/re-send/account-active', { email: data?.data.data.email });
             const resp = response.data;
             setTimeout(() => {
-                push(`/verify-email?token=${resp.data.token}`);
+                push(`/account-active/sent?token=${resp.account_active.token}`);
             }, 5000);
         } catch (error) {
             push(`/register`);
