@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import SwitchAuthLink from "@/components/SwitchLink";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { axiosInstance } from "@/lib/axios";
 import { AxiosError } from "axios";
 import { useFormik } from 'formik';
@@ -11,6 +11,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import Cookies from "js-cookie";
+import { Eye, EyeOff } from "lucide-react";
 
 interface FormData {
     email: string;
@@ -38,6 +39,8 @@ interface ErrorResponse {
 const LoginForm = () => {
     const { push } = useRouter();
     const { toast } = useToast()
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const [formErrors, setFormErrors] = useState<FormErrors>({
         email: [],
@@ -124,12 +127,22 @@ const LoginForm = () => {
                         <p key={index} className="text-red-500 text-sm">{error}</p>
                     ))}
                 </div>
-                <div className="flex flex-col mb-1">
+                <div className="flex flex-col mb-3 relative">
                     <Input
-                        type='password'
-                        placeholder='password' name="password"
-                        className="caret-white mb-1 border-[#1b1d2e] border-2 focus:border-[#4b5fe2]" onChange={formik.handleChange} value={formik.values.password}
+                        type={showPassword ? "text" : "password"}
+                        placeholder="password"
+                        name="password"
+                        className="caret-white mb-1 border-[#1b1d2e] border-2 focus:border-[#4b5fe2] pr-10"
+                        onChange={formik.handleChange}
+                        value={formik.values.password}
                     />
+                    <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 text-[#4b5fe2]"
+                    >
+                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
                     {formErrors.password.map((error, index) => (
                         <p key={index} className="text-red-500 text-sm">{error}</p>
                     ))}
