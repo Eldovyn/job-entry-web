@@ -2,6 +2,7 @@ import React from 'react'
 import { Input } from "@/components/ui/input";
 import RegisterForm from './auth/register/RegsiterForm';
 import LoginForm from './auth/login/LoginForm';
+import ForgotPassword from './auth/forgot-password/ForgotPassword';
 
 interface AuthFormProps {
     catgory: string;
@@ -13,6 +14,9 @@ export const AuthForm: React.FC<AuthFormProps> = ({ catgory }) => {
     }
     if (catgory === "login") {
         return <LoginForm />
+    }
+    if (catgory === "reset-password") {
+        return <ForgotPassword />
     }
 };
 
