@@ -10,6 +10,7 @@ import LoadingSpinnerComponent from 'react-spinners-components';
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
+import Cookies from "js-cookie";
 
 interface FormData {
     email: string;
@@ -80,6 +81,8 @@ const LoginForm = () => {
             return
         },
         onSuccess: async (data) => {
+            const dataApi = data.data
+            Cookies.set('accessToken', dataApi.data.access_token);
             toast({
                 description: "success login",
             })
