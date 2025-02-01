@@ -1,14 +1,14 @@
 'use client'
 import { AuthForm } from "@/layout/AuthForm"
 
-const ResetPasswordPage = () => {
+const Page = () => {
     return (
         <>
             <div className="bg-[#0b0d14] h-screen flex items-center justify-center w-full text-white">
-                <AuthForm catgory="forgot-password"/>
+                <AuthForm catgory="reset-password" />
             </div>
         </>
     )
 }
 
-export default ResetPasswordPage
+export default Page

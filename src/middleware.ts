@@ -18,5 +18,31 @@ export async function middleware(request: NextRequest) {
         }
     }
 
+    if (pathname === '/forgot-password/sent') {
+        const token = searchParams.get('token');
+        if (token) {
+            try {
+                const response = await axiosInstance.get(`/job-entry/page/reset-password`, { params: { token } });
+            } catch (error) {
+                return NextResponse.redirect(new URL('/forgot-password', request.url));
+            }
+        } else {
+            return NextResponse.redirect(new URL('/forgot-password', request.url));
+        }
+    }
+
+    if (pathname === '/reset-password') {
+        const token = searchParams.get('token');
+        if (token) {
+            try {
+                const response = await axiosInstance.get(`/job-entry/reset-password`, { params: { token } });
+            } catch (error) {
+                return NextResponse.redirect(new URL('/forgot-password', request.url));
+            }
+        } else {
+            return NextResponse.redirect(new URL('/forgot-password', request.url));
+        }
+    }
+
     return NextResponse.next();
 }

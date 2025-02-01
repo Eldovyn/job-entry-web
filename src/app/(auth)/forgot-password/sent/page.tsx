@@ -48,9 +48,7 @@ const Page = () => {
         try {
             const response = await axiosInstance.patch('/job-entry/re-send/reset-password', { email: data?.data.data.email });
             const resp = response.data;
-            setTimeout(() => {
-                push(`/forgot-password/sent?token=${resp.reset_password.token}`);
-            }, 5000);
+            push(`/forgot-password/sent?token=${resp.reset_password.token}`);
         } catch (error) {
             push(`/forgot-password`);
         }
