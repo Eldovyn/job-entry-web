@@ -3,24 +3,34 @@ import type { NextRequest } from 'next/server'
 import { axiosInstance } from './lib/axios';
 
 export async function middleware(request: NextRequest) {
-    const { pathname, searchParams } = request.nextUrl;
+    const url = request.nextUrl.clone();
+    const accessToken = request.cookies.get('accessToken')?.value;
 
-    if (pathname === '/login' || pathname === '/register') {
-        const accessToken = request.cookies.get('accessToken');
+    if (url.pathname === '/' || url.pathname === '/profile') {
         if (accessToken) {
-            return NextResponse.redirect(new URL('/', request.url));
+            try {
+                await axiosInstance.get(`/job-entry/@me`, {
+                    headers: { Authorization: `Bearer ${accessToken}` }
+                });
+            } catch (error) {
+                url.pathname = '/login';
+                return NextResponse.redirect(url);
+            }
+        } else {
+            url.pathname = '/login';
+            return NextResponse.redirect(url);
         }
     }
 
-    if (pathname === '/' || pathname == '/profile') {
-        const accessToken = request.cookies.get('accessToken');
-        if (!accessToken) {
-            return NextResponse.redirect(new URL('/login', request.url));
+    if (url.pathname === '/register' || url.pathname === '/login') {
+        if (accessToken) {
+            url.pathname = '/';
+            return NextResponse.redirect(url);
         }
     }
 
-    if (pathname === '/account-active/sent') {
-        const token = searchParams.get('token');
+    if (url.pathname === '/account-active/sent') {
+        const token = url.searchParams.get('token');
         if (token) {
             try {
                 const response = await axiosInstance.get(`/job-entry/account-active/page-verification`, { params: { token } });
@@ -32,8 +42,8 @@ export async function middleware(request: NextRequest) {
         }
     }
 
-    if (pathname === '/forgot-password/sent') {
-        const token = searchParams.get('token');
+    if (url.pathname === '/forgot-password/sent') {
+        const token = url.searchParams.get('token');
         if (token) {
             try {
                 const response = await axiosInstance.get(`/job-entry/page/reset-password`, { params: { token } });
@@ -45,8 +55,8 @@ export async function middleware(request: NextRequest) {
         }
     }
 
-    if (pathname === '/reset-password') {
-        const token = searchParams.get('token');
+    if (url.pathname === '/reset-password') {
+        const token = url.searchParams.get('token');
         if (token) {
             try {
                 const response = await axiosInstance.get(`/job-entry/reset-password`, { params: { token } });
