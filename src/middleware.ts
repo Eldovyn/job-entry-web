@@ -5,7 +5,7 @@ import { axiosInstance } from './lib/axios';
 export async function middleware(request: NextRequest) {
     const { pathname, searchParams } = request.nextUrl;
 
-    if (pathname === '/verify-email') {
+    if (pathname === '/account-active/sent') {
         const token = searchParams.get('token');
         if (token) {
             try {
