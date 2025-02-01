@@ -72,7 +72,7 @@ const LoginForm = () => {
                 toast({
                     description: "user is inactive",
                 })
-                setTimeout(() => push(`/account-active/sent?token=${data?.account_active?.token}`), 5000);
+                push(`/account-active/sent?token=${data?.account_active?.token}`)
             }
             toast({
                 description: err?.response?.data?.message,
@@ -83,7 +83,7 @@ const LoginForm = () => {
             toast({
                 description: "success login",
             })
-            setTimeout(() => push(`/`), 5000);
+            push(`/`)
         },
     })
 
