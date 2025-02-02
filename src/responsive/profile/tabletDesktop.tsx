@@ -2,13 +2,26 @@ import SideBar from "@/components/sidebar";
 import Image from "next/image";
 import { ImCross } from "react-icons/im";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { Toaster } from "@/components/ui/toaster"
-import React from "react";
+import React, { useState, Dispatch, SetStateAction } from "react";
 import AvatarProfile from '@/../public/avatar.jpg';
+import { MdOutlineEdit } from "react-icons/md";
+import TabletDesktopProfileForm from "./ProfileForm/tabletDesktop";
+
+interface User {
+    avatar: string;
+    created_at: number;
+    email: string;
+    is_active: boolean;
+    is_admin: boolean;
+    updated_at: number;
+    user_id: string;
+    username: string;
+}
 
 interface Props {
+    user: User | null;
     isOpen: boolean;
     fileName: string;
     preview: string | null;
@@ -20,9 +33,12 @@ interface Props {
     handleDrop: (event: React.DragEvent<HTMLDivElement>) => void;
     handleFileChange: (file: File | null) => void;
     isTablet: boolean;
+    setUserData: Dispatch<SetStateAction<User | null>>;
 }
 
-const TabletDesktopProfile: React.FC<Props> = ({ isTablet, isOpen, preview, openModal, handleFileChange, closeModal, handleDragOver, handleDrop, handleDragLeave, fileName, isDragging }) => {
+const TabletDesktopProfile: React.FC<Props> = ({ user, setUserData, isTablet, isOpen, preview, openModal, handleFileChange, closeModal, handleDragOver, handleDrop, handleDragLeave, fileName, isDragging }) => {
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+
     return (
         <>
             <div className="flex bg-[#0b0d14]">
@@ -55,6 +71,7 @@ const TabletDesktopProfile: React.FC<Props> = ({ isTablet, isOpen, preview, open
                                                 alt="User Icon"
                                                 width={100}
                                                 height={100}
+                                                priority
                                             />
                                         </div>
                                         <div className="flex flex-row justify-center mt-3">
@@ -100,42 +117,26 @@ const TabletDesktopProfile: React.FC<Props> = ({ isTablet, isOpen, preview, open
                             alt="User Icon"
                             width={100}
                             height={100}
+                            priority
                         />
                         <Button className={`bg-[#4b5fe2] hover:bg-[#4558cf] mt-5 ${isTablet ? 'w-[8rem] text-[13px]' : 'text-sm w-[9rem]'}`} onClick={openModal}>
                             Upload Avatar
                         </Button>
-                        <form action="" className="mt-5">
-                            <div className="flex flex-col mb-3">
-                                <label htmlFor="email" className="text-white mb-1 text-sm">Email</label>
-                                <Input
-                                    placeholder="email"
-                                    className="caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2]"
-                                    name="email"
-                                    type="email"
-                                />
+                        <div className="flex flex-col mb-3 mt-3">
+                            <label htmlFor="email" className="text-white mb-1 text-sm">Email</label>
+                            <TabletDesktopProfileForm userData={user} setUserData={setUserData} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />
+                        </div>
+                        <div className="flex flex-col mb-3">
+                            <label htmlFor="username" className="text-white mb-1 text-sm">Username</label>
+                            <div className="relative w-full">
+                                <p className="caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2] text-white w-full p-1 rounded-md ps-3">
+                                    {user?.username || ""}
+                                </p>
+                                <button className="absolute top-1/2 right-3 transform -translate-y-1/2 text-[#4b5fe2]">
+                                    <MdOutlineEdit />
+                                </button>
                             </div>
-                            <div className="flex flex-col mb-3">
-                                <label htmlFor="username" className="text-white mb-1 text-sm">Username</label>
-                                <Input
-                                    placeholder="username"
-                                    className="caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2]"
-                                    name="username"
-                                    type="text"
-                                />
-                            </div>
-                            <div className="flex flex-col mb-3">
-                                <label htmlFor="password" className="text-white mb-1 text-sm">Password</label>
-                                <Input
-                                    placeholder="password"
-                                    className="caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2]"
-                                    name="password"
-                                    type="password"
-                                />
-                            </div>
-                            <div className="flex justify-end">
-                                <Button className={`bg-[#4b5fe2] hover:bg-[#4558cf] ${isTablet ? 'w-[8rem] text-[13px]' : 'text-sm w-[9rem]'}`}>Save Changes</Button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                     <Toaster />
                 </main>

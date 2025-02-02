@@ -2,21 +2,45 @@
 import React, { useState, useEffect } from "react";
 import TabletDesktopProfile from "@/responsive/profile/tabletDesktop";
 import MobileProfile from "@/responsive/profile/mobile";
-import Avatar from "../../../public/avatar.jpg";
 import { useToast } from "@/hooks/use-toast"
 import { useMediaQuery } from 'react-responsive';
+import { useQuery } from "@tanstack/react-query";
+import { axiosInstance } from "@/lib/axios";
+import Cookies from "js-cookie";
 
 const Profile = () => {
+    const { data, isLoading, isError, error } = useQuery({
+        queryKey: ['@me'],
+        queryFn: async () => {
+            const response = await axiosInstance.get(`/job-entry/@me`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${Cookies.get('accessToken') || ''}`
+                }
+            });
+            return response;
+        },
+        refetchOnWindowFocus: false,
+        retry: false,
+    });
+
     const [isOpen, setIsOpen] = useState(false);
     const [fileName, setFileName] = useState("File Name");
-    const [preview, setPreview] = useState<string | null>(Avatar.src);
+    const [preview, setPreview] = useState<string | null>(data?.data?.data.avatar);
     const [isDragging, setIsDragging] = useState(false);
+    const [userData, setUserData] = useState(data?.data?.data);
     const { toast } = useToast()
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
         setIsClient(true);
     }, []);
+
+    useEffect(() => {
+        if (data?.data?.data) {
+            setUserData(data.data.data);
+        }
+    }, [data]);
 
     const isDesktop = useMediaQuery({ minWidth: 769 });
     const isTablet = useMediaQuery({ minWidth: 426, maxWidth: 769 });
@@ -26,7 +50,7 @@ const Profile = () => {
     const openModal = () => setIsOpen(true);
     const closeModal = () => {
         setFileName("File Name");
-        setPreview(Avatar.src);
+        setPreview(userData?.avatar); 
         setIsOpen(false);
     };
 
@@ -48,7 +72,7 @@ const Profile = () => {
                 })
             }
             setFileName("File Name");
-            setPreview(Avatar.src);
+            setPreview(userData?.avatar); 
         }
     };
 
@@ -82,11 +106,38 @@ const Profile = () => {
     }
 
     if (isDesktop || isTablet) {
-        return <TabletDesktopProfile isTablet={isTablet} isOpen={isOpen} preview={preview} isDragging={isDragging} openModal={openModal} handleFileChange={handleFileChange} closeModal={closeModal} handleDragOver={handleDragOver} handleDrop={handleDrop} handleDragLeave={handleDragLeave} fileName={fileName} />
+        return <TabletDesktopProfile 
+            user={userData} 
+            setUserData={setUserData}
+            preview={preview} 
+            isTablet={isTablet} 
+            isOpen={isOpen} 
+            isDragging={isDragging} 
+            openModal={openModal} 
+            handleFileChange={handleFileChange} 
+            closeModal={closeModal} 
+            handleDragOver={handleDragOver} 
+            handleDrop={handleDrop} 
+            handleDragLeave={handleDragLeave} 
+            fileName={fileName} 
+        />
     }
 
     if (isMobile || isSmallMobile) {
-        return <MobileProfile isMobile={isMobile} isSmallMobile={isSmallMobile} isOpen={isOpen} preview={preview} isDragging={isDragging} openModal={openModal} handleFileChange={handleFileChange} closeModal={closeModal} handleDragOver={handleDragOver} handleDrop={handleDrop} handleDragLeave={handleDragLeave} fileName={fileName} />
+        return <MobileProfile 
+            isMobile={isMobile} 
+            isSmallMobile={isSmallMobile} 
+            isOpen={isOpen} 
+            preview={preview} 
+            isDragging={isDragging} 
+            openModal={openModal} 
+            handleFileChange={handleFileChange} 
+            closeModal={closeModal} 
+            handleDragOver={handleDragOver} 
+            handleDrop={handleDrop} 
+            handleDragLeave={handleDragLeave} 
+            fileName={fileName} 
+        />
     }
 };
 
