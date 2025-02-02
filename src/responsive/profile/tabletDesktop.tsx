@@ -38,7 +38,8 @@ interface Props {
 }
 
 const TabletDesktopProfile: React.FC<Props> = ({ user, setUserData, isTablet, isOpen, preview, openModal, handleFileChange, closeModal, handleDragOver, handleDrop, handleDragLeave, fileName, isDragging }) => {
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [isDialogOpenUsername, setIsDialogOpenUsername] = useState(false);
+    const [isDialogOpenEmail, setIsDialogOpenEmail] = useState(false);
 
     return (
         <>
@@ -125,11 +126,11 @@ const TabletDesktopProfile: React.FC<Props> = ({ user, setUserData, isTablet, is
                         </Button>
                         <div className="flex flex-col mb-3 mt-3">
                             <label htmlFor="email" className="text-white mb-1 text-sm">Email</label>
-                            <TabletDesktopProfileFormEmail userData={user} setUserData={setUserData} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />
+                            <TabletDesktopProfileFormEmail userData={user} setUserData={setUserData} isDialogOpen={isDialogOpenEmail} setIsDialogOpen={setIsDialogOpenEmail} />
                         </div>
                         <div className="flex flex-col mb-3">
                             <label htmlFor="username" className="text-white mb-1 text-sm">Username</label>
-                            <TabletDesktopProfileFormUsername userData={user} setUserData={setUserData} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />
+                            <TabletDesktopProfileFormUsername userData={user} setUserData={setUserData} isDialogOpen={isDialogOpenUsername} setIsDialogOpen={setIsDialogOpenUsername} />
                         </div>
                     </div>
                     <Toaster />
