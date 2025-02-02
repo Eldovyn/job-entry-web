@@ -7,7 +7,8 @@ import { Toaster } from "@/components/ui/toaster"
 import React, { useState, Dispatch, SetStateAction } from "react";
 import AvatarProfile from '@/../public/avatar.jpg';
 import { MdOutlineEdit } from "react-icons/md";
-import TabletDesktopProfileForm from "./ProfileForm/tabletDesktop";
+import TabletDesktopProfileFormEmail from "./ProfileForm/FormEmail";
+import TabletDesktopProfileFormUsername from "./ProfileForm/FormUsername";
 
 interface User {
     avatar: string;
@@ -124,18 +125,11 @@ const TabletDesktopProfile: React.FC<Props> = ({ user, setUserData, isTablet, is
                         </Button>
                         <div className="flex flex-col mb-3 mt-3">
                             <label htmlFor="email" className="text-white mb-1 text-sm">Email</label>
-                            <TabletDesktopProfileForm userData={user} setUserData={setUserData} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />
+                            <TabletDesktopProfileFormEmail userData={user} setUserData={setUserData} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />
                         </div>
                         <div className="flex flex-col mb-3">
                             <label htmlFor="username" className="text-white mb-1 text-sm">Username</label>
-                            <div className="relative w-full">
-                                <p className="caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2] text-white w-full p-1 rounded-md ps-3">
-                                    {user?.username || ""}
-                                </p>
-                                <button className="absolute top-1/2 right-3 transform -translate-y-1/2 text-[#4b5fe2]">
-                                    <MdOutlineEdit />
-                                </button>
-                            </div>
+                            <TabletDesktopProfileFormUsername userData={user} setUserData={setUserData} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />
                         </div>
                     </div>
                     <Toaster />
