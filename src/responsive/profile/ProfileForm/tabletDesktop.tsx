@@ -101,7 +101,12 @@ const TabletDesktopProfileForm: React.FC<Props> = ({ isDialogOpen, setIsDialogOp
                 toast({
                     description: err?.response?.data?.message,
                 })
+                return
             }
+            toast({
+                description: err?.response?.data?.message,
+            })
+            return
         },
         onSuccess: async (data) => {
             setUserData((prevUserData) => ({
