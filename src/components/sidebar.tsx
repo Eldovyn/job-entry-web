@@ -12,11 +12,23 @@ import { GoDatabase } from "react-icons/go";
 import { CiBoxList } from "react-icons/ci";
 import { LuLockOpen } from "react-icons/lu";
 
-interface SideBarProps {
-    category: string;
+interface User {
+    avatar: string;
+    created_at: number;
+    email: string;
+    is_active: boolean;
+    is_admin: boolean;
+    updated_at: number;
+    user_id: string;
+    username: string;
 }
 
-const SideBar: React.FC<SideBarProps> = ({ category }) => {
+interface SideBarProps {
+    category: string;
+    user: User | null;
+}
+
+const SideBar: React.FC<SideBarProps> = ({ category, user }) => {
     const pathname = usePathname();
     const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -43,9 +55,9 @@ const SideBar: React.FC<SideBarProps> = ({ category }) => {
             <div className="hidden sm:block mt-5">
                 <div className="flex flex-col justify-center border-b-2 border-[#1f2236] pb-5">
                     <div className="flex flex-col mb-3 ms-1 items-center justify-center">
-                        <Image src={Avatar} alt="User Icon" width={65} height={65} className="rounded-full" />
+                        <Image src={user?.avatar || Avatar.src} alt="User Icon" width={65} height={65} className="rounded-full w-[65px] h-[65px]" />
                     </div>
-                    <p className="ml-1 text-sm text-center">Andana Farras Pramudita</p>
+                    <p className="ml-1 text-sm font-semibold text-center">{user?.username}</p>
                 </div>
             </div>
 

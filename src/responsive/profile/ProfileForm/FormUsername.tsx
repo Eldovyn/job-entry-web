@@ -55,7 +55,7 @@ interface Props {
     setUserData: Dispatch<SetStateAction<User | null>>;
 }
 
-const TabletDesktopProfileForm: React.FC<Props> = ({ isDialogOpen, setIsDialogOpen, userData, setUserData }) => {
+const ProfileForm: React.FC<Props> = ({ isDialogOpen, setIsDialogOpen, userData, setUserData }) => {
     const { toast } = useToast()
     const [username, setUsername] = useState('');
 
@@ -214,4 +214,4 @@ const TabletDesktopProfileForm: React.FC<Props> = ({ isDialogOpen, setIsDialogOp
     )
 }
 
-export default TabletDesktopProfileForm
+export default ProfileForm

@@ -47,59 +47,7 @@ const Profile = () => {
     const isMobile = useMediaQuery({ maxWidth: 426, minWidth: 320 });
     const isSmallMobile = useMediaQuery({ maxWidth: 320 });
 
-    const openModal = () => setIsOpen(true);
-    const closeModal = () => {
-        setFileName("File Name");
-        setPreview(userData?.avatar); 
-        setIsOpen(false);
-    };
-
-    const handleFileChange = (file: File | null) => {
-        if (file && file.type.startsWith('image/')) {
-            setFileName(file.name);
-
-            const reader = new FileReader();
-            reader.onload = () => {
-                setPreview(reader.result as string);
-            };
-            reader.readAsDataURL(file);
-        } else {
-            if (file) {
-                toast({
-                    title: "Failed to upload",
-                    description: "Only image files are allowed",
-                    variant: "destructive"
-                })
-            }
-            setFileName("File Name");
-            setPreview(userData?.avatar); 
-        }
-    };
-
-    const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-        event.preventDefault();
-        setIsDragging(true);
-    };
-
-    const handleDragLeave = () => {
-        setIsDragging(false);
-    };
-
-    const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
-        event.preventDefault();
-        setIsDragging(false);
-
-        const file = event.dataTransfer.files[0];
-        if (file && file.type.startsWith('image/')) {
-            handleFileChange(file);
-        } else {
-            toast({
-                title: "Failed to upload",
-                description: "Only image files are allowed",
-                variant: "destructive"
-            })
-        }
-    };
+    console.log(`isDesktop: ${isDesktop}; isTablet: ${isTablet}; isMobile: ${isMobile}; isSmallMobile: ${isSmallMobile}`);
 
     if (!isClient) {
         return null;
@@ -109,34 +57,21 @@ const Profile = () => {
         return <TabletDesktopProfile 
             user={userData} 
             setUserData={setUserData}
-            preview={preview}
+            isDesktop={isDesktop}
             isTablet={isTablet}
-            isOpen={isOpen} 
-            isDragging={isDragging} 
-            openModal={openModal} 
-            handleFileChange={handleFileChange} 
-            closeModal={closeModal} 
-            handleDragOver={handleDragOver} 
-            handleDrop={handleDrop} 
-            handleDragLeave={handleDragLeave} 
-            fileName={fileName} 
+            isMobile={isMobile}
+            isSmallMobile={isSmallMobile}
         />
     }
 
     if (isMobile || isSmallMobile) {
         return <MobileProfile 
-            isMobile={isMobile} 
-            isSmallMobile={isSmallMobile} 
-            isOpen={isOpen} 
-            preview={preview} 
-            isDragging={isDragging} 
-            openModal={openModal} 
-            handleFileChange={handleFileChange} 
-            closeModal={closeModal} 
-            handleDragOver={handleDragOver} 
-            handleDrop={handleDrop} 
-            handleDragLeave={handleDragLeave} 
-            fileName={fileName} 
+            user={userData} 
+            setUserData={setUserData}
+            isDesktop={isDesktop}
+            isTablet={isTablet}
+            isMobile={isMobile}
+            isSmallMobile={isSmallMobile}
         />
     }
 };
