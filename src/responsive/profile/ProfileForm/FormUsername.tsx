@@ -152,7 +152,7 @@ const TabletDesktopProfileForm: React.FC<Props> = ({ isDialogOpen, setIsDialogOp
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogTrigger asChild>
                     <button className="relative w-full text-left">
-                        <p className="caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2] text-white w-full p-1 rounded-md ps-3">
+                        <p className="caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2] text-white w-full p-1 rounded-md ps-3 truncate">
                             {username}
                         </p>
                         <span className="absolute top-1/2 right-3 transform -translate-y-1/2 text-[#4b5fe2]">
@@ -160,7 +160,7 @@ const TabletDesktopProfileForm: React.FC<Props> = ({ isDialogOpen, setIsDialogOp
                         </span>
                     </button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px] border-[#1b1d2e] bg-[#0b0d14] border-2 text-white">
+                <DialogContent className="w-[90%] border-[#1b1d2e] bg-[#0b0d14] border-2 text-white rounded-md">
                     <DialogHeader>
                         <DialogTitle>Edit Username</DialogTitle>
                         <DialogDescription>

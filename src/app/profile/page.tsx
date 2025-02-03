@@ -109,8 +109,8 @@ const Profile = () => {
         return <TabletDesktopProfile 
             user={userData} 
             setUserData={setUserData}
-            preview={preview} 
-            isTablet={isTablet} 
+            preview={preview}
+            isTablet={isTablet}
             isOpen={isOpen} 
             isDragging={isDragging} 
             openModal={openModal} 

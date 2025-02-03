@@ -24,7 +24,7 @@ const SideBar: React.FC<SideBarProps> = ({ category }) => {
 
     return (
         <div
-            className={`fixed top-0 left-0 h-screen bg-[#0b0d14] text-white border-r-2 border-[#1f2236] transition-all duration-300 ${isCollapsed ? 'w-13' : 'w-13 sm:w-40 lg:w-72'
+            className={`fixed top-0 left-0 min-h-screen bg-[#0b0d14] text-white border-r-2 border-[#1f2236] transition-all duration-300 ${isCollapsed ? 'w-13' : 'w-13 sm:w-40 lg:w-72'
                 }`}
         >
             <div className="flex items-center justify-center mt-5 sm:hidden">
