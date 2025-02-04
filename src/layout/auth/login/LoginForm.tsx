@@ -89,7 +89,11 @@ const LoginForm = () => {
             toast({
                 description: "success login",
             })
-            push(`/`)
+            if (!dataApi.data.is_admin) {
+                push(`/`)
+            } else {
+                push(`admin/dashboard/add-batch`)
+            }
         },
     })
 
