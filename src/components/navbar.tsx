@@ -51,13 +51,6 @@ const NavBar: React.FC<Props> = ({ category }) => {
                                 <IoHomeOutline size={22} />
                                 <p className="text-sm">Home</p>
                             </Navbar.Link>
-                            <Navbar.Link href="/profile" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white ${isActive('/profile')
-                                ? 'bg-[#4b5fe2]'
-                                : 'hover:bg-[#1f2236]'
-                                }`}>
-                                <VscAccount size={22} />
-                                <p className="text-sm">Profile</p>
-                            </Navbar.Link>
                         </>
                     )}
                     {category === 'admin' && (
@@ -85,6 +78,13 @@ const NavBar: React.FC<Props> = ({ category }) => {
                             </Navbar.Link>
                         </>
                     )}
+                    <Navbar.Link href={category === 'user' ? '/profile/user' : '/admin/dashboard/profile'} className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white ${isActive('/profile')
+                        ? 'bg-[#4b5fe2]'
+                        : 'hover:bg-[#1f2236]'
+                        }`}>
+                        <VscAccount size={22} />
+                        <p className="text-sm">Profile</p>
+                    </Navbar.Link>
                     <Navbar.Link href="/profile" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white hover:bg-[#1f2236]`}>
                         <IoMdExit size={22} />
                         <p className="text-sm">Logout</p>

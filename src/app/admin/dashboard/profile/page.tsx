@@ -54,6 +54,7 @@ const Profile = () => {
             isTablet={isTablet}
             isMobile={isMobile}
             isSmallMobile={isSmallMobile}
+            category="admin"
         />
     }
 

@@ -76,18 +76,6 @@ const SideBar: React.FC<SideBarProps> = ({ category, user }) => {
                                 <p className="text-sm hidden sm:block lg:block">Home</p>
                             </Link>
                         </li>
-                        <li>
-                            <Link
-                                href="/profile"
-                                className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm ${isActive('/profile')
-                                    ? 'bg-[#4b5fe2]'
-                                    : 'hover:bg-[#1f2236]'
-                                    }`}
-                            >
-                                <VscAccount size={22} className="me-1" />
-                                <p className="text-sm hidden sm:block lg:block">Profile</p>
-                            </Link>
-                        </li>
                     </>
                 )}
                 {category === 'admin' && (
@@ -130,6 +118,18 @@ const SideBar: React.FC<SideBarProps> = ({ category, user }) => {
                         </li>
                     </>
                 )}
+                <li>
+                    <Link
+                        href={category === 'user' ? '/profile/user' : '/admin/dashboard/profile'}
+                        className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm ${isActive(category === 'user' ? '/profile/user' : '/admin/dashboard/profile')
+                            ? 'bg-[#4b5fe2]'
+                            : 'hover:bg-[#1f2236]'
+                            }`}
+                    >
+                        <VscAccount size={22} className="me-1" />
+                        <p className="text-sm hidden sm:block lg:block">Profile</p>
+                    </Link>
+                </li>
                 <li>
                     <button
                         onClick={() => console.log('Logout clicked')}

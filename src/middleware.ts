@@ -6,7 +6,23 @@ export async function middleware(request: NextRequest) {
     const url = request.nextUrl.clone();
     const accessToken = request.cookies.get('accessToken')?.value;
 
-    if (url.pathname === '/' || url.pathname === '/profile') {
+    if (url.pathname === '/profile') {
+        if (accessToken) {
+            try {
+                const response = await axiosInstance.get(`/job-entry/@me`, {
+                    headers: { Authorization: `Bearer ${accessToken}` }
+                });
+            } catch (error) {
+                url.pathname = '/login';
+                return NextResponse.redirect(url);
+            }
+        } else {
+            url.pathname = '/login';
+            return NextResponse.redirect(url);
+        }
+    }
+
+    if (url.pathname === '/') {
         if (accessToken) {
             try {
                 const response = await axiosInstance.get(`/job-entry/@me`, {
