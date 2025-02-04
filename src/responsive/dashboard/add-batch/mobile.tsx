@@ -1,8 +1,14 @@
 import NavBar from "@/components/navbar"
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import AddBatch from "./form/AddBatch";
+import React from "react";
 
-const MobileAddBatch = () => {
+interface Props {
+    isDesktop: boolean;
+    isTablet: boolean;
+    isMobile: boolean;
+}
+
+const MobileAddBatch: React.FC<Props> = ({ isDesktop, isTablet, isMobile }) => {
     return (
         <>
             <NavBar category="admin" />
@@ -11,36 +17,7 @@ const MobileAddBatch = () => {
                     <p className="text-white text-2xl font-semibold text-center border-b-2 border-[#1f2236] pb-3">
                         Batch Pendaftaran
                     </p>
-                    <form action="" className="mt-3">
-                        <div className="flex flex-col gap-2">
-                            <label className="text-sm font-semibold text-white">
-                                Title
-                            </label>
-                            <Input
-                                type="text"
-                                placeholder={'title'}
-                                className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2]"
-                            />
-                        </div>
-                        <div className="flex flex-col gap-2 pt-2">
-                            <label className="text-sm font-semibold text-white">
-                                Duration
-                            </label>
-                            <Input
-                                type="text"
-                                placeholder={'Duration'}
-                                className="text-white caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2]"
-                            />
-                        </div>
-                        <div className="flex justify-end">
-                            <Button
-                                type="submit"
-                                className="mt-3 bg-[#4b5fe2] text-white hover:bg-[#4b5fe2] hover:text-white w-[7rem]"
-                            >
-                                Submit
-                            </Button>
-                        </div>
-                    </form>
+                    <AddBatch isDesktop={isDesktop} isTablet={isTablet} isMobile={isMobile} />
                 </div>
             </div>
         </>

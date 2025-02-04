@@ -24,12 +24,7 @@ const Profile = () => {
         retry: false,
     });
 
-    const [isOpen, setIsOpen] = useState(false);
-    const [fileName, setFileName] = useState("File Name");
-    const [preview, setPreview] = useState<string | null>(data?.data?.data.avatar);
-    const [isDragging, setIsDragging] = useState(false);
     const [userData, setUserData] = useState(data?.data?.data);
-    const { toast } = useToast()
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
@@ -46,8 +41,6 @@ const Profile = () => {
     const isTablet = useMediaQuery({ minWidth: 426, maxWidth: 769 });
     const isMobile = useMediaQuery({ maxWidth: 426, minWidth: 320 });
     const isSmallMobile = useMediaQuery({ maxWidth: 320 });
-
-    console.log(`isDesktop: ${isDesktop}; isTablet: ${isTablet}; isMobile: ${isMobile}; isSmallMobile: ${isSmallMobile}`);
 
     if (!isClient) {
         return null;
