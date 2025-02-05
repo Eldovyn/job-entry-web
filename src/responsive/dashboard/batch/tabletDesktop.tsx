@@ -104,7 +104,7 @@ const TabletDesktop: React.FC<Props> = ({ dataBatch, isDesktop, user, setDataBat
                                 </>
                             ) : ''}
                             {isSmallTablet || isExtraSmallTablet ? (
-                                dataBatch.map((data) => (
+                                dataBatch?.map((data) => (
                                     <div className="border rounded-md border-[#1f2236] mt-2 p-3 flex justify-between items-center text-white" key={data.batch_id}>
                                         <p className="text-center">{data.title}</p>
                                     </div>
