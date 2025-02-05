@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/tooltip"
 import Link from "next/link";
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { Switch } from "@/components/ui/switch"
+import UpdateStatusBatch from "./utils/UpdateStatusBatch";
 import { useMediaQuery } from "react-responsive";
 import SearchBatch from "./utils/SearchBatch";
 import DeleteBatch from "./utils/DeleteBatch";
@@ -95,7 +95,7 @@ const TabletDesktop: React.FC<Props> = ({ dataBatch, isDesktop, user, setDataBat
                                                         </div>
                                                     </td>
                                                     <td className="border-2 border-[#1f2236] px-4 py-2 w-[10%]">
-                                                        <Switch className="data-[state=checked]:bg-red-500 data-[state=unchecked]:bg-gray-300" />
+                                                        <UpdateStatusBatch isActive={data.is_active} batchId={data.batch_id} setDataBatch={setDataBatch} />
                                                     </td>
                                                     <td className="border-2 border-[#1f2236] px-4 py-2">
                                                         <TooltipProvider>
