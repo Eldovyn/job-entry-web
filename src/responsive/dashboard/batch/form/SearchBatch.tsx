@@ -27,7 +27,7 @@ const SearchBatch: React.FC = () => {
         onSubmit: (values, { setSubmitting }) => {
             try {
                 const { q } = values;
-                push(`/admin/dashboard/batch?q=${q}`);
+                push(`/admin/dashboard/batch${q ? `?q=${q}` : ''}`);
             } catch (error) {
                 console.error('Terjadi kesalahan:', error);
             } finally {
