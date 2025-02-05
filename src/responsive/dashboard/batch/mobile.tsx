@@ -1,6 +1,6 @@
 import NavBar from "@/components/navbar";
 import React, { Dispatch, SetStateAction } from "react";
-import SearchBatch from "./form/SearchBatch";
+import SearchBatch from "./utils/SearchBatch";
 import Link from "next/link";
 
 interface DataBatch {

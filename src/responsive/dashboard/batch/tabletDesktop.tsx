@@ -1,5 +1,5 @@
 import SideBar from "@/components/sidebar"
-import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
+import React, { useEffect, useState, SetStateAction, Dispatch } from "react";
 import {
     Tooltip,
     TooltipContent,
@@ -8,10 +8,10 @@ import {
 } from "@/components/ui/tooltip"
 import Link from "next/link";
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
 import { Switch } from "@/components/ui/switch"
 import { useMediaQuery } from "react-responsive";
-import SearchBatch from "./form/SearchBatch";
+import SearchBatch from "./utils/SearchBatch";
+import DeleteBatch from "./utils/DeleteBatch";
 
 interface DataBatch {
     batch_id: string;
@@ -38,9 +38,10 @@ interface Props {
     dataBatch: DataBatch[]
     isDesktop: boolean
     user: User
+    setDataBatch: Dispatch<SetStateAction<DataBatch[] | []>>;
 }
 
-const TabletDesktop: React.FC<Props> = ({ dataBatch, isDesktop, user }) => {
+const TabletDesktop: React.FC<Props> = ({ dataBatch, isDesktop, user, setDataBatch }) => {
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
@@ -84,7 +85,7 @@ const TabletDesktop: React.FC<Props> = ({ dataBatch, isDesktop, user }) => {
                                                     <td className="border-2 border-[#1f2236] px-4 py-2 w-[10%]">
                                                         <div className="flex flex-row justify-center">
                                                             <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] me-1">
-                                                                <MdDelete className="cursor-pointer text-red-500" size={20} />
+                                                                <DeleteBatch batchId={data.batch_id} setDataBatch={setDataBatch} />
                                                             </div>
                                                             <Link href={`/admin/dashboard/${data.batch_id}`}>
                                                                 <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] ms-1">

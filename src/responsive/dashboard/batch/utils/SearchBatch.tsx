@@ -1,21 +1,7 @@
-import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { FaSearch } from "react-icons/fa";
-import { useToast } from "@/hooks/use-toast";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
-import { axiosInstance } from "@/lib/axios";
-import Cookies from "js-cookie";
-
-interface DataBatch {
-    batch_id: string;
-    title: string;
-    description: string;
-    created_at: string;
-    updated_at: string;
-    author: string;
-    is_active: boolean;
-}
 
 const SearchBatch: React.FC = () => {
     const { push } = useRouter();

@@ -66,7 +66,7 @@ const BatchPage = () => {
     }
 
     if (isDesktop || isTablet) {
-        return <TabletDesktopBatch dataBatch={dataBatch} user={data?.user} isDesktop={isDesktop} />
+        return <TabletDesktopBatch dataBatch={dataBatch} setDataBatch={setDataBatch} user={data?.user} isDesktop={isDesktop} />
     }
 
     if (isMobile) {
