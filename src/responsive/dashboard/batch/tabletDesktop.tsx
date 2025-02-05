@@ -42,19 +42,9 @@ interface Props {
 }
 
 const TabletDesktop: React.FC<Props> = ({ dataBatch, isDesktop, user, setDataBatch }) => {
-    const [isClient, setIsClient] = useState(false);
-
-    useEffect(() => {
-        setIsClient(true);
-    }, []);
-
     const isTablet = useMediaQuery({ minWidth: 745, maxWidth: 853 });
     const isSmallTablet = useMediaQuery({ minWidth: 525, maxWidth: 745 });
     const isExtraSmallTablet = useMediaQuery({ minWidth: 426, maxWidth: 525 });
-
-    if (!isClient) {
-        return null;
-    }
 
     return (
         <>
