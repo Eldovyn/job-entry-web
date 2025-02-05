@@ -1,7 +1,5 @@
 import SideBar from "@/components/sidebar"
-import React from "react";
-import { Input } from "@/components/ui/input";
-import { FaSearch } from "react-icons/fa";
+import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import {
     Tooltip,
     TooltipContent,
@@ -13,6 +11,7 @@ import { FaExternalLinkAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { Switch } from "@/components/ui/switch"
 import { useMediaQuery } from "react-responsive";
+import SearchBatch from "./form/SearchBatch";
 
 interface DataBatch {
     batch_id: string;
@@ -42,9 +41,19 @@ interface Props {
 }
 
 const TabletDesktop: React.FC<Props> = ({ dataBatch, isDesktop, user }) => {
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
     const isTablet = useMediaQuery({ minWidth: 745, maxWidth: 853 });
     const isSmallTablet = useMediaQuery({ minWidth: 525, maxWidth: 745 });
     const isExtraSmallTablet = useMediaQuery({ minWidth: 426, maxWidth: 525 });
+
+    if (!isClient) {
+        return null;
+    }
 
     return (
         <>
@@ -57,16 +66,7 @@ const TabletDesktop: React.FC<Props> = ({ dataBatch, isDesktop, user }) => {
                                 Batch Pendaftaran
                             </p>
                             <div className="mt-3 flex justify-end flex-row">
-                                <div className="relative lg:w-[40%] md:w-[60%] w-full flex">
-                                    <Input
-                                        className="caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2] pr-10 h-[2.2rem]"
-                                        placeholder="cari sesuai title/id"
-                                        type="text"
-                                    />
-                                    <span className="absolute inset-y-0 right-3 flex items-center text-gray-400">
-                                        <FaSearch />
-                                    </span>
-                                </div>
+                                <SearchBatch />
                             </div>
                             {isTablet || isDesktop ? (
                                 <>

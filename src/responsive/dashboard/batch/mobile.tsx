@@ -1,7 +1,6 @@
 import NavBar from "@/components/navbar";
-import React from "react";
-import { Input } from "@/components/ui/input";
-import { FaSearch } from "react-icons/fa";
+import React, { Dispatch, SetStateAction } from "react";
+import SearchBatch from "./form/SearchBatch";
 import Link from "next/link";
 
 interface DataBatch {
@@ -28,16 +27,7 @@ const MobileBatch: React.FC<Props> = ({ dataBatch }) => {
                         Batch Pendaftaran
                     </p>
                     <div className="mt-3 flex justify-end flex-row">
-                        <div className="relative lg:w-[40%] md:w-[60%] w-full flex">
-                            <Input
-                                className="caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2] pr-10 h-[2.2rem]"
-                                placeholder="cari sesuai title/id"
-                                type="text"
-                            />
-                            <span className="absolute inset-y-0 right-3 flex items-center text-gray-400">
-                                <FaSearch />
-                            </span>
-                        </div>
+                        <SearchBatch />
                     </div>
                     {dataBatch.map((data) => (
                         <Link href={`/admin/dashboard/${data.batch_id}`} key={data.batch_id}>
