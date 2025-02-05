@@ -48,7 +48,7 @@ const BatchPage = () => {
     });
 
     useEffect(() => {
-        setDataBatch(data?.data);
+        setDataBatch(data?.page.batches[0]);
     }, [data]);
 
     useEffect(() => {
