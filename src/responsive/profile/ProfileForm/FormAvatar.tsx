@@ -18,6 +18,7 @@ import { axiosInstance } from "@/lib/axios";
 import { AxiosError } from "axios";
 import Cookies from "js-cookie";
 import { useToast } from "@/hooks/use-toast";
+import { User } from "@/interfaces/User";
 
 interface FormData {
     avatar: File | null;
@@ -33,17 +34,6 @@ interface ErrorResponse {
     errors?: {
         [field: string]: string[];
     };
-}
-
-interface User {
-    avatar: string;
-    created_at: number;
-    email: string;
-    is_active: boolean;
-    is_admin: boolean;
-    updated_at: number;
-    user_id: string;
-    username: string;
 }
 
 interface Props {

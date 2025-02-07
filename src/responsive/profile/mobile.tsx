@@ -7,17 +7,7 @@ import { useState, Dispatch, SetStateAction } from "react";
 import ProfileFormAvatar from "./ProfileForm/FormAvatar";
 import ProfileFormEmail from "./ProfileForm/FormEmail";
 import ProfileFormUsername from "./ProfileForm/FormUsername";
-
-interface User {
-    avatar: string;
-    created_at: number;
-    email: string;
-    is_active: boolean;
-    is_admin: boolean;
-    updated_at: number;
-    user_id: string;
-    username: string;
-}
+import { User } from "@/interfaces/User";
 
 interface Props {
     setUserData: Dispatch<SetStateAction<User | null>>;

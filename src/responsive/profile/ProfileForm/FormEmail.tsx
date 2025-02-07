@@ -18,6 +18,7 @@ import { useFormik } from 'formik';
 import { useToast } from "@/hooks/use-toast";
 import LoadingSpinnerComponent from 'react-spinners-components';
 import Cookies from "js-cookie";
+import { User } from "@/interfaces/User";
 
 interface FormData {
     email: string;
@@ -37,17 +38,6 @@ interface ErrorResponse {
     };
 }
 
-interface User {
-    avatar: string;
-    created_at: number;
-    email: string;
-    is_active: boolean;
-    is_admin: boolean;
-    updated_at: number;
-    user_id: string;
-    username: string;
-}
-
 interface Props {
     isDialogOpen: boolean;
     setIsDialogOpen: Dispatch<SetStateAction<boolean>>;
@@ -61,7 +51,7 @@ const ProfileFormEmail: React.FC<Props> = ({ isDialogOpen, setIsDialogOpen, user
 
     useEffect(() => {
         if (userData) {
-            setEmail(userData.email);
+            setEmail(userData?.email || '');
         }
     }, [userData]);
 
@@ -167,7 +157,7 @@ const ProfileFormEmail: React.FC<Props> = ({ isDialogOpen, setIsDialogOpen, user
                             now you can edit your email
                         </DialogDescription>
                     </DialogHeader>
-                    <form className="flex flex-col gap-2" onSubmit={formik.isSubmitting ? () => {} : formik.handleSubmit}>
+                    <form className="flex flex-col gap-2" onSubmit={formik.isSubmitting ? () => { } : formik.handleSubmit}>
                         <Input
                             type="text"
                             id="email"

@@ -18,6 +18,7 @@ import { useFormik } from 'formik';
 import { useToast } from "@/hooks/use-toast";
 import LoadingSpinnerComponent from 'react-spinners-components';
 import Cookies from "js-cookie";
+import { User } from "@/interfaces/User";
 
 interface FormData {
     username: string;
@@ -35,17 +36,6 @@ interface ErrorResponse {
     errors?: {
         [field: string]: string[];
     };
-}
-
-interface User {
-    avatar: string;
-    created_at: number;
-    email: string;
-    is_active: boolean;
-    is_admin: boolean;
-    updated_at: number;
-    user_id: string;
-    username: string;
 }
 
 interface Props {
