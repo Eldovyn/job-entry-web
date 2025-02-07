@@ -1,12 +1,11 @@
 'use client'
 import IconVerification from "@/../public/Verification.png"
 import Image from "next/image"
-import { useQuery } from "@tanstack/react-query";
-import { axiosInstance } from "@/lib/axios";
+import { usePageVerification } from "@/api/user/pageVerification";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { use, useEffect } from "react";
 import Link from "next/link";
 
 interface ErrorResponse {
@@ -20,23 +19,9 @@ const AccountActive = () => {
     const { push } = useRouter();
     const searchParams = useSearchParams();
 
-    const { data, isLoading, isError, error } = useQuery({
-        queryKey: ['email-account-active'],
-        queryFn: async () => {
-            const token = searchParams.get('token');
-            const response = await axiosInstance.get(`/job-entry/account-active/email-verification`, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                params: {
-                    token
-                },
-            });
-            return response;
-        },
-        refetchOnWindowFocus: false,
-        retry: false,
-    });
+    const { data, isLoading, isError, error } = usePageVerification(
+        searchParams.get("token") || ""
+    )
 
     const err = error as AxiosError<ErrorResponse>;
 

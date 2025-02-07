@@ -1,7 +1,7 @@
 'use client'
 import IconEmail from "@/../public/iconEmailVerification.png"
 import Image from "next/image"
-import { useQuery } from "@tanstack/react-query";
+import { usePageVerification } from "@/api/user/pageVerification";
 import { axiosInstance } from "@/lib/axios";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
@@ -13,23 +13,9 @@ const VerifyEmail = () => {
     const [isLoadingResend, setIsLoadingResend] = useState(false);
     const [shouldRedirect, setShouldRedirect] = useState(false);
 
-    const { data, isError, error } = useQuery({
-        queryKey: ['my-polling'],
-        queryFn: async () => {
-            const token = searchParams.get('token');
-            const response = await axiosInstance.get(`/job-entry/account-active/page-verification`, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                params: {
-                    token
-                },
-            });
-            return response;
-        },
-        refetchOnWindowFocus: false,
-        retry: false,
-    });
+    const { data, isLoading, isError, error } = usePageVerification(
+        searchParams.get("token") || ""
+    )
 
     useEffect(() => {
         if (isError) {
@@ -75,7 +61,7 @@ const VerifyEmail = () => {
                     <p className="text-white">Link expired?</p>
                     <p
                         className="text-blue-600 md:ms-1 lg:ms-1 cursor-pointer"
-                        onClick={isLoadingResend ? () => {} : handleResendEmail}
+                        onClick={isLoadingResend ? () => { } : handleResendEmail}
                     >
                         Resend verification email.
                     </p>
