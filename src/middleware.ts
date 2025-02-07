@@ -94,7 +94,7 @@ export async function middleware(request: NextRequest) {
         const token = url.searchParams.get('token');
         if (token) {
             try {
-                const response = await axiosInstance.get(`/job-entry/account-active/page-verification`, { params: { token } });
+                const response = await axiosInstance.get(`/job-entry/account-active/email-verification`, { params: { token } });
             } catch (error) {
                 return NextResponse.redirect(new URL('/register', request.url));
             }
