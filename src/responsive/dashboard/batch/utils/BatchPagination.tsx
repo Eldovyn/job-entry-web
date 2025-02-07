@@ -16,55 +16,15 @@ import {
     PaginationLink,
 } from "@/components/ui/pagination";
 import Link from "next/link";;
-
-interface Pagination {
-    current_page: number;
-    items_per_page: number;
-    limit: number | null;
-    next_page: number | null;
-    previous_page: number | null;
-    total_items: number;
-    total_pages: number;
-    current_batch: Batch[];
-}
-
-interface User {
-    avatar: string;
-    created_at: number;
-    email: string;
-    is_active: boolean;
-    is_admin: boolean;
-    updated_at: number;
-    user_id: string;
-    username: string;
-}
-
-interface Batch {
-    batch_id: string;
-    created_at: number;
-    description: string;
-    title: string;
-    updated_at: number;
-    user_id: string;
-    author: string
-    is_active: boolean
-}
-
-interface SuccessResponse {
-    data: Batch[];
-    message: string;
-    page: Pagination;
-    user: User;
-}
+import { BatchPagination as BPagination } from "@/interfaces/BatchPagination";
 
 interface Props {
-    data: SuccessResponse;
-    pagination: Pagination | null;
+    pagination: BPagination | null;
     isDesktop: boolean;
-    setPagination: Dispatch<SetStateAction<Pagination | null>>;
+    setPagination: Dispatch<SetStateAction<BPagination | null>>;
 }
 
-const BatchPagination: React.FC<Props> = ({ pagination, data, isDesktop, setPagination }) => {
+const BatchPagination: React.FC<Props> = ({ pagination, isDesktop, setPagination }) => {
     const searchParams = useSearchParams();
 
     return (
@@ -83,7 +43,7 @@ const BatchPagination: React.FC<Props> = ({ pagination, data, isDesktop, setPagi
                             <td className="border-2 border-[#1f2236] px-4 py-2 w-[10%]">
                                 <div className="flex flex-row justify-center">
                                     <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] me-1">
-                                        <DeleteBatch pagination={pagination} data={data as SuccessResponse} batchId={item.batch_id} setPagination={setPagination} />
+                                        <DeleteBatch pagination={pagination} batchId={item.batch_id} setPagination={setPagination} />
                                     </div>
                                     <Link href={`/admin/dashboard/${item.batch_id}`}>
                                         <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] ms-1">

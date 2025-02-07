@@ -4,60 +4,27 @@ import { useFormik } from "formik";
 import { axiosInstance } from "@/lib/axios";
 import Cookies from "js-cookie";
 import { useRouter, useSearchParams } from "next/navigation";
-
-interface Pagination {
-    current_page: number;
-    items_per_page: number;
-    limit: number | null;
-    next_page: number | null;
-    previous_page: number | null;
-    total_items: number;
-    total_pages: number;
-    current_batch: Batch[];
-}
-
-interface User {
-    avatar: string;
-    created_at: number;
-    email: string;
-    is_active: boolean;
-    is_admin: boolean;
-    updated_at: number;
-    user_id: string;
-    username: string;
-}
-
-interface Batch {
-    batch_id: string;
-    created_at: number;
-    description: string;
-    title: string;
-    updated_at: number;
-    user_id: string;
-    author: string
-    is_active: boolean
-}
-
-interface SuccessResponse {
-    data: Batch[];
-    message: string;
-    page: Pagination;
-    user: User;
-}
-
-interface ErrorResponse {
-    message: string;
-    errors?: Record<string, string[]>;
-}
+import { BatchPagination } from "@/interfaces/BatchPagination";
+import { Batch } from "@/interfaces/Batch";
+import { User } from "@/interfaces/User";
 
 interface Props {
-    data: SuccessResponse;
-    pagination: Pagination | null
+    pagination: BatchPagination | null
     batchId: string
-    setPagination: Dispatch<SetStateAction<Pagination | null>>;
+    setPagination: Dispatch<SetStateAction<BatchPagination | null>>;
 }
 
-const DeleteBatch: React.FC<Props> = ({ pagination, data, batchId, setPagination }) => {
+interface ApiResponse {
+    data: Batch | null;
+    message: string;
+    errors: {
+        [field: string]: string[];
+    } | null;
+    page: BatchPagination | null;
+    user: User | null;
+}
+
+const DeleteBatch: React.FC<Props> = ({ pagination, batchId, setPagination }) => {
     const { push } = useRouter();
     const searchParams = useSearchParams();
 
@@ -72,7 +39,7 @@ const DeleteBatch: React.FC<Props> = ({ pagination, data, batchId, setPagination
         initialValues: {},
         onSubmit: async (values, { setSubmitting }) => {
             try {
-                const response = await axiosInstance.delete<SuccessResponse | ErrorResponse>(`/job-entry/admin/batch`, {
+                const response = await axiosInstance.delete<ApiResponse>(`/job-entry/admin/batch`, {
                     headers: {
                         "Content-Type": "application/json",
                         "Authorization": `Bearer ${Cookies.get('accessToken') || ''}`
@@ -85,7 +52,7 @@ const DeleteBatch: React.FC<Props> = ({ pagination, data, batchId, setPagination
                     if ('page' in responseData) {
                         setPagination({
                             ...pagination,
-                            ...responseData.page as Pagination,
+                            ...responseData.page as BatchPagination,
                         })
                     }
                 }

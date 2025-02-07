@@ -11,21 +11,11 @@ import { IoMdExit } from "react-icons/io";
 import { GoDatabase } from "react-icons/go";
 import { CiBoxList } from "react-icons/ci";
 import { LuLockOpen } from "react-icons/lu";
-
-interface User {
-    avatar: string;
-    created_at: number;
-    email: string;
-    is_active: boolean;
-    is_admin: boolean;
-    updated_at: number;
-    user_id: string;
-    username: string;
-}
+import { User } from '@/interfaces/User';
 
 interface SideBarProps {
     category: string;
-    user?: User | null;
+    user: User | null;
 }
 
 const SideBar: React.FC<SideBarProps> = ({ category, user }) => {

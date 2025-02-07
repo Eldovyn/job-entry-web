@@ -6,87 +6,31 @@ import TabletDesktopBatch from "@/responsive/dashboard/batch/tabletDesktop";
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "@/lib/axios";
 import Cookies from "js-cookie";
+import { useMe } from "@/api/user/me";
+import { useAdminAllBatch } from "@/api/batch/useAdminAllBatch";
 import { useRouter, useSearchParams } from "next/navigation";
-
-interface Pagination {
-    current_page: number;
-    items_per_page: number;
-    limit: number | null;
-    next_page: number | null;
-    previous_page: number | null;
-    total_items: number;
-    total_pages: number;
-    current_batch: Batch[];
-}
-
-interface User {
-    avatar: string;
-    created_at: number;
-    email: string;
-    is_active: boolean;
-    is_admin: boolean;
-    updated_at: number;
-    user_id: string;
-    username: string;
-}
-
-interface Batch {
-    batch_id: string;
-    created_at: number;
-    description: string;
-    title: string;
-    updated_at: number;
-    user_id: string;
-    author: string
-    is_active: boolean
-}
-
-interface SuccessResponse {
-    data: Batch[];
-    message: string;
-    page: Pagination;
-    user: User;
-}
-
-interface ErrorResponse {
-    message: string;
-    errors?: Record<string, string[]>;
-}
+import { BatchPagination } from "@/interfaces/BatchPagination";
 
 
 const BatchPage = () => {
     const [isClient, setIsClient] = useState(false);
-    const [pagination, setPagination] = useState<Pagination | null>(null);
+    const [pagination, setPagination] = useState<BatchPagination | null>(null);
     const searchParams = useSearchParams();
-    const router = useRouter();
-    const currentPage = Number(searchParams.get("current_page"));
+    const currentPage = searchParams.get("current_page")
     const q = searchParams.get("q");
 
     useEffect(() => {
         setIsClient(true);
     }, []);
 
-    const { data, isLoading, isError, error } = useQuery<SuccessResponse | ErrorResponse>({
-        queryKey: ["get-all-batch", currentPage, q],
-        queryFn: async () => {
-            const response = await axiosInstance.get("/job-entry/admin/search/batch", {
-                params: { current_page: currentPage, q: q },
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${Cookies.get('accessToken') || ''}`
-                },
-            });
-            return response.data;
-        },
-        refetchOnWindowFocus: false,
-        retry: false,
-    });
+    const { data: batch, isLoading: isLoadingBatch, isError: isErrorBatch, error: errorBatch } = useAdminAllBatch(currentPage || "1", q || "", Cookies.get('accessToken') || '');
+    const { data: me, isLoading: isLoadingMe, isError: isErrorMe, error: errorMe } = useMe(Cookies.get('accessToken') || '');
 
     useEffect(() => {
-        if (!isLoading && data) {
-            setPagination((data as SuccessResponse).page);
+        if (!isLoadingBatch && batch) {
+            setPagination(batch.page);
         }
-    }, [isLoading, data]);
+    }, [isLoadingBatch, batch]);
 
     const isDesktop = useMediaQuery({ minWidth: 853 });
     const isTablet = useMediaQuery({ minWidth: 445, maxWidth: 853 });
@@ -97,12 +41,12 @@ const BatchPage = () => {
     }
 
     if (isDesktop || isTablet) {
-        return <TabletDesktopBatch pagination={pagination} setPagination={setPagination} data={data as SuccessResponse} isDesktop={isDesktop} />
+        return <TabletDesktopBatch pagination={pagination} setPagination={setPagination} user={me?.data || null} isDesktop={isDesktop} />
     }
 
-    if (isMobile) {
-        return <MobileBatch data={data as SuccessResponse} />
-    }
+    // if (isMobile) {
+    //     return <MobileBatch data={data as SuccessResponse} />
+    // }
 }
 
 export default BatchPage;

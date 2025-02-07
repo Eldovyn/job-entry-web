@@ -3,16 +3,18 @@ import React from "react";
 import { useFormik } from "formik";
 import { axiosInstance } from "@/lib/axios";
 import Cookies from "js-cookie";
+import { Batch } from "@/interfaces/Batch";
+import { BatchPagination } from "@/interfaces/BatchPagination";
+import { User } from "@/interfaces/User";
 
-interface Batch {
-    batch_id: string;
-    created_at: number;
-    description: string;
-    title: string;
-    updated_at: number;
-    user_id: string;
-    author: string
-    is_active: boolean
+interface ApiResponse {
+    data: Batch | null;
+    message: string;
+    errors: {
+        [field: string]: string[];
+    } | null;
+    page: BatchPagination | null;
+    user: User | null;
 }
 
 interface Props {
@@ -27,7 +29,7 @@ const UpdateStatusBatch: React.FC<Props> = ({ batchId,isActive }) => {
         },
         onSubmit: async (values, { setSubmitting }) => {
             try {
-                const response = await axiosInstance.patch(`/job-entry/admin/batch/status`,
+                const response = await axiosInstance.patch<ApiResponse>(`/job-entry/admin/batch/status`,
                     { batch_id: batchId },
                     {
                         headers: {
@@ -35,11 +37,10 @@ const UpdateStatusBatch: React.FC<Props> = ({ batchId,isActive }) => {
                             "Authorization": `Bearer ${Cookies.get('accessToken') || ''}`
                         }
                     });
-
+                const resp = response.data;
                 if (response.status === 201) {
+                    formik.setFieldValue('isEnabled', resp.data?.is_active);
                 }
-
-                formik.setFieldValue('isEnabled', response.data?.data.is_active);
             } catch (error) {
                 console.error('Terjadi kesalahan:', error);
             } finally {
