@@ -1,11 +1,11 @@
 'use client'
 import IconVerification from "@/../public/Verification.png"
 import Image from "next/image"
-import { usePageVerification } from "@/api/user/pageVerification";
+import { useEmailVerification } from "@/api/user/emailVerification";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-import { use, useEffect } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 
 interface ErrorResponse {
@@ -19,7 +19,7 @@ const AccountActive = () => {
     const { push } = useRouter();
     const searchParams = useSearchParams();
 
-    const { data, isLoading, isError, error } = usePageVerification(
+    const { data, isLoading, isError, error } = useEmailVerification(
         searchParams.get("token") || ""
     )
 

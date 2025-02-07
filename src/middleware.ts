@@ -90,6 +90,19 @@ export async function middleware(request: NextRequest) {
         }
     }
 
+    if (url.pathname === '/account-active') {
+        const token = url.searchParams.get('token');
+        if (token) {
+            try {
+                const response = await axiosInstance.get(`/job-entry/account-active/page-verification`, { params: { token } });
+            } catch (error) {
+                return NextResponse.redirect(new URL('/register', request.url));
+            }
+        } else {
+            return NextResponse.redirect(new URL('/register', request.url));
+        }
+    }
+
     if (url.pathname === '/account-active/sent') {
         const token = url.searchParams.get('token');
         if (token) {
