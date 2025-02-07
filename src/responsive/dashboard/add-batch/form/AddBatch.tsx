@@ -9,6 +9,7 @@ import React from "react";
 import { useFormik } from "formik";
 import Cookies from "js-cookie";
 import LoadingSpinnerComponent from "react-spinners-components";
+import { useRouter } from "next/navigation";
 
 interface Props {
     isDesktop: boolean;
@@ -37,6 +38,7 @@ const AddBatch: React.FC<Props> = ({ isDesktop, isTablet, isMobile }) => {
     if (!isDesktop && !isTablet && !isMobile) return null;
 
     const { toast } = useToast();
+    const { push } = useRouter();
 
     const [formErrors, setFormErrors] = useState<FormErrors>({
         title: [],
@@ -75,6 +77,7 @@ const AddBatch: React.FC<Props> = ({ isDesktop, isTablet, isMobile }) => {
         },
         onSuccess: async (data) => {
             const dataApi = data.data
+            console.log(dataApi);
             toast({
                 description: dataApi.message,
             })
@@ -84,6 +87,7 @@ const AddBatch: React.FC<Props> = ({ isDesktop, isTablet, isMobile }) => {
             })
             formik.setFieldValue('title', '');
             formik.setFieldValue('description', '');
+            push(`/admin/dashboard/batch?current_page=${dataApi.page.current_page}&q=${dataApi.data.batch_id}`);
         },
     })
 

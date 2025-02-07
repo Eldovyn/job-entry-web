@@ -1,26 +1,27 @@
 import SideBar from "@/components/sidebar"
-import React, { useEffect, useState, SetStateAction, Dispatch } from "react";
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip"
-import Link from "next/link";
-import { FaExternalLinkAlt } from "react-icons/fa";
-import UpdateStatusBatch from "./utils/UpdateStatusBatch";
+import React, { SetStateAction, Dispatch } from "react";
 import { useMediaQuery } from "react-responsive";
 import SearchBatch from "./utils/SearchBatch";
+import BatchPagination from "./utils/BatchPagination";
 import DeleteBatch from "./utils/DeleteBatch";
+import {
+    Pagination,
+    PaginationContent,
+    PaginationItem,
+    PaginationLink,
+} from "@/components/ui/pagination";
+import { useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
-interface DataBatch {
-    batch_id: string;
-    title: string;
-    description: string;
-    created_at: string;
-    updated_at: string;
-    author: string;
-    is_active: boolean;
+interface Pagination {
+    current_page: number;
+    items_per_page: number;
+    limit: number | null;
+    next_page: number | null;
+    previous_page: number | null;
+    total_items: number;
+    total_pages: number;
+    current_batch: Batch[];
 }
 
 interface User {
@@ -34,22 +35,42 @@ interface User {
     username: string;
 }
 
-interface Props {
-    dataBatch: DataBatch[]
-    isDesktop: boolean
-    user: User
-    setDataBatch: Dispatch<SetStateAction<DataBatch[] | []>>;
+interface Batch {
+    batch_id: string;
+    created_at: number;
+    description: string;
+    title: string;
+    updated_at: number;
+    user_id: string;
+    author: string
+    is_active: boolean
 }
 
-const TabletDesktop: React.FC<Props> = ({ dataBatch, isDesktop, user, setDataBatch }) => {
+interface SuccessResponse {
+    data: Batch[];
+    message: string;
+    page: Pagination;
+    user: User;
+}
+
+interface Props {
+    data: SuccessResponse
+    pagination: Pagination | null;
+    isDesktop: boolean
+    setPagination: Dispatch<SetStateAction<Pagination | null>>;
+}
+
+const TabletDesktop: React.FC<Props> = ({ pagination, data, isDesktop, setPagination }) => {
     const isTablet = useMediaQuery({ minWidth: 745, maxWidth: 853 });
     const isSmallTablet = useMediaQuery({ minWidth: 525, maxWidth: 745 });
     const isExtraSmallTablet = useMediaQuery({ minWidth: 426, maxWidth: 525 });
 
+    const searchParams = useSearchParams();
+
     return (
         <>
             <div className="flex bg-[#0b0d14]">
-                <SideBar category="admin" user={user} />
+                <SideBar category="admin" user={data?.user} />
                 <main className={`flex-1 ml-20 sm:ml-40 lg:ml-72 p-8 bg-[#0b0d14] flex items-center justify-center`}>
                     <div className="h-screen bg-[#0b0d14] flex items-center justify-center md:w-[95%] lg:w-[90%] w-full">
                         <div className="bg-[#12141e] w-full border-2 p-8 rounded-md border-[#1f2236]">
@@ -60,60 +81,45 @@ const TabletDesktop: React.FC<Props> = ({ dataBatch, isDesktop, user, setDataBat
                                 <SearchBatch />
                             </div>
                             {isTablet || isDesktop ? (
-                                <>
-                                    <table className="table-auto w-full border-2 mt-2 text-white text-center">
-                                        <thead className="bg-[#1f2236]">
-                                            <tr>
-                                                <th className="border-2 border-[#1f2236] px-4 py-2">Action</th>
-                                                <th className="border-2 border-[#1f2236] px-4 py-2">Switch</th>
-                                                <th className="border-2 border-[#1f2236] px-4 py-2">Title</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {dataBatch?.map((data) => (
-                                                <tr key={data.batch_id}>
-                                                    <td className="border-2 border-[#1f2236] px-4 py-2 w-[10%]">
-                                                        <div className="flex flex-row justify-center">
-                                                            <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] me-1">
-                                                                <DeleteBatch batchId={data.batch_id} setDataBatch={setDataBatch} />
-                                                            </div>
-                                                            <Link href={`/admin/dashboard/${data.batch_id}`}>
-                                                                <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] ms-1">
-                                                                    <FaExternalLinkAlt className="cursor-pointer text-white" size={20} />
-                                                                </div>
-                                                            </Link>
-                                                        </div>
-                                                    </td>
-                                                    <td className="border-2 border-[#1f2236] px-4 py-2 w-[10%]">
-                                                        <UpdateStatusBatch isActive={data.is_active} batchId={data.batch_id} setDataBatch={setDataBatch} />
-                                                    </td>
-                                                    <td className="border-2 border-[#1f2236] px-4 py-2">
-                                                        <TooltipProvider>
-                                                            <Tooltip>
-                                                                <TooltipTrigger>{data.title}</TooltipTrigger>
-                                                                <TooltipContent>
-                                                                    <p>{data.batch_id}</p>
-                                                                </TooltipContent>
-                                                            </Tooltip>
-                                                        </TooltipProvider>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </>
+                                <BatchPagination pagination={pagination} setPagination={setPagination} data={data as SuccessResponse} isDesktop={isDesktop} />
                             ) : ''}
-                            {isSmallTablet || isExtraSmallTablet ? (
-                                dataBatch?.map((data) => (
-                                    <div className="border rounded-md border-[#1f2236] mt-2 p-3 flex justify-between items-center text-white" key={data.batch_id}>
-                                        <p className="text-center">{data.title}</p>
-                                    </div>
-                                ))
+                            {isSmallTablet || isExtraSmallTablet && pagination ? (
+                                <>
+                                    {pagination?.current_batch?.map((item) => (
+                                        <div className="border rounded-md border-[#1f2236] mt-2 p-3 flex justify-between items-center text-white" key={item?.batch_id}>
+                                            <p className="text-center truncate">{item?.title}</p>
+                                            <DeleteBatch pagination={pagination} data={data as SuccessResponse} batchId={item.batch_id} setPagination={setPagination} />
+                                        </div>
+                                    ))}
+                                    <Pagination className="mt-3">
+                                        <PaginationContent>
+                                            <PaginationItem>
+                                                <PaginationLink
+                                                    href={`?current_page=${pagination?.previous_page || 1}&q=${searchParams.get('q')}`}
+                                                    className="bg-[#4b5fe2] text-white hover:bg-[#4b5fe2] hover:text-white w-[5rem]"
+                                                >
+                                                    Previous
+                                                </PaginationLink>
+                                            </PaginationItem>
+                                            <Button className="bg-[#4b5563] text-white hover:bg-[#4b5563] hover:text-white w-[2.5rem]">
+                                                {pagination?.current_page}
+                                            </Button>
+                                            <PaginationItem>
+                                                <PaginationLink
+                                                    href={`?current_page=${pagination?.next_page || pagination?.total_pages}&q=${searchParams.get('q')}`}
+                                                    className="bg-[#4b5fe2] text-white hover:bg-[#4b5fe2] hover:text-white w-[5rem]"
+                                                >
+                                                    Next
+                                                </PaginationLink>
+                                            </PaginationItem>
+                                        </PaginationContent>
+                                    </Pagination>
+                                </>
                             ) : ''}
                         </div>
                     </div>
-                </main>
-            </div>
+                </main >
+            </div >
         </>
     )
 }

@@ -25,7 +25,7 @@ interface User {
 
 interface SideBarProps {
     category: string;
-    user: User | null;
+    user?: User | null;
 }
 
 const SideBar: React.FC<SideBarProps> = ({ category, user }) => {
