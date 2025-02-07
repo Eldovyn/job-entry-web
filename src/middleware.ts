@@ -86,22 +86,40 @@ export async function middleware(request: NextRequest) {
     }
 
     if (url.pathname === '/admin/dashboard/batch') {
-        const currentPage = url.searchParams.get('current_page');
-        const q = url.searchParams.get('q');
+        if (accessToken) {
+            try {
+                const response = await axiosInstance.get(`/job-entry/@me`, {
+                    headers: { Authorization: `Bearer ${accessToken}` }
+                });
+                const data = response.data
+                if (!data.data.is_admin) {
+                    url.pathname = '/';
+                    return NextResponse.redirect(url);
+                }
+                const currentPage = url.searchParams.get('current_page');
+                const q = url.searchParams.get('q');
 
-        if (currentPage && q !== null) {
-            return NextResponse.next();
+                if (currentPage && q !== null) {
+                    return NextResponse.next();
+                }
+
+                if (!currentPage) {
+                    url.searchParams.set('current_page', '1');
+                }
+
+                if (!q) {
+                    url.searchParams.set('q', '');
+                }
+
+                return NextResponse.redirect(url);
+            } catch (error) {
+                url.pathname = '/login';
+                return NextResponse.redirect(url);
+            }
+        } else {
+            url.pathname = '/login';
+            return NextResponse.redirect(url);
         }
-
-        if (!currentPage) {
-            url.searchParams.set('current_page', '1');
-        }
-
-        if (!q) {
-            url.searchParams.set('q', '');
-        }
-
-        return NextResponse.redirect(url);
     }
 
     if (url.pathname === '/register' || url.pathname === '/login') {
