@@ -2,32 +2,24 @@
 import IconVerification from "@/../public/Verification.png"
 import Image from "next/image"
 import { useEmailVerification } from "@/api/user/emailVerification";
-import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import Link from "next/link";
 
-interface ErrorResponse {
-    message: string;
-    errors?: {
-        [field: string]: string[];
-    };
-}
-
 const AccountActive = () => {
     const { push } = useRouter();
     const searchParams = useSearchParams();
 
-    const { data, isLoading, isError, error } = useEmailVerification(
+    const { data, isLoading, isError } = useEmailVerification(
         searchParams.get("token") || ""
-    )
+    );
 
-    const err = error as AxiosError<ErrorResponse>;
-
-    if (err) {
-        push(`/register`);
-    }
+    useEffect(() => {
+        if (isError) {
+            push(`/register`);
+        }
+    }, [isError, push]);
 
     useEffect(() => {
         if (data) {
