@@ -11,7 +11,9 @@ const AddBatch = () => {
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
-        setIsClient(true);
+        setTimeout(() => {
+            setIsClient(true);
+        }, 100);
     }, []);
 
     const { data, isLoading, isError, error } = useQuery({

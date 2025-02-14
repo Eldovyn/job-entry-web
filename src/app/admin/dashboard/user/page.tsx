@@ -8,7 +8,9 @@ const DashboardUser = () => {
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
-        setIsClient(true);
+        setTimeout(() => {
+            setIsClient(true);
+        }, 100);
     }, []);
 
     const isMobile = useMediaQuery({

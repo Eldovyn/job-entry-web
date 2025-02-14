@@ -26,7 +26,9 @@ const HomePage = () => {
     const { data: batch, isLoading: batchIsLoading, isError: batchIsError, error: batchError } = useUserAllBatch(currentPage || "1", q || "", Cookies.get('accessToken') || '');
 
     useEffect(() => {
-        setIsClient(true);
+        setTimeout(() => {
+            setIsClient(true);
+        }, 100);
     }, []);
 
     const isMobile = useMediaQuery({
@@ -41,9 +43,11 @@ const HomePage = () => {
         query: '(min-width: 1024px)'
     });
 
-    if (!isClient) {
-        return null
-    }
+    useEffect(() => {
+        setTimeout(() => {
+            setIsClient(true);
+        }, 100);
+    }, []);
 
 
     if (isTablet || isDesktop) {

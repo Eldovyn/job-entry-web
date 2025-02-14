@@ -20,7 +20,9 @@ const BatchPage = () => {
     const q = searchParams.get("q");
 
     useEffect(() => {
-        setIsClient(true);
+        setTimeout(() => {
+            setIsClient(true);
+        }, 100);
     }, []);
 
     const { data: batch, isLoading: isLoadingBatch, isError: isErrorBatch, error: errorBatch } = useAdminAllBatch(currentPage || "1", q || "", Cookies.get('accessToken') || '');

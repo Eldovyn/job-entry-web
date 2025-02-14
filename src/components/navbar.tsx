@@ -22,7 +22,9 @@ const NavBar: React.FC<Props> = ({ category }) => {
     const isActive = (path: string) => pathname === path;
 
     useEffect(() => {
-        setIsClient(true);
+        setTimeout(() => {
+            setIsClient(true);
+        }, 100);
     }, []);
 
     const isTablet = useMediaQuery({ minWidth: 426, maxWidth: 768 });

@@ -20,7 +20,9 @@ const Profile = () => {
     }, [data]);
 
     useEffect(() => {
-        setIsClient(true);
+        setTimeout(() => {
+            setIsClient(true);
+        }, 100);
     }, []);
 
     const isDesktop = useMediaQuery({ minWidth: 769 });
