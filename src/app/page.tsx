@@ -13,12 +13,14 @@ import NavBar from "@/components/navbar";
 
 
 const HomePage = () => {
+    console.log("🏠 HomePage rendered");
     const router = useRouter();
     const searchParams = useSearchParams();
     const currentPage = searchParams.get("current_page")
     const q = searchParams.get("q");
 
     const [isClient, setIsClient] = useState(false);
+
 
     const { data: user, isLoading: userIsLoading, isError: userIsError, error: userError } = useMe(Cookies.get('accessToken') || '');
     const { data: batch, isLoading: batchIsLoading, isError: batchIsError, error: batchError } = useUserAllBatch(currentPage || "1", q || "", Cookies.get('accessToken') || '');
@@ -40,10 +42,9 @@ const HomePage = () => {
     });
 
     if (!isClient) {
-        return null;
+        return null
     }
 
-    console.log(isMobile)
 
     if (isTablet || isDesktop) {
         return (

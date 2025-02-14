@@ -1,199 +1,67 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
-import { axiosInstance } from './lib/axios';
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { axiosInstance } from "./lib/axios";
+
+async function getUserData(accessToken: string) {
+    try {
+        const response = await axiosInstance.get(`/job-entry/@me`, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        return response.data?.data;
+    } catch (error) {
+        return null;
+    }
+}
 
 export async function middleware(request: NextRequest) {
     const url = request.nextUrl.clone();
-    const accessToken = request.cookies.get('accessToken')?.value;
+    const accessToken = request.cookies.get("accessToken")?.value;
 
-    if (url.pathname === '/profile') {
-        if (accessToken) {
+    const protectedRoutes = ["/profile", "/admin/dashboard", "/admin/dashboard/profile", "/admin/dashboard/batch"];
+    const authPages = ["/register", "/login"];
+    const tokenRequiredRoutes = {
+        "/account-active": "/register",
+        "/account-active/sent": "/register",
+        "/forgot-password/sent": "/forgot-password",
+        "/reset-password": "/forgot-password",
+    };
+
+    if (protectedRoutes.some((route) => url.pathname.startsWith(route))) {
+        if (!accessToken) {
+            url.pathname = "/login";
+            return NextResponse.redirect(url);
+        }
+
+        const userData = await getUserData(accessToken);
+        if (!userData) {
+            url.pathname = "/login";
+            return NextResponse.redirect(url);
+        }
+
+        if (url.pathname.startsWith("/admin/dashboard") && !userData.is_admin) {
+            url.pathname = "/";
+            return NextResponse.redirect(url);
+        }
+    }
+
+    if (authPages.includes(url.pathname) && accessToken) {
+        return NextResponse.redirect(new URL("/", request.url));
+    }
+
+    for (const [route, fallback] of Object.entries(tokenRequiredRoutes)) {
+        if (url.pathname === route) {
+            const token = url.searchParams.get("token");
+            if (!token) {
+                return NextResponse.redirect(new URL(fallback, request.url));
+            }
+
             try {
-                const response = await axiosInstance.get(`/job-entry/@me`, {
-                    headers: { Authorization: `Bearer ${accessToken}` }
+                await axiosInstance.get(`/job-entry${route.replace("/account-active", "/account-active/email-verification")}`, {
+                    params: { token },
                 });
             } catch (error) {
-                url.pathname = '/login';
-                return NextResponse.redirect(url);
+                return NextResponse.redirect(new URL(fallback, request.url));
             }
-        } else {
-            url.pathname = '/login';
-            return NextResponse.redirect(url);
-        }
-    }
-
-    if (url.pathname === '/') {
-        if (accessToken) {
-            try {
-                const response = await axiosInstance.get(`/job-entry/@me`, {
-                    headers: { Authorization: `Bearer ${accessToken}` }
-                });
-                const data = response.data
-                if (data.data.is_admin) {
-                    url.pathname = '/admin/dashboard/add-batch';
-                    return NextResponse.redirect(url);
-                }
-                const currentPage = url.searchParams.get('current_page');
-                const q = url.searchParams.get('q');
-
-                if (currentPage && q !== null) {
-                    return NextResponse.next();
-                }
-
-                if (!currentPage) {
-                    url.searchParams.set('current_page', '1');
-                }
-
-                if (!q) {
-                    url.searchParams.set('q', '');
-                }
-
-                return NextResponse.redirect(url);
-            } catch (error) {
-                url.pathname = '/login';
-                return NextResponse.redirect(url);
-            }
-        } else {
-            url.pathname = '/login';
-            return NextResponse.redirect(url);
-        }
-    }
-
-    if (url.pathname === '/admin/dashboard/add-batch') {
-        if (accessToken) {
-            try {
-                const response = await axiosInstance.get(`/job-entry/@me`, {
-                    headers: { Authorization: `Bearer ${accessToken}` }
-                });
-                const data = response.data
-                if (!data.data.is_admin) {
-                    url.pathname = '/';
-                    return NextResponse.redirect(url);
-                }
-            } catch (error) {
-                url.pathname = '/login';
-                return NextResponse.redirect(url);
-            }
-        } else {
-            url.pathname = '/login';
-            return NextResponse.redirect(url);
-        }
-    }
-
-    if (url.pathname === '/admin/dashboard/profile') {
-        if (accessToken) {
-            try {
-                const response = await axiosInstance.get(`/job-entry/@me`, {
-                    headers: { Authorization: `Bearer ${accessToken}` }
-                });
-                const data = response.data
-                if (!data.data.is_admin) {
-                    url.pathname = '/';
-                    return NextResponse.redirect(url);
-                }
-            } catch (error) {
-                url.pathname = '/login';
-                return NextResponse.redirect(url);
-            }
-        } else {
-            url.pathname = '/login';
-            return NextResponse.redirect(url);
-        }
-    }
-
-    if (url.pathname === '/admin/dashboard/batch') {
-        if (accessToken) {
-            try {
-                const response = await axiosInstance.get(`/job-entry/@me`, {
-                    headers: { Authorization: `Bearer ${accessToken}` }
-                });
-                const data = response.data
-                if (!data.data.is_admin) {
-                    url.pathname = '/';
-                    return NextResponse.redirect(url);
-                }
-                const currentPage = url.searchParams.get('current_page');
-                const q = url.searchParams.get('q');
-
-                if (currentPage && q !== null) {
-                    return NextResponse.next();
-                }
-
-                if (!currentPage) {
-                    url.searchParams.set('current_page', '1');
-                }
-
-                if (!q) {
-                    url.searchParams.set('q', '');
-                }
-
-                return NextResponse.redirect(url);
-            } catch (error) {
-                url.pathname = '/login';
-                return NextResponse.redirect(url);
-            }
-        } else {
-            url.pathname = '/login';
-            return NextResponse.redirect(url);
-        }
-    }
-
-    if (url.pathname === '/register' || url.pathname === '/login') {
-        if (accessToken) {
-            url.pathname = '/';
-            return NextResponse.redirect(url);
-        }
-    }
-
-    if (url.pathname === '/account-active') {
-        const token = url.searchParams.get('token');
-        if (token) {
-            try {
-                const response = await axiosInstance.get(`/job-entry/account-active/email-verification`, { params: { token } });
-            } catch (error) {
-                return NextResponse.redirect(new URL('/register', request.url));
-            }
-        } else {
-            return NextResponse.redirect(new URL('/register', request.url));
-        }
-    }
-
-    if (url.pathname === '/account-active/sent') {
-        const token = url.searchParams.get('token');
-        if (token) {
-            try {
-                const response = await axiosInstance.get(`/job-entry/account-active/page-verification`, { params: { token } });
-            } catch (error) {
-                return NextResponse.redirect(new URL('/register', request.url));
-            }
-        } else {
-            return NextResponse.redirect(new URL('/register', request.url));
-        }
-    }
-
-    if (url.pathname === '/forgot-password/sent') {
-        const token = url.searchParams.get('token');
-        if (token) {
-            try {
-                const response = await axiosInstance.get(`/job-entry/page/reset-password`, { params: { token } });
-            } catch (error) {
-                return NextResponse.redirect(new URL('/forgot-password', request.url));
-            }
-        } else {
-            return NextResponse.redirect(new URL('/forgot-password', request.url));
-        }
-    }
-
-    if (url.pathname === '/reset-password') {
-        const token = url.searchParams.get('token');
-        if (token) {
-            try {
-                const response = await axiosInstance.get(`/job-entry/reset-password`, { params: { token } });
-            } catch (error) {
-                return NextResponse.redirect(new URL('/forgot-password', request.url));
-            }
-        } else {
-            return NextResponse.redirect(new URL('/forgot-password', request.url));
         }
     }
 
