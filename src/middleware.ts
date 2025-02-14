@@ -33,6 +33,22 @@ export async function middleware(request: NextRequest) {
                     url.pathname = '/admin/dashboard/add-batch';
                     return NextResponse.redirect(url);
                 }
+                const currentPage = url.searchParams.get('current_page');
+                const q = url.searchParams.get('q');
+
+                if (currentPage && q !== null) {
+                    return NextResponse.next();
+                }
+
+                if (!currentPage) {
+                    url.searchParams.set('current_page', '1');
+                }
+
+                if (!q) {
+                    url.searchParams.set('q', '');
+                }
+
+                return NextResponse.redirect(url);
             } catch (error) {
                 url.pathname = '/login';
                 return NextResponse.redirect(url);
