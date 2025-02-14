@@ -41,7 +41,7 @@ const TabletDesktop: React.FC<Props> = ({ category, pagination, user, isDesktop,
                                 Batch Pendaftaran
                             </p>
                             <div className="mt-3 flex justify-end flex-row">
-                                <SearchBatch />
+                                <SearchBatch category="admin" />
                             </div>
                             {isTablet || isDesktop ? (
                                 <BatchPagination category={category} pagination={pagination} setPagination={setPagination} isDesktop={isDesktop} />

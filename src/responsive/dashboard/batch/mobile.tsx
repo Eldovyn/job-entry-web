@@ -57,7 +57,7 @@ const MobileBatch: React.FC<Props> = ({ data }) => {
                         Batch Pendaftaran
                     </p>
                     <div className="mt-3 flex justify-end flex-row">
-                        <SearchBatch />
+                        <SearchBatch category="admin" />
                     </div>
                     {data?.data?.map((data) => (
                         <Link href={`/admin/dashboard/${data.batch_id}`} key={data.batch_id}>

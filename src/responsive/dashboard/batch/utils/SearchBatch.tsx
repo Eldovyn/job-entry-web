@@ -3,9 +3,12 @@ import { FaSearch } from "react-icons/fa";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useFormik } from "formik";
 
-const SearchBatch: React.FC = () => {
+interface Props {
+    category: string
+}
+
+const SearchBatch: React.FC<Props> = ({ category }) => {
     const { push } = useRouter();
-    const searchParams = useSearchParams();
 
     const formik = useFormik({
         initialValues: {
@@ -14,7 +17,11 @@ const SearchBatch: React.FC = () => {
         onSubmit: (values, { setSubmitting }) => {
             try {
                 const { q } = values;
-                push(`/admin/dashboard/batch?current_page=1&q=${q}`);
+                if (category === 'admin') {
+                    push(`/admin/dashboard/batch?current_page=1&q=${q}`);
+                } else {
+                    push(`/?current_page=1&q=${q}`);
+                }
             } catch (error) {
                 console.error('Terjadi kesalahan:', error);
             } finally {

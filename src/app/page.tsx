@@ -21,7 +21,6 @@ const HomePage = () => {
     const [isClient, setIsClient] = useState(false);
 
     const { data: user, isLoading: userIsLoading, isError: userIsError, error: userError } = useMe(Cookies.get('accessToken') || '');
-    const { data: me, isLoading: meIsLoading, isError: meIsError, error: meError } = useMe(Cookies.get('accessToken') || '');
     const { data: batch, isLoading: batchIsLoading, isError: batchIsError, error: batchError } = useUserAllBatch(currentPage || "1", q || "", Cookies.get('accessToken') || '');
 
     useEffect(() => {
@@ -58,7 +57,7 @@ const HomePage = () => {
                                     Batch Pendaftaran
                                 </p>
                                 <div className="mt-3 flex justify-end flex-row">
-                                    <SearchBatch />
+                                    <SearchBatch category='user' />
                                 </div>
                                 {isTablet || isDesktop ? (
                                     <BatchPagination category="user" pagination={batch?.page || null} isDesktop={isDesktop} setPagination={null} />
@@ -81,7 +80,7 @@ const HomePage = () => {
                             Batch Pendaftaran
                         </p>
                         <div className="mt-3 flex justify-end flex-row">
-                            <SearchBatch />
+                            <SearchBatch category='user' />
                         </div>
                         <BatchPagination category="user" pagination={batch?.page || null} isDesktop={isDesktop} setPagination={null} />
                     </div>
