@@ -52,6 +52,7 @@ const Profile = () => {
             isTablet={isTablet}
             isMobile={isMobile}
             isSmallMobile={isSmallMobile}
+            category="user"
         />
     }
 };
