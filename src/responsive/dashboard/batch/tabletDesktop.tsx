@@ -20,9 +20,10 @@ interface Props {
     isDesktop: boolean
     setPagination: Dispatch<SetStateAction<BPagination | null>>;
     user: User | null
+    category: string
 }
 
-const TabletDesktop: React.FC<Props> = ({ pagination, user, isDesktop, setPagination }) => {
+const TabletDesktop: React.FC<Props> = ({ category, pagination, user, isDesktop, setPagination }) => {
     const isTablet = useMediaQuery({ minWidth: 745, maxWidth: 853 });
     const isSmallTablet = useMediaQuery({ minWidth: 525, maxWidth: 745 });
     const isExtraSmallTablet = useMediaQuery({ minWidth: 426, maxWidth: 525 });
@@ -43,7 +44,7 @@ const TabletDesktop: React.FC<Props> = ({ pagination, user, isDesktop, setPagina
                                 <SearchBatch />
                             </div>
                             {isTablet || isDesktop ? (
-                                <BatchPagination pagination={pagination} setPagination={setPagination} isDesktop={isDesktop} />
+                                <BatchPagination category={category} pagination={pagination} setPagination={setPagination} isDesktop={isDesktop} />
                             ) : ''}
                             {isSmallTablet || isExtraSmallTablet && pagination ? (
                                 <>

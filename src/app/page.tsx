@@ -1,153 +1,94 @@
 "use client";
 import React, { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { MdOutlineFileUpload } from "react-icons/md";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import MobileTabletDesktopHome from "@/responsive/home/mobileTabletDesktop";
-import MobileHome from "@/responsive/home/mobile";
 import { useMe } from "@/api/user/me";
 import Cookies from "js-cookie";
+import SideBar from "@/components/sidebar";
+import { useUserAllBatch } from "@/api/batch/useUserAllBatch";
+import SearchBatch from "@/responsive/dashboard/batch/utils/SearchBatch";
+import BatchPagination from "@/responsive/dashboard/batch/utils/BatchPagination";
+import NavBar from "@/components/navbar";
 
-interface UseFileUploadReturn {
-  fileName: string;
-  isDragging: boolean;
-  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleDragOver: (e: React.DragEvent<HTMLLabelElement>) => void;
-  handleDrop: (e: React.DragEvent<HTMLLabelElement>) => void;
-  handleDragLeave: () => void;
+
+const HomePage = () => {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const currentPage = searchParams.get("current_page")
+    const q = searchParams.get("q");
+
+    const [isClient, setIsClient] = useState(false);
+
+    const { data: user, isLoading: userIsLoading, isError: userIsError, error: userError } = useMe(Cookies.get('accessToken') || '');
+    const { data: me, isLoading: meIsLoading, isError: meIsError, error: meError } = useMe(Cookies.get('accessToken') || '');
+    const { data: batch, isLoading: batchIsLoading, isError: batchIsError, error: batchError } = useUserAllBatch(currentPage || "1", q || "", Cookies.get('accessToken') || '');
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    const isMobile = useMediaQuery({
+        query: '(max-width: 425px)'
+    });
+
+    const isTablet = useMediaQuery({
+        query: '(min-width: 425px) and (max-width: 1024px)'
+    });
+
+    const isDesktop = useMediaQuery({
+        query: '(min-width: 1024px)'
+    });
+
+    if (!isClient) {
+        return null;
+    }
+
+    console.log(isMobile)
+
+    if (isTablet || isDesktop) {
+        return (
+            <>
+                <div className="flex bg-[#0b0d14]">
+                    <SideBar category="user" user={user?.data || null} />
+                    <main className={`flex-1 ml-20 sm:ml-40 lg:ml-72 p-8 bg-[#0b0d14] flex items-center justify-center`}>
+                        <div className="h-screen bg-[#0b0d14] flex items-center justify-center md:w-[95%] lg:w-[90%] w-full">
+                            <div className="bg-[#12141e] w-full border-2 p-8 rounded-md border-[#1f2236]">
+                                <p className="text-white text-2xl font-semibold text-center border-b-2 border-[#1f2236] pb-3">
+                                    Batch Pendaftaran
+                                </p>
+                                <div className="mt-3 flex justify-end flex-row">
+                                    <SearchBatch />
+                                </div>
+                                {isTablet || isDesktop ? (
+                                    <BatchPagination category="user" pagination={batch?.page || null} isDesktop={isDesktop} setPagination={null} />
+                                ) : ''}
+                            </div>
+                        </div>
+                    </main >
+                </div >
+            </>
+        )
+    }
+
+    if (isMobile) {
+        return (
+            <>
+                <NavBar category="user" />
+                <div className="h-screen bg-[#0b0d14] flex items-center justify-center md:w-[95%] lg:w-[90%] w-full">
+                    <div className="bg-[#12141e] w-[90%] border-2 p-8 rounded-md border-[#1f2236]">
+                        <p className="text-white text-2xl font-semibold text-center border-b-2 border-[#1f2236] pb-3">
+                            Batch Pendaftaran
+                        </p>
+                        <div className="mt-3 flex justify-end flex-row">
+                            <SearchBatch />
+                        </div>
+                        <BatchPagination category="user" pagination={batch?.page || null} isDesktop={isDesktop} setPagination={null} />
+                    </div>
+                </div>
+            </>
+        )
+    }
 }
 
-
-interface InputFileProps {
-  placeholder: string;
-}
-
-const useFileUpload = (placeholder: string): UseFileUploadReturn => {
-  const [fileName, setFileName] = useState(placeholder);
-  const [isDragging, setIsDragging] = useState(false);
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setFileName(file.name);
-    }
-  };
-
-  const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    setIsDragging(false);
-
-    const file = e.dataTransfer.files?.[0];
-    if (file) {
-      setFileName(file.name);
-    }
-  };
-
-  const handleDragLeave = () => {
-    setIsDragging(false);
-  };
-
-  return {
-    fileName,
-    isDragging,
-    handleFileChange,
-    handleDragOver,
-    handleDrop,
-    handleDragLeave,
-  };
-};
-
-export const InputFile: React.FC<InputFileProps> = ({ placeholder }) => {
-  const {
-    fileName,
-    isDragging,
-    handleFileChange,
-    handleDragOver,
-    handleDrop,
-    handleDragLeave,
-  } = useFileUpload(placeholder);
-
-  return (
-    <div className="flex flex-row">
-      <div className="border-[#1b1d2e] border-t-2 border-s-2 w-[9rem] rounded-s-md border-b-2 focus:border-[#4b5fe2] h-9 text-[#71717a] flex items-center overflow-hidden whitespace-nowrap">
-        <p className="ms-3 text-ellipsis overflow-hidden">{fileName}</p>
-      </div>
-      <label
-        className={`border-[#1b1d2e] border-s-2 border-e-2 border-t-2 border-b-2 rounded-e-md w-[3rem] focus:border-[#4b5fe2] flex items-center justify-center cursor-pointer ${isDragging ? "bg-[#4b5fe2]" : ""
-          }`}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-        onDragLeave={handleDragLeave}
-      >
-        <MdOutlineFileUpload className="text-white" size={25} />
-        <input
-          type="file"
-          className="hidden"
-          accept="application/pdf"
-          onChange={handleFileChange}
-        />
-      </label>
-    </div>
-  );
-};
-
-
-const Home = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const page = Number(searchParams.get("page") || 0);
-
-  const [isClient, setIsClient] = useState(false);
-
-  const { data, isLoading, isError, error } = useMe(Cookies.get('accessToken') || '');
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  const isMobile = useMediaQuery({
-    query: '(max-width: 640px) and (min-width: 438px)'
-  });
-
-  const isSmallMobile = useMediaQuery({
-    query: '(max-width: 438px)'
-  });
-
-  const isTablet = useMediaQuery({
-    query: '(min-width: 640px) and (max-width: 1024px)'
-  });
-
-  const isDesktop = useMediaQuery({
-    query: '(min-width: 1024px)'
-  });
-
-  useEffect(() => {
-    if (isNaN(page) || page < 0) {
-      router.push("?page=0");
-    }
-  }, [page]);
-
-  if (!isClient) {
-    return null;
-  }
-
-  if (isDesktop || isTablet || isMobile) {
-    return (
-      <MobileTabletDesktopHome page={page} isMobile={isMobile} user={data?.data || null}/>
-    );
-  }
-
-  if (isSmallMobile) {
-    return (
-      <MobileHome />
-    );
-  }
-};
-
-export default Home;
+export default HomePage

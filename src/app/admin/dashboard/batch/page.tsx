@@ -41,7 +41,7 @@ const BatchPage = () => {
     }
 
     if (isDesktop || isTablet) {
-        return <TabletDesktopBatch pagination={pagination} setPagination={setPagination} user={me?.data || null} isDesktop={isDesktop} />
+        return <TabletDesktopBatch category="admin" pagination={pagination} setPagination={setPagination} user={me?.data || null} isDesktop={isDesktop} />
     }
 
     // if (isMobile) {

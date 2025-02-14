@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import React from "react";
-import { InputFile } from "@/app/page";
+import { InputFile } from "@/app/testing/page";
 
 const MobileHome: React.FC = () => {
     const formFields = [

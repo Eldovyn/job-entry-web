@@ -11,7 +11,7 @@ import { User } from "@/interfaces/User";
 interface Props {
     pagination: BatchPagination | null
     batchId: string
-    setPagination: Dispatch<SetStateAction<BatchPagination | null>>;
+    setPagination: Dispatch<SetStateAction<BatchPagination | null>> | null;
 }
 
 interface ApiResponse {
@@ -50,10 +50,12 @@ const DeleteBatch: React.FC<Props> = ({ pagination, batchId, setPagination }) =>
                 const responseData = response.data;
                 if (response.status === 201) {
                     if ('page' in responseData) {
-                        setPagination({
-                            ...pagination,
-                            ...responseData.page as BatchPagination,
-                        })
+                        if (setPagination) {
+                            setPagination({
+                                ...pagination,
+                                ...responseData.page as BatchPagination,
+                            })
+                        }
                     }
                 }
             } catch (error) {

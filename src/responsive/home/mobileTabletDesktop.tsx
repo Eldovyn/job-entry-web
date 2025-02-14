@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
 import React from "react";
-import { InputFile } from "@/app/page";
+import { InputFile } from "@/app/testing/page";
 import { User } from "@/interfaces/User";
 
 interface MobileTabletDesktopHomeProps {
