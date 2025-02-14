@@ -5,12 +5,19 @@ import MobileProfile from "@/responsive/profile/mobile";
 import { useMe } from "@/api/user/me";
 import { useMediaQuery } from 'react-responsive';
 import Cookies from "js-cookie";
+import { User } from "@/interfaces/User";
 
 const Profile = () => {
     const { data, isLoading, isError, error } = useMe(Cookies.get('accessToken') || '');
 
-    const [userData, setUserData] = useState(data?.data || null);
+    const [userData, setUserData] = useState<User | null>(null);
     const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        if (data) {
+            setUserData(data?.data);
+        }
+    }, [data]);
 
     useEffect(() => {
         setIsClient(true);
@@ -27,13 +34,13 @@ const Profile = () => {
 
     if (isDesktop || isTablet) {
         return <TabletDesktopProfile 
-            user={userData || null} 
+            user={userData} 
             setUserData={setUserData}
             isDesktop={isDesktop}
             isTablet={isTablet}
             isMobile={isMobile}
             isSmallMobile={isSmallMobile}
-            category='user'
+            category="user"
         />
     }
 

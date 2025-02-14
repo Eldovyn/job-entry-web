@@ -16,16 +16,17 @@ interface Props {
     isTablet: boolean
     isSmallMobile: boolean
     isMobile: boolean
+    category: string
 }
 
-const MobileProfile: React.FC<Props> = ({ isDesktop, isTablet, isMobile, isSmallMobile, user, setUserData }) => {
+const MobileProfile: React.FC<Props> = ({ isDesktop, isTablet, isMobile, isSmallMobile, user, setUserData, category }) => {
     const [isDialogOpenUsername, setIsDialogOpenUsername] = useState(false);
     const [isDialogOpenEmail, setIsDialogOpenEmail] = useState(false);
     const [isDialogOpenAvatar, setIsDialogOpenAvatar] = useState(false);
 
     return (
         <>
-            <NavBar category="user" />
+            <NavBar category={category} />
             <main className="p-8 h-screen bg-[#0b0d14] flex items-center justify-center">
                 <div className="bg-[#12141e] md:w-[75%] lg:w-[60%] w-[85%] mx-auto p-5 rounded-md border-[#1f2236] border-2 flex flex-col">
                     <p className="text-lg mb-3 text-white text-center font-semibold">Profile Picture</p>

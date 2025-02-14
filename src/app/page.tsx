@@ -6,6 +6,8 @@ import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import MobileTabletDesktopHome from "@/responsive/home/mobileTabletDesktop";
 import MobileHome from "@/responsive/home/mobile";
+import { useMe } from "@/api/user/me";
+import Cookies from "js-cookie";
 
 interface UseFileUploadReturn {
   fileName: string;
@@ -103,6 +105,8 @@ const Home = () => {
 
   const [isClient, setIsClient] = useState(false);
 
+  const { data, isLoading, isError, error } = useMe(Cookies.get('accessToken') || '');
+
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -135,7 +139,7 @@ const Home = () => {
 
   if (isDesktop || isTablet || isMobile) {
     return (
-      <MobileTabletDesktopHome page={page} isMobile={isMobile} />
+      <MobileTabletDesktopHome page={page} isMobile={isMobile} user={data?.data || null}/>
     );
   }
 
