@@ -12,6 +12,9 @@ import { GoDatabase } from "react-icons/go";
 import { CiBoxList } from "react-icons/ci";
 import { LuLockOpen } from "react-icons/lu";
 import { User } from '@/interfaces/User';
+import { axiosInstance } from '@/lib/axios';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
 interface SideBarProps {
     category: string;
@@ -22,7 +25,26 @@ const SideBar: React.FC<SideBarProps> = ({ category, user }) => {
     const pathname = usePathname();
     const [isCollapsed, setIsCollapsed] = useState(false);
 
+    const { push } = useRouter();
+
+    const token = Cookies.get('accessToken');
+
     const isActive = (path: string) => pathname === path;
+
+    const handleLogout = async () => {
+        const response = await axiosInstance.delete('/job-entry/logout', {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+            },
+        });
+        if (response.status === 201) {
+            Cookies.remove('accessToken');
+            push('/login');
+        } else {
+            push(pathname);
+        }
+    }
 
     return (
         <div
@@ -122,7 +144,7 @@ const SideBar: React.FC<SideBarProps> = ({ category, user }) => {
                 </li>
                 <li>
                     <button
-                        onClick={() => console.log('Logout clicked')}
+                        onClick={handleLogout}
                         className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm hover:bg-[#1f2236] w-full`}
                     >
                         <IoMdExit size={22} className="me-1" />

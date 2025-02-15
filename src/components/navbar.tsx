@@ -11,6 +11,9 @@ import { IoMdExit } from 'react-icons/io';
 import { GoDatabase } from "react-icons/go";
 import { CiBoxList } from "react-icons/ci";
 import { LuLockOpen } from "react-icons/lu";
+import { axiosInstance } from '@/lib/axios';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
 interface Props {
     category: string;
@@ -20,6 +23,10 @@ const NavBar: React.FC<Props> = ({ category }) => {
     const pathname = usePathname();
     const [isClient, setIsClient] = useState(false);
     const isActive = (path: string) => pathname === path;
+
+    const { push } = useRouter();
+
+    const token = Cookies.get('accessToken');
 
     useEffect(() => {
         setTimeout(() => {
@@ -33,6 +40,21 @@ const NavBar: React.FC<Props> = ({ category }) => {
 
     if (!isClient) {
         return null;
+    }
+
+    const handleLogout = async () => {
+        const response = await axiosInstance.delete('/job-entry/logout', {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+            },
+        });
+        if (response.status === 201) {
+            Cookies.remove('accessToken');
+            push('/login');
+        } else {
+            push(pathname);
+        }
     }
 
     return (
@@ -87,7 +109,7 @@ const NavBar: React.FC<Props> = ({ category }) => {
                         <VscAccount size={22} />
                         <p className="text-sm">Profile</p>
                     </Navbar.Link>
-                    <Navbar.Link href="/profile" className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white hover:bg-[#1f2236]`}>
+                    <Navbar.Link onClick={handleLogout} className={`flex items-center gap-3 py-3.5 px-3 md:px-5 cursor-pointer rounded-sm border-b-transparent text-white hover:bg-[#1f2236]`}>
                         <IoMdExit size={22} />
                         <p className="text-sm">Logout</p>
                     </Navbar.Link>
