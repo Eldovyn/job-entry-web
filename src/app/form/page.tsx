@@ -1,153 +1,131 @@
-"use client";
-import React, { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { MdOutlineFileUpload } from "react-icons/md";
-import { useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import MobileTabletDesktopHome from "@/responsive/home/mobileTabletDesktop";
-import MobileHome from "@/responsive/home/mobile";
-import { useMe } from "@/api/user/me";
+'use client';
+import React, { useState } from "react";
+import { useFormik } from "formik";
+import { useMutation } from "@tanstack/react-query";
+import { axiosInstance } from "@/lib/axios";
 import Cookies from "js-cookie";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
-interface UseFileUploadReturn {
-  fileName: string;
-  isDragging: boolean;
-  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleDragOver: (e: React.DragEvent<HTMLLabelElement>) => void;
-  handleDrop: (e: React.DragEvent<HTMLLabelElement>) => void;
-  handleDragLeave: () => void;
+interface FormData {
+  nama: string;
+  tempat_tanggal_lahir: string;
+  jenis_kelamin: string;
+  alamat: string;
+  no_hp: string;
+  email: string;
+  ipk: string;
+  npm: string;
+  kelas: string;
+  jurusan: string;
+  lokasi_kampus: string;
+  posisi: string;
+  cv: File | null;
+  ktm: File | null;
+  krs: File | null;
+  pas_foto: File | null;
+  ktp: File | null;
+  rangkuman_nilai: File | null;
+  certificate: File | null;
 }
 
+const FormPage = () => {
+  const [page, setPage] = useState(1);
 
-interface InputFileProps {
-  placeholder: string;
-}
+  const { mutate } = useMutation({
+    mutationFn: async (data: FormData) => {
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => {
+        if (value instanceof File) {
+          formData.append(key, value);
+        } else {
+          formData.append(key, value);
+        }
+      });
 
-const useFileUpload = (placeholder: string): UseFileUploadReturn => {
-  const [fileName, setFileName] = useState(placeholder);
-  const [isDragging, setIsDragging] = useState(false);
+      return axiosInstance.patch('/job-entry/update/files', formData, {
+        headers: {
+          'Authorization': `Bearer ${Cookies.get('accessToken') || ''}`,
+        },
+      });
+    },
+  });
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setFileName(file.name);
-    }
+  const formik = useFormik<FormData>({
+    initialValues: {
+      nama: "",
+      tempat_tanggal_lahir: "",
+      jenis_kelamin: "",
+      alamat: "",
+      no_hp: "",
+      email: "",
+      ipk: "",
+      npm: "",
+      kelas: "",
+      jurusan: "",
+      lokasi_kampus: "",
+      posisi: "",
+      cv: null,
+      ktm: null,
+      krs: null,
+      pas_foto: null,
+      ktp: null,
+      rangkuman_nilai: null,
+      certificate: null,
+    },
+    onSubmit: (values) => {
+      mutate(values);
+    },
+  });
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, fieldName: keyof FormData) => {
+    const file = event.target.files?.[0] || null;
+    formik.setFieldValue(fieldName, file);
   };
-
-  const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    setIsDragging(false);
-
-    const file = e.dataTransfer.files?.[0];
-    if (file) {
-      setFileName(file.name);
-    }
-  };
-
-  const handleDragLeave = () => {
-    setIsDragging(false);
-  };
-
-  return {
-    fileName,
-    isDragging,
-    handleFileChange,
-    handleDragOver,
-    handleDrop,
-    handleDragLeave,
-  };
-};
-
-export const InputFile: React.FC<InputFileProps> = ({ placeholder }) => {
-  const {
-    fileName,
-    isDragging,
-    handleFileChange,
-    handleDragOver,
-    handleDrop,
-    handleDragLeave,
-  } = useFileUpload(placeholder);
 
   return (
-    <div className="flex flex-row">
-      <div className="border-[#1b1d2e] border-t-2 border-s-2 w-[9rem] rounded-s-md border-b-2 focus:border-[#4b5fe2] h-9 text-[#71717a] flex items-center overflow-hidden whitespace-nowrap">
-        <p className="ms-3 text-ellipsis overflow-hidden">{fileName}</p>
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="bg-[#12141e] w-[50%] p-8 border-2 border-[#1f2236] rounded-md">
+        <p className="text-white text-2xl font-semibold text-center border-b-2 border-[#1f2236] pb-3">
+          Form Pendaftaran
+        </p>
+        <form onSubmit={formik.handleSubmit} className="space-y-4">
+          {page === 1 && (
+            ["nama", "email", "tempat_tanggal_lahir", "jenis_kelamin", "alamat", "no_hp"].map((field) => (
+              <div key={field} className="flex flex-col">
+                <label className="text-white capitalize">{field.replace('_', ' ')}</label>
+                <Input type="text" value={formik.values[field as keyof FormData] as string} onChange={formik.handleChange} name={field} />
+              </div>
+            ))
+          )}
+          {page === 2 && (
+            ["npm", "kelas", "jurusan", "lokasi_kampus", "posisi", "ipk"].map((field) => (
+              <div key={field} className="flex flex-col">
+                <label className="text-white capitalize">{field.replace('_', ' ')}</label>
+                <Input type="text" value={formik.values[field as keyof FormData] as string} onChange={formik.handleChange} name={field} />
+              </div>
+            ))
+          )}
+          {page === 3 && (
+            ["cv", "ktm", "krs", "pas_foto", "ktp", "rangkuman_nilai", "certificate"].map((field) => (
+              <div key={field} className="flex flex-col">
+                <label className="text-white capitalize">{field.replace('_', ' ')}</label>
+                <Input type="file" accept=".png,.jpg,.jpeg,.pdf" onChange={(e) => handleFileChange(e, field as keyof FormData)} />
+              </div>
+            ))
+          )}
+          <div className="flex justify-between mt-4">
+            {page > 1 && <Button type="button" onClick={() => setPage(page - 1)}>Previous</Button>}
+            {page < 3 ? (
+              <Button type="button" onClick={() => setPage(page + 1)}>Next</Button>
+            ) : (
+              <Button type="submit">Submit</Button>
+            )}
+          </div>
+        </form>
       </div>
-      <label
-        className={`border-[#1b1d2e] border-s-2 border-e-2 border-t-2 border-b-2 rounded-e-md w-[3rem] focus:border-[#4b5fe2] flex items-center justify-center cursor-pointer ${isDragging ? "bg-[#4b5fe2]" : ""
-          }`}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-        onDragLeave={handleDragLeave}
-      >
-        <MdOutlineFileUpload className="text-white" size={25} />
-        <input
-          type="file"
-          className="hidden"
-          accept="application/pdf"
-          onChange={handleFileChange}
-        />
-      </label>
     </div>
   );
 };
 
-
-const Home = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const page = Number(searchParams.get("page") || 0);
-
-  const [isClient, setIsClient] = useState(false);
-
-  const { data, isLoading, isError, error } = useMe(Cookies.get('accessToken') || '');
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  const isMobile = useMediaQuery({
-    query: '(max-width: 640px) and (min-width: 438px)'
-  });
-
-  const isSmallMobile = useMediaQuery({
-    query: '(max-width: 438px)'
-  });
-
-  const isTablet = useMediaQuery({
-    query: '(min-width: 640px) and (max-width: 1024px)'
-  });
-
-  const isDesktop = useMediaQuery({
-    query: '(min-width: 1024px)'
-  });
-
-  useEffect(() => {
-    if (isNaN(page) || page < 0) {
-      router.push("?page=0");
-    }
-  }, [page]);
-
-  if (!isClient) {
-    return null;
-  }
-
-  if (isDesktop || isTablet || isMobile) {
-    return (
-      <MobileTabletDesktopHome page={page} isMobile={isMobile} user={data?.data || null}/>
-    );
-  }
-
-  if (isSmallMobile) {
-    return (
-      <MobileHome />
-    );
-  }
-};
-
-export default Home;
+export default FormPage;
