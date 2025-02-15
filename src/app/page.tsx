@@ -43,11 +43,9 @@ const HomePage = () => {
         query: '(min-width: 1024px)'
     });
 
-    useEffect(() => {
-        setTimeout(() => {
-            setIsClient(true);
-        }, 100);
-    }, []);
+    if (!isClient) {
+        return null;
+    }
 
 
     if (isTablet || isDesktop) {
