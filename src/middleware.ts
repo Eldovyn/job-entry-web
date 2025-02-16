@@ -91,16 +91,14 @@ export async function middleware(request: NextRequest) {
         if (url.pathname === "/form/is-submitted") {
             const isSubmitted = await getForm(accessToken, q);
 
-            const redirectUrl = new URL("/form/is-submitted", request.url);
-            redirectUrl.searchParams.set("q", q);
-
-            if (isSubmitted) {
-                return NextResponse.redirect(redirectUrl);
-            } else {
+            if (!isSubmitted) {
                 return NextResponse.redirect(new URL("/", request.url));
             }
+
+            return NextResponse.next();
         }
     }
+
 
     if (protectedRoutes.some((route) => url.pathname.startsWith(route))) {
         if (!accessToken) return redirectToLogin();
