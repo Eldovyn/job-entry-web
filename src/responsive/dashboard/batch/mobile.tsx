@@ -1,53 +1,14 @@
 import NavBar from "@/components/navbar";
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import SearchBatch from "./utils/SearchBatch";
 import Link from "next/link";
-
-interface Pagination {
-    current_page: number;
-    items_per_page: number;
-    limit: number | null;
-    next_page: number | null;
-    previous_page: number | null;
-    total_items: number;
-    total_pages: number;
-    current_batch: Batch[];
-}
-
-interface User {
-    avatar: string;
-    created_at: number;
-    email: string;
-    is_active: boolean;
-    is_admin: boolean;
-    updated_at: number;
-    user_id: string;
-    username: string;
-}
-
-interface Batch {
-    batch_id: string;
-    created_at: number;
-    description: string;
-    title: string;
-    updated_at: number;
-    user_id: string;
-    author: string
-    is_active: boolean
-}
-
-interface SuccessResponse {
-    data: Batch[];
-    message: string;
-    page: Pagination;
-    user: User;
-}
+import { BatchPagination } from "@/interfaces/BatchPagination";
 
 interface Props {
-    data: SuccessResponse
+    pagination: BatchPagination | null;
 }
 
-const MobileBatch: React.FC<Props> = ({ data }) => {
+const MobileBatch: React.FC<Props> = ({ pagination }) => {
     return (
         <>
             <NavBar category="admin" />
@@ -59,7 +20,7 @@ const MobileBatch: React.FC<Props> = ({ data }) => {
                     <div className="mt-3 flex justify-end flex-row">
                         <SearchBatch category="admin" />
                     </div>
-                    {data?.data?.map((data) => (
+                    {pagination?.current_batch.map((data) => (
                         <Link href={`/admin/dashboard/${data.batch_id}`} key={data.batch_id}>
                             <div className="border-2 rounded-md border-[#1f2236] mt-2 p-3 flex justify-between items-center text-white overflow-hidden text-ellipsis" key={data.batch_id}>
                                 <p className="text-center">{data.title}</p>

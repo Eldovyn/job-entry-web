@@ -35,8 +35,8 @@ const BatchPage = () => {
     }, [isLoadingBatch, batch]);
 
     const isDesktop = useMediaQuery({ minWidth: 853 });
-    const isTablet = useMediaQuery({ minWidth: 445, maxWidth: 853 });
-    const isMobile = useMediaQuery({ maxWidth: 445 });
+    const isTablet = useMediaQuery({ minWidth: 455, maxWidth: 853 });
+    const isMobile = useMediaQuery({ maxWidth: 455 });
 
     if (!isClient) {
         return null;
@@ -46,9 +46,9 @@ const BatchPage = () => {
         return <TabletDesktopBatch category="admin" pagination={pagination} setPagination={setPagination} user={me?.data || null} isDesktop={isDesktop} />
     }
 
-    // if (isMobile) {
-    //     return <MobileBatch data={data as SuccessResponse} />
-    // }
+    if (isMobile) {
+        return <MobileBatch pagination={pagination} />
+    }
 }
 
 export default BatchPage;
