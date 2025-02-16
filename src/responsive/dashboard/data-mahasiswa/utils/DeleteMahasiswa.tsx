@@ -28,13 +28,6 @@ const DeleteMahasiswa: React.FC<Props> = ({ pagination, batchId, setPagination }
     const { push } = useRouter();
     const searchParams = useSearchParams();
 
-    const handlePageChange = (newPage: number, q: string) => {
-        const params = new URLSearchParams(searchParams.toString());
-        params.set("current_page", newPage.toString());
-        params.set("q", q);
-        push(`?${params.toString()}`, { scroll: false });
-    };
-
     const formik = useFormik({
         initialValues: {},
         onSubmit: async (values, { setSubmitting }) => {

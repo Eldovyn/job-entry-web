@@ -1,5 +1,3 @@
-import { Input } from "@/components/ui/input";
-import { FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -17,12 +15,43 @@ import { MahasiswaPagination } from "@/interfaces/MahasiswaPagination";
 import { Button } from "@/components/ui/button";
 import { useSearchParams } from "next/navigation";
 import SearchDataMahasiswa from "./utils/SearchDataMahasiswa";
+import * as XLSX from "xlsx";
+import { axiosInstance } from "@/lib/axios";
+import Cookies from "js-cookie";
 
 interface Props {
     pagination: MahasiswaPagination | null;
     isDesktop: boolean;
     user: User | null
 }
+
+const ExportExcel: React.FC<{ data: any[]; fileName: string, currentPage: string, q: string }> = ({ data, fileName, currentPage, q }) => {
+    const exportToExcel = async() => {
+        console.log('muncul')
+        const response = await axiosInstance.get('/job-entry/export/data-mahasiswa', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Cookies.get('accessToken') || ''}`
+            },
+            params: {
+                current_page: currentPage,
+                q: q
+            }
+        })
+        if (response.status == 200) {
+            const worksheet = XLSX.utils.json_to_sheet(response.data.page.current_data);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+            XLSX.writeFile(workbook, `${fileName}.xlsx`);
+        }
+    };
+
+    return (
+        <Button className="bg-green-500 hover:bg-green-600 text-white" onClick={exportToExcel}>
+            export
+        </Button>
+    );
+};
 
 const TabletDesktopDashboard: React.FC<Props> = ({ pagination, isDesktop, user }) => {
     const [isClient, setIsClient] = useState(false);
@@ -52,8 +81,13 @@ const TabletDesktopDashboard: React.FC<Props> = ({ pagination, isDesktop, user }
                             <p className="text-white text-2xl font-semibold text-center border-b-2 border-[#1f2236] pb-3">
                                 Data Mahasiswa
                             </p>
-                            <div className="mt-3 flex justify-end flex-row">
-                                <SearchDataMahasiswa />
+                            <div className="flex justify-between items-center">
+                                <div className="flex justify-center items-center mt-3">
+                                    <ExportExcel currentPage={searchParams.get('current_page') || '1'} q={searchParams.get('q') || ''} data={pagination?.current_data || []} fileName="exported_data" />
+                                </div>
+                                <div className="mt-3 flex justify-end flex-row w-full">
+                                    <SearchDataMahasiswa />
+                                </div>
                             </div>
                             {isDesktop && pagination?.current_data ? (
                                 <table className="table-auto w-full border-2 mt-2 text-white text-center">
