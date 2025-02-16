@@ -3,21 +3,13 @@ import React, { useState, useEffect } from "react";
 import { useMediaQuery } from 'react-responsive';
 import TabletDesktopDashboard from "@/responsive/dashboard/data-mahasiswa/tabletDesktop";
 import MobileDashboard from "@/responsive/dashboard/data-mahasiswa/mobile";
-
-interface DataMahasiswa {
-    name: string;
-    noHp: string;
-    tempatLahir: string;
-    tanggalLahir: string;
-    jenisKelamin: string;
-    npm: string;
-    kelas: string;
-    lokasiKampus: string;
-    batch: string;
-}
+import { useGetUserAllDataMahasiswa } from "@/api/data-mahasiswa/useGetAllDataMahasiswa";
+import { useSearchParams } from "next/navigation";
+import Cookies from "js-cookie";
 
 const Dashboard = () => {
     const [isClient, setIsClient] = useState(false);
+    const searchParams = useSearchParams();
 
     useEffect(() => {
         setTimeout(() => {
@@ -29,53 +21,19 @@ const Dashboard = () => {
     const isTablet = useMediaQuery({ minWidth: 426, maxWidth: 853 });
     const isMobile = useMediaQuery({ maxWidth: 426 });
 
+    const { data: dataMahasiswa, isLoading: isLoadingDataMahasiswa, isError: isErrorDataMahasiswa, error: errorDataMahasiswa } = useGetUserAllDataMahasiswa(searchParams.get("currentPage") || "1", searchParams.get("q") || "", Cookies.get('accessToken') || '');
+
     if (!isClient) {
         return null;
     }
 
-    const dataMahasiswa: DataMahasiswa[] = [
-        {
-            name: "Andana Farras Pramudita",
-            noHp: "081234567890",
-            tempatLahir: "Bandung",
-            tanggalLahir: "01-01-2000",
-            jenisKelamin: "Laki-laki",
-            npm: "20201001",
-            kelas: "TI-2A",
-            lokasiKampus: "Bandung",
-            batch: "2022",
-        },
-        {
-            name: "Andana Farras Pramudita",
-            noHp: "081234567890",
-            tempatLahir: "Bandung",
-            tanggalLahir: "01-01-2000",
-            jenisKelamin: "Laki-laki",
-            npm: "20201002",
-            kelas: "TI-2B",
-            lokasiKampus: "Bandung",
-            batch: "2023",
-        },
-        {
-            name: "Andana Farras Pramudita",
-            noHp: "081234567890",
-            tempatLahir: "Bandung",
-            tanggalLahir: "01-01-2000",
-            jenisKelamin: "Laki-laki",
-            npm: "20201003",
-            kelas: "TI-2C",
-            lokasiKampus: "Bandung",
-            batch: "2024",
-        }
-    ];
-
     if (isDesktop || isTablet) {
-        return <TabletDesktopDashboard dataMahasiswa={dataMahasiswa} isDesktop={isDesktop} />;
+        return <TabletDesktopDashboard pagination={dataMahasiswa?.page || null} user={dataMahasiswa?.user || null} isDesktop={isDesktop} />;
     }
 
-    if (isMobile) {
-        return <MobileDashboard dataMahasiswa={dataMahasiswa} />
-    }
+    return (
+        <p>Dashboard</p>
+    )
 };
 
 export default Dashboard;

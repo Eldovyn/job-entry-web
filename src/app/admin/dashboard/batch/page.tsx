@@ -3,12 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import MobileBatch from "@/responsive/dashboard/batch/mobile";
 import TabletDesktopBatch from "@/responsive/dashboard/batch/tabletDesktop";
-import { useQuery } from "@tanstack/react-query";
-import { axiosInstance } from "@/lib/axios";
 import Cookies from "js-cookie";
 import { useMe } from "@/api/user/me";
 import { useAdminAllBatch } from "@/api/batch/useAdminAllBatch";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { BatchPagination } from "@/interfaces/BatchPagination";
 
 

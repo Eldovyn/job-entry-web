@@ -7,31 +7,26 @@ import SideBar from "@/components/sidebar";
 import { useMediaQuery } from "react-responsive";
 import React, { useEffect, useState } from "react";
 import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip"
-
-interface DataMahasiswa {
-    name: string;
-    noHp: string;
-    tempatLahir: string;
-    tanggalLahir: string;
-    jenisKelamin: string;
-    npm: string;
-    kelas: string;
-    lokasiKampus: string;
-    batch: string;
-}
+    Pagination,
+    PaginationContent,
+    PaginationItem,
+    PaginationLink,
+} from "@/components/ui/pagination";
+import { User } from "@/interfaces/User";
+import { MahasiswaPagination } from "@/interfaces/MahasiswaPagination";
+import { Button } from "@/components/ui/button";
+import { useSearchParams } from "next/navigation";
+import SearchDataMahasiswa from "./utils/SearchDataMahasiswa";
 
 interface Props {
-    dataMahasiswa: DataMahasiswa[];
+    pagination: MahasiswaPagination | null;
     isDesktop: boolean;
+    user: User | null
 }
 
-const TabletDesktopDashboard: React.FC<Props> = ({ dataMahasiswa, isDesktop }) => {
+const TabletDesktopDashboard: React.FC<Props> = ({ pagination, isDesktop, user }) => {
     const [isClient, setIsClient] = useState(false);
+    const searchParams = useSearchParams();
 
     useEffect(() => {
         setTimeout(() => {
@@ -50,7 +45,7 @@ const TabletDesktopDashboard: React.FC<Props> = ({ dataMahasiswa, isDesktop }) =
     return (
         <>
             <div className="flex bg-[#0b0d14]">
-                <SideBar category="admin" />
+                <SideBar category="admin" user={user} />
                 <main className={`flex-1 ml-20 sm:ml-40 lg:ml-72 ${isSmallTablet ? 'p-2 me-6' : ''} ${isTablet || isDesktop ? 'p-8' : ''} ${isExtraSmallTablet ? 'p-2 me-7' : ''} h-screen bg-[#0b0d14] flex items-center justify-center`}>
                     <div className="h-screen bg-[#0b0d14] flex items-center justify-center md:w-[95%] lg:w-[90%] w-full">
                         <div className="bg-[#12141e] w-full border-2 p-8 rounded-md border-[#1f2236]">
@@ -58,16 +53,7 @@ const TabletDesktopDashboard: React.FC<Props> = ({ dataMahasiswa, isDesktop }) =
                                 Data Mahasiswa
                             </p>
                             <div className="mt-3 flex justify-end flex-row">
-                                <div className="relative lg:w-[40%] md:w-[60%] w-full flex">
-                                    <Input
-                                        className="caret-white border-[#1b1d2e] border-2 focus:border-[#4b5fe2] pr-10 h-[2.2rem]"
-                                        placeholder="cari sesuai nama/npm"
-                                        type="text"
-                                    />
-                                    <span className="absolute inset-y-0 right-3 flex items-center text-gray-400">
-                                        <FaSearch />
-                                    </span>
-                                </div>
+                                <SearchDataMahasiswa />
                             </div>
                             {isDesktop && (
                                 <table className="table-auto w-full border-2 mt-2 text-white text-center">
@@ -81,8 +67,8 @@ const TabletDesktopDashboard: React.FC<Props> = ({ dataMahasiswa, isDesktop }) =
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {dataMahasiswa.map((mahasiswa) => (
-                                            <tr key={mahasiswa.npm}>
+                                        {pagination?.current_data.map((mahasiswa) => (
+                                            <tr key={mahasiswa.is_submit}>
                                                 <td className="border-2 border-[#1f2236] px-4 py-2">
                                                     <div className="flex flex-row justify-center">
                                                         <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] me-1">
@@ -96,26 +82,19 @@ const TabletDesktopDashboard: React.FC<Props> = ({ dataMahasiswa, isDesktop }) =
                                                     </div>
                                                 </td>
                                                 <td className="border-2 border-[#1f2236] px-4 py-2">
-                                                    <TooltipProvider>
-                                                        <Tooltip>
-                                                            <TooltipTrigger>{mahasiswa.name}</TooltipTrigger>
-                                                            <TooltipContent>
-                                                                <p>{mahasiswa.batch}</p>
-                                                            </TooltipContent>
-                                                        </Tooltip>
-                                                    </TooltipProvider>
+                                                    {mahasiswa.nama}
                                                 </td>
                                                 <td className="border-2 border-[#1f2236] px-4 py-2">{mahasiswa.npm}</td>
                                                 <td className="border-2 border-[#1f2236] px-4 py-2">{mahasiswa.kelas}</td>
-                                                <td className="border-2 border-[#1f2236] px-4 py-2">{mahasiswa.lokasiKampus}</td>
+                                                <td className="border-2 border-[#1f2236] px-4 py-2">{mahasiswa.lokasi_kampus}</td>
                                             </tr>
                                         ))}
                                     </tbody>
                                 </table>
                             )}
                             {isTablet && (
-                                dataMahasiswa.map((mahasiswa) => (
-                                    <div className="border rounded-md border-[#1f2236] mt-2 p-3 flex justify-between items-center text-white" key={mahasiswa.npm}>
+                                pagination?.current_data.map((mahasiswa) => (
+                                    <div className="border rounded-md border-[#1f2236] mt-2 p-3 flex justify-between items-center text-white" key={mahasiswa.is_submit}>
                                         <div className="flex flex-row justify-center">
                                             <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] me-1">
                                                 <MdDelete className="cursor-pointer text-red-500" size={20} />
@@ -126,14 +105,14 @@ const TabletDesktopDashboard: React.FC<Props> = ({ dataMahasiswa, isDesktop }) =
                                                 </div>
                                             </Link>
                                         </div>
-                                        <p className="text-center">{mahasiswa.name}</p>
+                                        <p className="text-center">{mahasiswa.nama}</p>
                                         <p className="text-center">{mahasiswa.npm}</p>
                                     </div>
                                 ))
                             )}
                             {isSmallTablet && (
-                                dataMahasiswa.map((mahasiswa) => (
-                                    <div className="border rounded-md border-[#1f2236] mt-2 p-3 flex justify-between items-center text-white" key={mahasiswa.npm}>
+                                pagination?.current_data.map((mahasiswa) => (
+                                    <div className="border rounded-md border-[#1f2236] mt-2 p-3 flex justify-between items-center text-white" key={mahasiswa.is_submit}>
                                         <div className="flex flex-row justify-center">
                                             <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] me-1">
                                                 <MdDelete className="cursor-pointer text-red-500" size={20} />
@@ -144,17 +123,40 @@ const TabletDesktopDashboard: React.FC<Props> = ({ dataMahasiswa, isDesktop }) =
                                                 </div>
                                             </Link>
                                         </div>
-                                        <p className="text-center">{mahasiswa.name}</p>
+                                        <p className="text-center">{mahasiswa.nama}</p>
                                     </div>
                                 ))
                             )}
                             {isExtraSmallTablet && (
-                                dataMahasiswa.map((mahasiswa) => (
-                                    <p className="text-center border rounded-md border-[#1f2236] mt-2 p-3 flex justify-center items-center text-white" key={mahasiswa.npm}>
-                                        {mahasiswa.name}
+                                pagination?.current_data.map((mahasiswa) => (
+                                    <p className="text-center border rounded-md border-[#1f2236] mt-2 p-3 flex justify-center items-center text-white" key={mahasiswa.is_submit}>
+                                        {mahasiswa.nama}
                                     </p>
                                 ))
                             )}
+                            <Pagination className="mt-3">
+                                <PaginationContent>
+                                    <PaginationItem>
+                                        <PaginationLink
+                                            href={`?currentPage=${pagination?.previous_page || 1}&q=${searchParams.get('q') || ''}`}
+                                            className="bg-[#4b5fe2] text-white hover:bg-[#4b5fe2] hover:text-white w-[5rem]"
+                                        >
+                                            Previous
+                                        </PaginationLink>
+                                    </PaginationItem>
+                                    <Button className="bg-[#4b5563] text-white hover:bg-[#4b5563] hover:text-white w-[2.5rem]">
+                                        {pagination?.current_page}
+                                    </Button>
+                                    <PaginationItem>
+                                        <PaginationLink
+                                            href={`?currentPage=${pagination?.next_page || pagination?.total_pages}&q=${searchParams.get('q') || ''}`}
+                                            className="bg-[#4b5fe2] text-white hover:bg-[#4b5fe2] hover:text-white w-[5rem]"
+                                        >
+                                            Next
+                                        </PaginationLink>
+                                    </PaginationItem>
+                                </PaginationContent>
+                            </Pagination>
                         </div>
                     </div>
                 </main>

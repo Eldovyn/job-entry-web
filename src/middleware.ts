@@ -61,6 +61,28 @@ export async function middleware(request: NextRequest) {
         if (!accessToken) {
             return NextResponse.redirect(new URL("/login", request.url));
         }
+
+        const userData = await getUserData(accessToken);
+        if (!userData) {
+            return NextResponse.redirect(new URL("/login", request.url));
+        }
+        if (userData.is_admin) {
+            return NextResponse.redirect(new URL("/admin/dashboard/batch", request.url));
+        }
+    }
+
+    if (url.pathname === "/profile/user") {
+        if (!accessToken) {
+            return NextResponse.redirect(new URL("/login", request.url));
+        }
+
+        const userData = await getUserData(accessToken);
+        if (!userData) {
+            return NextResponse.redirect(new URL("/login", request.url));
+        }
+        if (userData.is_admin) {
+            return NextResponse.redirect(new URL("/admin/dashboard/profile", request.url));
+        }
     }
 
     if (url.pathname === "/form" || url.pathname === "/form/is-submitted") {
