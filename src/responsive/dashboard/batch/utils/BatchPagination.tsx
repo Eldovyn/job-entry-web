@@ -115,7 +115,7 @@ const BatchPagination: React.FC<Props> = ({ pagination, isDesktop, setPagination
         return (
             <div className="flex-col">
                 {pagination?.current_batch.map((data) => (
-                    <Link href={`/admin/dashboard/${data.batch_id}`} key={data.batch_id}>
+                    <Link href={`/form?q=${data.batch_id}`} key={data.batch_id} target="_blank" rel="noopener noreferrer">
                         <div className="border-2 hover:border-[#4b5fe2] rounded-md border-[#1f2236] mt-2 p-3 flex justify-between items-center text-white overflow-hidden text-ellipsis" key={data.batch_id}>
                             <p className="text-center">{data.title}</p>
                         </div>
