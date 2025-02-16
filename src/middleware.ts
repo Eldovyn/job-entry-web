@@ -13,9 +13,9 @@ async function getUserData(accessToken: string) {
     }
 }
 
-async function getForm(accessToken: string, q: string) {
+async function getFormIsSubmitted(accessToken: string, q: string) {
     try {
-        const response = await axiosInstance.get(`/job-entry/form`, {
+        const response = await axiosInstance.get(`/job-entry/form/is-submitted`, {
             headers: { Authorization: `Bearer ${accessToken}` },
             params: { q },
         });
@@ -41,36 +41,51 @@ export async function middleware(request: NextRequest) {
     const redirectToLogin = () => {
         const response = NextResponse.redirect(new URL("/login", request.url));
         response.cookies.set("accessToken", "");
-        console.warn("Token removed, redirecting to /login");
         return response;
     };
 
-    if (url.pathname === "/form" || url.pathname === "/") {
-        if (!accessToken) return redirectToLogin();
+    if (!accessToken) return redirectToLogin();
 
-        const userData = await getUserData(accessToken);
-        if (!userData) return redirectToLogin();
+    const userData = await getUserData(accessToken);
+    if (!userData) return redirectToLogin();
 
-        const q = url.searchParams.get("q") || "";
-        const formData = await getForm(accessToken, q);
-        if (!formData) {
-            const redirectPath = userData.is_admin ? "/admin/dashboard/batch" : "/";
-            if (url.pathname !== redirectPath) {
-                return NextResponse.redirect(new URL(redirectPath, request.url));
-            }
-            return NextResponse.next();
+    if (url.pathname === "/") {
+        if (userData.is_admin) {
+            return NextResponse.redirect(new URL("/admin/dashboard/add-batch", request.url));
         }
+        return NextResponse.next();
+    }
+
+    if (url.pathname === "/form") {
+        const q = url.searchParams.get("q");
+
+        if (!q) return NextResponse.redirect(new URL("/", request.url));
+
+        const formIsSubmitted = await getFormIsSubmitted(accessToken, q);
+        if (formIsSubmitted) {
+            return NextResponse.redirect(new URL(`/form/is-submitted?q=${q}`, request.url));
+        }
+
+        return NextResponse.next();
+    }
+
+    if (url.pathname === "/form/is-submitted") {
+        const q = url.searchParams.get("q");
+
+        if (!q) return NextResponse.redirect(new URL("/", request.url));
+
+        const formIsSubmitted = await getFormIsSubmitted(accessToken, q);
+
+        if (!formIsSubmitted) {
+            return NextResponse.redirect(new URL("/", request.url));
+        }
+
+        return NextResponse.next();
     }
 
     if (protectedRoutes.some((route) => url.pathname.startsWith(route))) {
-        if (!accessToken) return redirectToLogin();
-
-        const userData = await getUserData(accessToken);
-        if (!userData) return redirectToLogin();
-
-        if (url.pathname.startsWith("/admin/dashboard") && !userData.is_admin) {
-            url.pathname = "/";
-            return NextResponse.redirect(url);
+        if (url.pathname.startsWith("/admin/dashboard/add-batch") && !userData.is_admin) {
+            return NextResponse.redirect(new URL("/", request.url));
         }
     }
 

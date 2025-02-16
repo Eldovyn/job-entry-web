@@ -13,8 +13,6 @@ import NavBar from "@/components/navbar";
 
 
 const HomePage = () => {
-    console.log("🏠 HomePage rendered");
-    const router = useRouter();
     const searchParams = useSearchParams();
     const currentPage = searchParams.get("current_page")
     const q = searchParams.get("q");
