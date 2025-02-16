@@ -190,7 +190,7 @@ const FormPage = () => {
     },
     onSuccess: async (data) => {
       const dataApi = data.data;
-      push(`/form/is-submitted?token=${dataApi.data.token}`);
+      push(`/form/is-submitted?q=${dataApi.data.batch_form_id}`);
     },
   });
 
