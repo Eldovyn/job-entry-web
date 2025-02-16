@@ -2,24 +2,13 @@ import NavBar from "@/components/navbar";
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { FaSearch } from "react-icons/fa";
-
-interface DataMahasiswa {
-    name: string;
-    noHp: string;
-    tempatLahir: string;
-    tanggalLahir: string;
-    jenisKelamin: string;
-    npm: string;
-    kelas: string;
-    lokasiKampus: string;
-    batch: string;
-}
+import { MahasiswaPagination } from "@/interfaces/MahasiswaPagination";
 
 interface Props {
-    dataMahasiswa: DataMahasiswa[];
+    pagination: MahasiswaPagination | null;
 }
 
-const MobileDashboard: React.FC<Props> = ({ dataMahasiswa }) => {
+const MobileDashboard: React.FC<Props> = ({ pagination }) => {
     return (
         <>
             <NavBar category="admin"/>
@@ -40,9 +29,9 @@ const MobileDashboard: React.FC<Props> = ({ dataMahasiswa }) => {
                             </span>
                         </div>
                     </div>
-                    {dataMahasiswa.map((mahasiswa) => (
-                        <p className="text-center border rounded-md border-[#1f2236] mt-2 p-3 flex justify-center items-center text-white" key={mahasiswa.npm}>
-                            {mahasiswa.name}
+                    {pagination?.current_data.map((mahasiswa) => (
+                        <p className="text-center border rounded-md border-[#1f2236] mt-2 p-3 flex justify-center items-center text-white" key={mahasiswa.is_submit}>
+                            {mahasiswa.nama}
                         </p>
                     ))}
                 </div>

@@ -31,9 +31,9 @@ const Dashboard = () => {
         return <TabletDesktopDashboard pagination={dataMahasiswa?.page || null} user={dataMahasiswa?.user || null} isDesktop={isDesktop} />;
     }
 
-    return (
-        <p>Dashboard</p>
-    )
+    if (isMobile) {
+        return <MobileDashboard pagination={dataMahasiswa?.page || null} />;
+    }
 };
 
 export default Dashboard;
