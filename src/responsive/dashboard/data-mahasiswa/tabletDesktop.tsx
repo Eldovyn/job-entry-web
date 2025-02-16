@@ -55,7 +55,7 @@ const TabletDesktopDashboard: React.FC<Props> = ({ pagination, isDesktop, user }
                             <div className="mt-3 flex justify-end flex-row">
                                 <SearchDataMahasiswa />
                             </div>
-                            {isDesktop && (
+                            {isDesktop && pagination?.current_data ? (
                                 <table className="table-auto w-full border-2 mt-2 text-white text-center">
                                     <thead className="bg-[#1f2236]">
                                         <tr>
@@ -91,7 +91,7 @@ const TabletDesktopDashboard: React.FC<Props> = ({ pagination, isDesktop, user }
                                         ))}
                                     </tbody>
                                 </table>
-                            )}
+                            ) : ''}
                             {isTablet && (
                                 pagination?.current_data.map((mahasiswa) => (
                                     <div className="border rounded-md border-[#1f2236] mt-2 p-3 flex justify-between items-center text-white" key={mahasiswa.is_submit}>
@@ -134,29 +134,31 @@ const TabletDesktopDashboard: React.FC<Props> = ({ pagination, isDesktop, user }
                                     </p>
                                 ))
                             )}
-                            <Pagination className="mt-3">
-                                <PaginationContent>
-                                    <PaginationItem>
-                                        <PaginationLink
-                                            href={`?currentPage=${pagination?.previous_page || 1}&q=${searchParams.get('q') || ''}`}
-                                            className="bg-[#4b5fe2] text-white hover:bg-[#4b5fe2] hover:text-white w-[5rem]"
-                                        >
-                                            Previous
-                                        </PaginationLink>
-                                    </PaginationItem>
-                                    <Button className="bg-[#4b5563] text-white hover:bg-[#4b5563] hover:text-white w-[2.5rem]">
-                                        {pagination?.current_page}
-                                    </Button>
-                                    <PaginationItem>
-                                        <PaginationLink
-                                            href={`?currentPage=${pagination?.next_page || pagination?.total_pages}&q=${searchParams.get('q') || ''}`}
-                                            className="bg-[#4b5fe2] text-white hover:bg-[#4b5fe2] hover:text-white w-[5rem]"
-                                        >
-                                            Next
-                                        </PaginationLink>
-                                    </PaginationItem>
-                                </PaginationContent>
-                            </Pagination>
+                            {pagination?.current_data && (
+                                <Pagination className="mt-3">
+                                    <PaginationContent>
+                                        <PaginationItem>
+                                            <PaginationLink
+                                                href={`?currentPage=${pagination?.previous_page || 1}&q=${searchParams.get('q') || ''}`}
+                                                className="bg-[#4b5fe2] text-white hover:bg-[#4b5fe2] hover:text-white w-[5rem]"
+                                            >
+                                                Previous
+                                            </PaginationLink>
+                                        </PaginationItem>
+                                        <Button className="bg-[#4b5563] text-white hover:bg-[#4b5563] hover:text-white w-[2.5rem]">
+                                            {pagination?.current_page}
+                                        </Button>
+                                        <PaginationItem>
+                                            <PaginationLink
+                                                href={`?currentPage=${pagination?.next_page || pagination?.total_pages}&q=${searchParams.get('q') || ''}`}
+                                                className="bg-[#4b5fe2] text-white hover:bg-[#4b5fe2] hover:text-white w-[5rem]"
+                                            >
+                                                Next
+                                            </PaginationLink>
+                                        </PaginationItem>
+                                    </PaginationContent>
+                                </Pagination>
+                            )}
                         </div>
                     </div>
                 </main>
