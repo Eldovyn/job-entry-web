@@ -13,77 +13,32 @@ async function getUserData(accessToken: string) {
     }
 }
 
-async function getForm(accessToken: string, q: string) {
-    try {
-        const response = await axiosInstance.get(`/job-entry/form`, {
-            headers: { Authorization: `Bearer ${accessToken}` },
-            params: { q },
-        });
-        return response.data?.data;
-    } catch (error) {
-        return null;
-    }
-}
-
 export async function middleware(request: NextRequest) {
     const url = request.nextUrl.clone();
     const accessToken = request.cookies.get("accessToken")?.value;
 
     const protectedRoutes = ["/profile", "/admin/dashboard", "/admin/dashboard/profile", "/admin/dashboard/batch"];
     const authPages = ["/register", "/login"];
-    const tokenRequiredRoutes = {
-        "/account-active": "/register",
-        "/account-active/sent": "/register",
-        "/forgot-password/sent": "/forgot-password",
-        "/reset-password": "/forgot-password",
+
+    const redirectToLogin = () => {
+        const response = NextResponse.redirect(new URL("/login", request.url));
+        response.cookies.set("accessToken", "");
+        console.warn("Token removed, redirecting to /login");
+        return response;
     };
 
-    if (url.pathname === "/form") {
-        if (!accessToken) {
-            url.pathname = "/login";
-            return NextResponse.redirect(url);
-        }
+    if (url.pathname === "/form" || url.pathname === "/") {
+        if (!accessToken) return redirectToLogin();
 
         const userData = await getUserData(accessToken);
-        if (!userData) {
-            url.pathname = "/login";
-            return NextResponse.redirect(url);
-        }
-
-        const q = url.searchParams.get("q") || "";
-
-        const formData = await getForm(accessToken, q);
-        if (!formData) {
-            url.search = "";
-            url.pathname = userData.is_admin ? "/admin/dashboard/batch" : "/";
-            return NextResponse.redirect(url);
-        }
-    }
-
-    if (url.pathname === "/") {
-        if (!accessToken) {
-            url.pathname = "/login";
-            return NextResponse.redirect(url);
-        }
-
-        const userData = await getUserData(accessToken);
-        if (!userData) {
-            url.pathname = "/login";
-            return NextResponse.redirect(url);
-        }
+        if (!userData) return redirectToLogin();
     }
 
     if (protectedRoutes.some((route) => url.pathname.startsWith(route))) {
-        if (!accessToken) {
-            url.pathname = "/login";
-            return NextResponse.redirect(url);
-        }
+        if (!accessToken) return redirectToLogin();
 
         const userData = await getUserData(accessToken);
-        if (!userData) {
-            url.pathname = "/login";
-            return NextResponse.redirect(url);
-        }
+        if (!userData) return redirectToLogin();
 
         if (url.pathname.startsWith("/admin/dashboard") && !userData.is_admin) {
             url.pathname = "/";
@@ -93,23 +48,6 @@ export async function middleware(request: NextRequest) {
 
     if (authPages.includes(url.pathname) && accessToken) {
         return NextResponse.redirect(new URL("/", request.url));
-    }
-
-    for (const [route, fallback] of Object.entries(tokenRequiredRoutes)) {
-        if (url.pathname === route) {
-            const token = url.searchParams.get("token");
-            if (!token) {
-                return NextResponse.redirect(new URL(fallback, request.url));
-            }
-
-            try {
-                await axiosInstance.get(`/job-entry${route.replace("/account-active", "/account-active/email-verification")}`, {
-                    params: { token },
-                });
-            } catch (error) {
-                return NextResponse.redirect(new URL(fallback, request.url));
-            }
-        }
     }
 
     return NextResponse.next();
