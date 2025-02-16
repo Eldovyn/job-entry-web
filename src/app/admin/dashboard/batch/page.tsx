@@ -24,7 +24,6 @@ const BatchPage = () => {
     }, []);
 
     const { data: batch, isLoading: isLoadingBatch, isError: isErrorBatch, error: errorBatch } = useAdminAllBatch(currentPage || "1", q || "", Cookies.get('accessToken') || '');
-    const { data: me, isLoading: isLoadingMe, isError: isErrorMe, error: errorMe } = useMe(Cookies.get('accessToken') || '');
 
     useEffect(() => {
         if (!isLoadingBatch && batch) {
@@ -41,7 +40,7 @@ const BatchPage = () => {
     }
 
     if (isDesktop || isTablet) {
-        return <TabletDesktopBatch category="admin" pagination={pagination} setPagination={setPagination} user={me?.data || null} isDesktop={isDesktop} />
+        return <TabletDesktopBatch category="admin" pagination={pagination} setPagination={setPagination} user={batch?.user || null} isDesktop={isDesktop} />
     }
 
     if (isMobile) {
