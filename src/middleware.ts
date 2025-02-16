@@ -13,6 +13,18 @@ async function getUserData(accessToken: string) {
     }
 }
 
+async function getForm(accessToken: string, q: string) {
+    try {
+        const response = await axiosInstance.get(`/job-entry/form`, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+            params: { q },
+        });
+        return response.data?.data;
+    } catch (error) {
+        return null;
+    }
+}
+
 export async function middleware(request: NextRequest) {
     const url = request.nextUrl.clone();
     const accessToken = request.cookies.get("accessToken")?.value;
@@ -25,6 +37,41 @@ export async function middleware(request: NextRequest) {
         "/forgot-password/sent": "/forgot-password",
         "/reset-password": "/forgot-password",
     };
+
+    if (url.pathname === "/form") {
+        if (!accessToken) {
+            url.pathname = "/login";
+            return NextResponse.redirect(url);
+        }
+
+        const userData = await getUserData(accessToken);
+        if (!userData) {
+            url.pathname = "/login";
+            return NextResponse.redirect(url);
+        }
+
+        const q = url.searchParams.get("q") || "";
+
+        const formData = await getForm(accessToken, q);
+        if (!formData) {
+            url.search = "";
+            url.pathname = userData.is_admin ? "/admin/dashboard/batch" : "/";
+            return NextResponse.redirect(url);
+        }
+    }
+
+    if (url.pathname === "/") {
+        if (!accessToken) {
+            url.pathname = "/login";
+            return NextResponse.redirect(url);
+        }
+
+        const userData = await getUserData(accessToken);
+        if (!userData) {
+            url.pathname = "/login";
+            return NextResponse.redirect(url);
+        }
+    }
 
     if (protectedRoutes.some((route) => url.pathname.startsWith(route))) {
         if (!accessToken) {

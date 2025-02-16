@@ -8,6 +8,8 @@ import { useDropzone } from "react-dropzone";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MdOutlineFileUpload } from "react-icons/md";
+import { useGetForm } from "@/api/form/useGetForm";
+import { useSearchParams } from "next/navigation";
 
 interface FormData {
   nama: string;
@@ -34,6 +36,8 @@ interface FormData {
 const FormPage = () => {
   const [page, setPage] = useState(1);
   const [selectedFiles, setSelectedFiles] = useState<{ [key in keyof FormData]?: string }>({});
+
+  const searchParams = useSearchParams();
 
   const { mutate } = useMutation({
     mutationFn: async (data: FormData) => {
@@ -86,11 +90,13 @@ const FormPage = () => {
     setSelectedFiles((prev) => ({ ...prev, [fieldName]: file ? file.name : 'No file selected' }));
   }, [formik]);
 
+  const { data, isLoading, isError, error } = useGetForm(searchParams.get('q') || '', Cookies.get('accessToken') || '');
+
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className={`bg-[#12141e] w-[50%] p-8 border-2 border-[#1f2236] rounded-md ${page === 3 ? 'mt-10 mb-10' : ''} ${page === 1 ? 'mt-10 mb-10' : ''} ${page === 2 ? 'mt-10 mb-10' : ''}`}>
         <p className="text-white text-2xl font-semibold text-center border-b-2 border-[#1f2236] pb-3">
-          Form Pendaftaran
+          {data?.data[0]?.title}
         </p>
         <form onSubmit={formik.handleSubmit} className="space-y-4 pt-3">
         {page === 1 && (
