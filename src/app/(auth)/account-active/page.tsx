@@ -16,12 +16,6 @@ const AccountActive = () => {
     );
 
     useEffect(() => {
-        if (isError) {
-            push(`/register`);
-        }
-    }, [isError, push]);
-
-    useEffect(() => {
         if (data) {
             const timer = setTimeout(() => {
                 push("/login");

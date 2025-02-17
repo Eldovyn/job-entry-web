@@ -37,9 +37,81 @@ async function getFormIsSubmitted(accessToken: string, q: string) {
     }
 }
 
+const getAccountActivePage = async (token: string) => {
+    try {
+        const response = await axiosInstance.get(`/job-entry/account-active/page-verification`, {
+            headers: { "Content-Type": "application/json" }, params: { token }
+        });
+        return response.data?.data;
+    } catch (error) {
+        return null;
+    }
+}
+
+const getAccountActiveSent = async (token: string) => {
+    try {
+        const response = await axiosInstance.get(`/job-entry/account-active/email-verification`, {
+            headers: { "Content-Type": "application/json" }, params: { token }
+        });
+        return response.data?.data;
+    } catch (error) {
+        return null;
+    }
+}
+
+const getForgotPasswordSent = async (token: string) => {
+    try {
+        const response = await axiosInstance.get(`/job-entry/forgot-password/sent`, {
+            headers: { "Content-Type": "application/json" }, params: { token }
+        });
+        return response.data?.data;
+    } catch (error) {
+        return null;
+    }
+}
+
+const getResetPassword = async (token: string) => {
+    try {
+        const response = await axiosInstance.get(`/job-entry/reset-password`, {
+            headers: { "Content-Type": "application/json" }, params: { token }
+        });
+        return response.data?.data;
+    } catch (error) {
+        return null;
+    }
+}
+
 export async function middleware(request: NextRequest) {
     const url = request.nextUrl.clone();
     const accessToken = request.cookies.get("accessToken")?.value;
+
+    if (url.pathname === '/account-active' || url.pathname === '/account-active/sent') {
+        const token = url.searchParams.get("token");
+        if (!token) {
+            return NextResponse.redirect(new URL("/login", request.url));
+        }
+    }
+
+    if (url.pathname === '/forgot-password/sent' || url.pathname === '/reset-password') {
+        const token = url.searchParams.get("token");
+        if (!token) {
+            return NextResponse.redirect(new URL("/login", request.url));
+        }
+
+        if (url.pathname === "/forgot-password/sent") {
+            const data = await getForgotPasswordSent(token);
+            if (!data) {
+                return NextResponse.redirect(new URL("/login", request.url));
+            }
+        }
+
+        if (url.pathname === "/reset-password") {
+            const data = await getResetPassword(token);
+            if (!data) {
+                return NextResponse.redirect(new URL("/login", request.url));
+            }
+        }
+    }
 
     if (url.pathname.startsWith('/admin/dashboard') || url.pathname === '/form' || url.pathname === '/form/is-submitted' || url.pathname === '/profile/user' || url.pathname === '/') {
         if (!accessToken) {
