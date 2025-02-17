@@ -25,6 +25,12 @@ const AccountActive = () => {
         }
     }, [data, push]);
 
+    useEffect(() => {
+        if (isError) {
+            push("/login");
+        }
+    }, [isError, push]);
+
     return (
         <div className="bg-[#0b0d14] h-screen flex items-center justify-center w-full">
             <div className="bg-[#12141e] lg:w-[45%] md:w-[60%] sm:w-[70%] w-[90%] p-8 rounded-md mt-9 border-[#1f2236] border-2">

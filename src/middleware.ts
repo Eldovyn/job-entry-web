@@ -95,20 +95,13 @@ export async function middleware(request: NextRequest) {
     if (url.pathname === '/forgot-password/sent' || url.pathname === '/reset-password') {
         const token = url.searchParams.get("token");
         if (!token) {
-            return NextResponse.redirect(new URL("/login", request.url));
+            return NextResponse.redirect(new URL("/forgot-password", request.url));
         }
 
-        if (url.pathname === "/forgot-password/sent") {
-            const data = await getForgotPasswordSent(token);
+        if (url.pathname === '/reset-password') {
+            const data = await getResetPassword(token || "");
             if (!data) {
-                return NextResponse.redirect(new URL("/login", request.url));
-            }
-        }
-
-        if (url.pathname === "/reset-password") {
-            const data = await getResetPassword(token);
-            if (!data) {
-                return NextResponse.redirect(new URL("/login", request.url));
+                return NextResponse.redirect(new URL("/forgot-password", request.url));
             }
         }
     }
