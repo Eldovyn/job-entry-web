@@ -6,10 +6,12 @@ import MobileDashboard from "@/responsive/dashboard/data-mahasiswa/mobile";
 import { useGetUserAllDataMahasiswa } from "@/api/data-mahasiswa/useGetAllDataMahasiswa";
 import { useSearchParams } from "next/navigation";
 import Cookies from "js-cookie";
+import { MahasiswaPagination } from "@/interfaces/MahasiswaPagination";
 
 const Dashboard = () => {
     const [isClient, setIsClient] = useState(false);
     const searchParams = useSearchParams();
+    const [pagination, setPagination] = useState<MahasiswaPagination | null>(null);
 
     useEffect(() => {
         setTimeout(() => {
@@ -23,16 +25,22 @@ const Dashboard = () => {
 
     const { data: dataMahasiswa, isLoading: isLoadingDataMahasiswa, isError: isErrorDataMahasiswa, error: errorDataMahasiswa } = useGetUserAllDataMahasiswa(searchParams.get("currentPage") || "1", searchParams.get("q") || "", Cookies.get('accessToken') || '');
 
+    useEffect(() => {
+        if (!isLoadingDataMahasiswa && dataMahasiswa) {
+            setPagination(dataMahasiswa.page);
+        }
+    }, [isLoadingDataMahasiswa, dataMahasiswa]);
+
     if (!isClient) {
         return null;
     }
 
     if (isDesktop || isTablet) {
-        return <TabletDesktopDashboard pagination={dataMahasiswa?.page || null} user={dataMahasiswa?.user || null} isDesktop={isDesktop} />;
+        return <TabletDesktopDashboard setPagination={setPagination} pagination={pagination || null} user={dataMahasiswa?.user || null} isDesktop={isDesktop} />;
     }
 
     if (isMobile) {
-        return <MobileDashboard pagination={dataMahasiswa?.page || null} />;
+        return <MobileDashboard pagination={pagination || null} />;
     }
 };
 

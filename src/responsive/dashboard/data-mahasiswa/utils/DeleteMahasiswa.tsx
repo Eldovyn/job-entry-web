@@ -4,14 +4,14 @@ import { useFormik } from "formik";
 import { axiosInstance } from "@/lib/axios";
 import Cookies from "js-cookie";
 import { useRouter, useSearchParams } from "next/navigation";
-import { BatchPagination } from "@/interfaces/BatchPagination";
+import { MahasiswaPagination } from "@/interfaces/MahasiswaPagination";
 import { Batch } from "@/interfaces/Batch";
 import { User } from "@/interfaces/User";
 
 interface Props {
-    pagination: BatchPagination | null
-    batchId: string
-    setPagination: Dispatch<SetStateAction<BatchPagination | null>> | null;
+    pagination: MahasiswaPagination | null
+    userId: string
+    setPagination: Dispatch<SetStateAction<MahasiswaPagination | null>> | null;
 }
 
 interface ApiResponse {
@@ -20,11 +20,11 @@ interface ApiResponse {
     errors: {
         [field: string]: string[];
     } | null;
-    page: BatchPagination | null;
+    page: MahasiswaPagination | null;
     user: User | null;
 }
 
-const DeleteMahasiswa: React.FC<Props> = ({ pagination, batchId, setPagination }) => {
+const DeleteMahasiswa: React.FC<Props> = ({ pagination, userId, setPagination }) => {
     const { push } = useRouter();
     const searchParams = useSearchParams();
 
@@ -32,13 +32,12 @@ const DeleteMahasiswa: React.FC<Props> = ({ pagination, batchId, setPagination }
         initialValues: {},
         onSubmit: async (values, { setSubmitting }) => {
             try {
-                const response = await axiosInstance.delete<ApiResponse>(`/job-entry/admin/batch`, {
+                const response = await axiosInstance.delete<ApiResponse>(`/job-entry/data-mahasiswa`, {
                     headers: {
                         "Content-Type": "application/json",
                         "Authorization": `Bearer ${Cookies.get('accessToken') || ''}`
                     },
-                    data: { batch_id: batchId },
-                    params: { current_page: searchParams.get('current_page'), q: searchParams.get('q') }
+                    data: { target_user_id: userId },
                 });
                 const responseData = response.data;
                 if (response.status === 201) {
@@ -46,7 +45,7 @@ const DeleteMahasiswa: React.FC<Props> = ({ pagination, batchId, setPagination }
                         if (setPagination) {
                             setPagination({
                                 ...pagination,
-                                ...responseData.page as BatchPagination,
+                                ...responseData.page as MahasiswaPagination,
                             })
                         }
                     }
