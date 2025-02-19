@@ -47,7 +47,7 @@ const BatchPagination: React.FC<Props> = ({ pagination, isDesktop, setPagination
                                         <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] me-1">
                                             <DeleteBatch pagination={pagination} batchId={item.batch_id} setPagination={setPagination} />
                                         </div>
-                                        <Link href={`/admin/dashboard/${item.batch_id}`}>
+                                        <Link href={`/admin/dashboard/data-mahasiswa?currentPage=1&q=${item.batch_id}`}>
                                             <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] ms-1">
                                                 <FaExternalLinkAlt className="cursor-pointer text-white" size={20} />
                                             </div>

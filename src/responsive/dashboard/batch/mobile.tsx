@@ -21,7 +21,7 @@ const MobileBatch: React.FC<Props> = ({ pagination }) => {
                         <SearchBatch category="admin" />
                     </div>
                     {pagination?.current_batch.map((data) => (
-                        <Link href={`/admin/dashboard/${data.batch_id}`} key={data.batch_id}>
+                        <Link href={`/admin/dashboard/data-mahasiswa?currentPage=1&q=${data.batch_id}`} key={data.batch_id}>
                             <div className="border-2 rounded-md border-[#1f2236] mt-2 p-3 flex justify-between items-center text-white overflow-hidden text-ellipsis" key={data.batch_id}>
                                 <p className="text-center">{data.title}</p>
                             </div>
