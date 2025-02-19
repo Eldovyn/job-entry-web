@@ -48,9 +48,9 @@ const getAccountActivePage = async (token: string) => {
     }
 }
 
-const getAccountActiveSent = async (token: string) => {
+const getAccountActiveEmail = async (token: string) => {
     try {
-        const response = await axiosInstance.get(`/job-entry/account-active/email-verification`, {
+        const response = await axiosInstance.get(`/job-entry/account-active/validation/email-verification`, {
             headers: { "Content-Type": "application/json" }, params: { token }
         });
         return response.data?.data;
@@ -89,6 +89,20 @@ export async function middleware(request: NextRequest) {
         const token = url.searchParams.get("token");
         if (!token) {
             return NextResponse.redirect(new URL("/login", request.url));
+        }
+
+        if (url.pathname === '/account-active/sent') {
+            const getAccountActive = await getAccountActivePage(token || "");
+            if (!getAccountActive) {
+                return NextResponse.redirect(new URL("/login", request.url));
+            }
+        }
+
+        if (url.pathname === '/account-active') {
+            const getAccountActive = await getAccountActiveEmail(token || "");
+            if (!getAccountActive) {
+                return NextResponse.redirect(new URL("/login", request.url));
+            }
         }
     }
 
