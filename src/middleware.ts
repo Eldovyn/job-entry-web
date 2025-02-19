@@ -118,6 +118,13 @@ export async function middleware(request: NextRequest) {
                 return NextResponse.redirect(new URL("/forgot-password", request.url));
             }
         }
+
+        if (url.pathname === '/forgot-password/sent') {
+            const data = await getForgotPasswordSent(token || "");
+            if (!data) {
+                return NextResponse.redirect(new URL("/forgot-password", request.url));
+            }
+        }
     }
 
     if (url.pathname.startsWith('/admin/dashboard') || url.pathname === '/form' || url.pathname === '/form/is-submitted' || url.pathname === '/profile/user' || url.pathname === '/') {
