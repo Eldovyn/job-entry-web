@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
 import SideBar from "@/components/sidebar";
 import { useMediaQuery } from "react-responsive";
 import React, { useEffect, useState, Dispatch, SetStateAction } from "react";

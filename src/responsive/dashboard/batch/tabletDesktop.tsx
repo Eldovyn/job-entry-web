@@ -46,7 +46,7 @@ const TabletDesktop: React.FC<Props> = ({ category, pagination, user, isDesktop,
                             {isTablet || isDesktop ? (
                                 <BatchPagination category={category} pagination={pagination} setPagination={setPagination} isDesktop={isDesktop} />
                             ) : ''}
-                            {isSmallTablet || isExtraSmallTablet && pagination ? (
+                            {isSmallTablet || isExtraSmallTablet && pagination?.current_batch && pagination?.total_pages > 0 ? (
                                 <>
                                     {pagination?.current_batch?.map((item) => (
                                         <div className="border rounded-md border-[#1f2236] mt-2 p-3 flex justify-between items-center text-white" key={item?.batch_id}>

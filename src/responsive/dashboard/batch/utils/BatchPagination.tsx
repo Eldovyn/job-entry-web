@@ -15,7 +15,7 @@ import {
     PaginationItem,
     PaginationLink,
 } from "@/components/ui/pagination";
-import Link from "next/link";;
+import Link from "next/link";
 import { BatchPagination as BPagination } from "@/interfaces/BatchPagination";
 
 interface Props {
@@ -31,48 +31,50 @@ const BatchPagination: React.FC<Props> = ({ pagination, isDesktop, setPagination
     if (category === 'admin') {
         return (
             <div>
-                <table className="table-auto w-full border-2 mt-2 text-white text-center">
-                    <thead className="bg-[#1f2236]">
-                        <tr>
-                            <th className="border-2 border-[#1f2236] px-4 py-2">Action</th>
-                            <th className="border-2 border-[#1f2236] px-4 py-2">Switch</th>
-                            <th className="border-2 border-[#1f2236] px-4 py-2">Title</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {pagination?.current_batch?.map((item) => (
-                            <tr key={item.batch_id || `batch-${item.title}-${Math.random()}`}>
-                                <td className="border-2 border-[#1f2236] px-4 py-2 w-[10%]">
-                                    <div className="flex flex-row justify-center">
-                                        <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] me-1">
-                                            <DeleteBatch pagination={pagination} batchId={item.batch_id} setPagination={setPagination} />
-                                        </div>
-                                        <Link href={`/admin/dashboard/data-mahasiswa?currentPage=1&q=${item.batch_id}`}>
-                                            <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] ms-1">
-                                                <FaExternalLinkAlt className="cursor-pointer text-white" size={20} />
-                                            </div>
-                                        </Link>
-                                    </div>
-                                </td>
-                                <td className="border-2 border-[#1f2236] px-4 py-2 w-[10%]">
-                                    <UpdateStatusBatch isActive={item.is_active} batchId={item.batch_id} />
-                                </td>
-                                <td className="border-2 border-[#1f2236] px-4 py-2">
-                                    <TooltipProvider>
-                                        <Tooltip>
-                                            <TooltipTrigger>{item.title}</TooltipTrigger>
-                                            <TooltipContent>
-                                                <p>{item.batch_id}</p>
-                                            </TooltipContent>
-                                        </Tooltip>
-                                    </TooltipProvider>
-                                </td>
+                {pagination && pagination.total_pages > 0 ? (
+                    <table className="table-auto w-full border-2 mt-2 text-white text-center">
+                        <thead className="bg-[#1f2236]">
+                            <tr>
+                                <th className="border-2 border-[#1f2236] px-4 py-2">Action</th>
+                                <th className="border-2 border-[#1f2236] px-4 py-2">Switch</th>
+                                <th className="border-2 border-[#1f2236] px-4 py-2">Title</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {pagination?.current_batch?.map((item) => (
+                                <tr key={item.batch_id || `batch-${item.title}-${Math.random()}`}>
+                                    <td className="border-2 border-[#1f2236] px-4 py-2 w-[10%]">
+                                        <div className="flex flex-row justify-center">
+                                            <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] me-1">
+                                                <DeleteBatch pagination={pagination} batchId={item.batch_id} setPagination={setPagination} />
+                                            </div>
+                                            <Link href={`/admin/dashboard/data-mahasiswa?currentPage=1&q=${item.batch_id}`}>
+                                                <div className="border p-2 rounded-md bg-[#4b5fe2] border-[#1f2236] ms-1">
+                                                    <FaExternalLinkAlt className="cursor-pointer text-white" size={20} />
+                                                </div>
+                                            </Link>
+                                        </div>
+                                    </td>
+                                    <td className="border-2 border-[#1f2236] px-4 py-2 w-[10%]">
+                                        <UpdateStatusBatch isActive={item.is_active} batchId={item.batch_id} />
+                                    </td>
+                                    <td className="border-2 border-[#1f2236] px-4 py-2">
+                                        <TooltipProvider>
+                                            <Tooltip>
+                                                <TooltipTrigger>{item.title}</TooltipTrigger>
+                                                <TooltipContent>
+                                                    <p>{item.batch_id}</p>
+                                                </TooltipContent>
+                                            </Tooltip>
+                                        </TooltipProvider>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                ) : ''}
                 <div className="flex justify-between items-center mt-4">
-                    {pagination && (
+                    {pagination && pagination.total_pages > 0 ? (
                         <>
                             <Pagination className="mt-3">
                                 <PaginationContent>
@@ -105,7 +107,7 @@ const BatchPagination: React.FC<Props> = ({ pagination, isDesktop, setPagination
                                 </PaginationContent>
                             </Pagination>
                         </>
-                    )}
+                    ) : ''}
                 </div>
             </div>
         );
