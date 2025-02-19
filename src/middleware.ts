@@ -134,7 +134,9 @@ export async function middleware(request: NextRequest) {
 
         const userData = await getUserData(accessToken);
         if (!userData) {
-            return NextResponse.redirect(new URL("/login", request.url));
+            const response = NextResponse.redirect(new URL("/login", request.url));
+            response.cookies.delete("accessToken");
+            return response;
         }
 
         if (url.pathname === "/" || url.pathname === "/profile/user") {
