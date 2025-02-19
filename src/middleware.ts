@@ -81,6 +81,21 @@ const getResetPassword = async (token: string) => {
     }
 }
 
+const getDataMahasiswa = async (token: string, q: string) => {
+    try {
+        const response = await axiosInstance.get("/job-entry/details/data-mahasiswa", {
+            params: { q: q },
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+        });
+        return response.data?.data;
+    } catch (error) {
+        return null;
+    }
+}
+
 export async function middleware(request: NextRequest) {
     const url = request.nextUrl.clone();
     const accessToken = request.cookies.get("accessToken")?.value;
@@ -148,6 +163,18 @@ export async function middleware(request: NextRequest) {
         if (url.pathname.startsWith("/admin/dashboard")) {
             if (!userData.is_admin) {
                 return NextResponse.redirect(new URL("/", request.url));
+            }
+
+            if (url.pathname === '/admin/dashboard/data-mahasiswa/details') {
+                const q = url.searchParams.get("q");
+                if (!q) {
+                    return NextResponse.redirect(new URL("/admin/dashboard/data-mahasiswa", request.url));
+                }
+
+                const dataMahasiswa = await getDataMahasiswa(accessToken, q)
+                if (!dataMahasiswa) {
+                    return NextResponse.redirect(new URL("/admin/dashboard/data-mahasiswa", request.url));
+                }
             }
         }
 
